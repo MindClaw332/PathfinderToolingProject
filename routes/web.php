@@ -6,14 +6,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('newcreature', function() {
+Route::get('newcreature', function () {
     return view('newCreature');
 });
 
-Route::get('randomize', function() {
+Route::get('randomize', function () {
     return view('randomize');
 });
 
-Route::get('encounter', function() {
+Route::get('encounter', function () {
     return view('encounter');
+});
+
+Route::get('creature', function () {
+    return view('creature');
 });
