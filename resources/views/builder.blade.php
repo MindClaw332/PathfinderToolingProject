@@ -1,10 +1,13 @@
-@vite(['resources/css/app.css', 'resources/js/app.js'])
+@vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/builder.js'])
 
 <div class="bg-primary text-white h-full w-full">
     <!-- selection bar -->
     <div class="p-2">
         <div class="flex flex-row bg-secondary w-full p-2 border border-accent rounded-lg justify-between">
-            <div>show/hide creatures/hazards</div>
+            <!-- show/hide creatures and hazards -->
+            <button onclick="toggleCreatureHazard ()">
+                creatures/hazards
+            </button>
             <div>randomize complete</div>
             <div>randomize partially</div>
             <div>clear</div>
@@ -15,9 +18,9 @@
     </div>
     <div class="flex flex-row">
         <!-- creature/hazard picker -->
-        <div class="flex flex-col w-1/3 p-2 gap-4">
+        <div class="flex flex-col w-1/3 p-2 block" id="creatureHazard">
             <!-- creatures -->
-            <div class="bg-secondary border border-accent rounded-lg">
+            <div class="bg-secondary mb-4 border border-accent rounded-lg block" id="creature">
                 <!-- filter -->
                 <div class="p-2">
                     <div class="w-full p-1 bg-tertiary rounded-lg">
@@ -33,7 +36,7 @@
                 </div>
             </div>
             <!-- hazards -->
-            <div class="bg-secondary border border-accent rounded-lg">
+            <div class="bg-secondary mb-1 border border-accent rounded-lg block" id="hazard">
                 <!-- filter -->
                 <div class="p-2">
                     <div class="w-full p-1 bg-tertiary rounded-lg">
@@ -47,6 +50,17 @@
                     <div class="p-2">hazard</div>
                     <div class="p-2">hazard</div>
                 </div>
+            </div>
+            <!-- show/hide buttons -->
+            <div class="flex justify-end gap-2">
+                <!-- show/hide creatures -->
+                <button onclick="toggleCreature ()">
+                    creatures
+                </button>
+                <!-- show/hide hazards -->
+                <button onclick="toggleHazard ()">
+                    hazards
+                </button>
             </div>
         </div>
         <!-- selected content -->
