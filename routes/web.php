@@ -1,23 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BuilderController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('newcreature', function () {
-    return view('builder.newCreature');
-});
+Route::get('newcreature', [BuilderController::class, 'newcreature']);
 
-Route::get('randomize', function () {
-    return view('builder.randomize');
-});
+Route::get('randomize', [BuilderController::class, 'randomize']);
 
-Route::get('encounter', function () {
-    return view('builder.encounter');
-});
+Route::get('encounter', [BuilderController::class, 'encounter']);
 
-Route::get('creature', function () {
-    return view('builder.creature');
-});
+Route::get('creature', [BuilderController::class, 'creature']);
