@@ -13,7 +13,14 @@ class SizeSeeder extends Seeder
      */
     public function run(): void
     {
-        $sizes = ['name' => 'tiny', 'name' => 'small', 'name' => 'medium', 'name' => 'large', 'name' => 'huge', 'name' => 'gargantuan'];
+        $sizes = [
+            ['name' => 'tiny'],
+            ['name' => 'small'],
+            ['name' => 'medium'],
+            ['name' => 'large'],
+            ['name' => 'huge'],
+            ['name' => 'gargantuan']
+        ];
 
         DB::table('sizes')->insert($sizes);
     }
