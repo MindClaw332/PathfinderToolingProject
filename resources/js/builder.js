@@ -16,10 +16,18 @@ window.toggleCreatureHazard = function () {
 window.toggleCreature = function () {
     creature.classList.toggle('hidden');
     creature.classList.toggle('block');
+    if (hazard.classList.contains('hidden')) {
+        hazard.classList.remove('hidden');
+        hazard.classList.add('block');
+    }
 };
 
 // Show/hide hazards
 window.toggleHazard = function () {
     hazard.classList.toggle('hidden');
     hazard.classList.toggle('block');
+    if (creature.classList.contains('hidden')) {
+        creature.classList.remove('hidden');
+        creature.classList.add('block');
+    }
 };
