@@ -1,6 +1,6 @@
-@vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/builder.js'])
+@extends('layout')
 
-<div class="bg-primary text-white h-full w-full">
+@section('tool')
     <!-- selection bar -->
     <div class="p-2">
         <div class="flex flex-row bg-secondary w-full p-2 border border-accent rounded-lg justify-between">
@@ -24,26 +24,32 @@
             <div class="bg-secondary mb-4 border border-accent rounded-lg block" id="creature">
                 <!-- filter -->
                 <div class="p-2">
-                    <input type="text" class="w-full p-1 bg-tertiary rounded-lg">
+                    <div class="w-full p-1 bg-tertiary rounded-lg">
+                        filter
+                    </div>
                 </div>
                 <!-- list creatures -->
-                <div class="h-84 overflow-y-auto scrollbar-hide divide-y-1 divide-y divide-tertiary">
-                    @foreach($creatures as $creature)
-                        <div class="p-2">{{$creature->name}} {{$creature->size->name}} {{ $creature->rarity->name}}</div>
-                    @endforeach
+                <div class="divide-y-1 divide-y divide-tertiary">
+                    <div class="p-2">creature</div>
+                    <div class="p-2">creature</div>
+                    <div class="p-2">creature</div>
+                    <div class="p-2">creature</div>
                 </div>
             </div>
             <!-- hazards -->
             <div class="bg-secondary mb-1 border border-accent rounded-lg block" id="hazard">
                 <!-- filter -->
                 <div class="p-2">
-                    <input type="text" class="w-full p-1 bg-tertiary rounded-lg">
+                    <div class="w-full p-1 bg-tertiary rounded-lg">
+                        filter
+                    </div>
                 </div>
                 <!-- list hazard -->
-                <div class="h-36 overflow-y-auto scrollbar-hide  divide-y-1 divide-y divide-tertiary">
-                    @foreach($hazards as $hazard)             
-                        <div class="p-2">{{$hazard->name}} {{$hazard->type->name}} {{$hazard->rarity->name}}</div>
-                    @endforeach
+                <div class="divide-y-1 divide-y divide-tertiary">
+                    <div class="p-2">hazard</div>
+                    <div class="p-2">hazard</div>
+                    <div class="p-2">hazard</div>
+                    <div class="p-2">hazard</div>
                 </div>
             </div>
             <!-- show/hide buttons -->
@@ -58,9 +64,4 @@
                 </button>
             </div>
         </div>
-        <!-- selected content -->
-        <div class="w-2/3" id="content">
-            @yield('content')
-        </div>
-    </div>
-</div>
+@endsection
