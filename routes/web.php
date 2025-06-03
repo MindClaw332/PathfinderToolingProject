@@ -13,3 +13,7 @@ Route::get('newcreature', function() {
 Route::get('randomize', function() {
     return view('randomize');
 });
+
+Route::get('encounter', function() {
+    return view('encounter');
+});
