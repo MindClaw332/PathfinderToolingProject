@@ -13,7 +13,11 @@ class TypeSeeder extends Seeder
      */
     public function run(): void
     {
-        $types = ['name' => 'haunt', 'name' => 'trap', 'name' => 'environmental'];
+        $types = [
+            ['name' => 'haunt'],
+            ['name' => 'trap'],
+            ['name' => 'environmental']
+        ];
 
         DB::table('types')->insert($types);
     }

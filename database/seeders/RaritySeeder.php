@@ -13,7 +13,12 @@ class RaritySeeder extends Seeder
      */
     public function run(): void
     {
-        $rarities = ['name' => 'common', 'name' => 'unique', 'name' => 'rare', 'name' => 'uncommon'];
+        $rarities = [
+            ['name' => 'common'],
+            ['name' => 'unique'],
+            ['name' => 'rare'],
+            ['name' => 'uncommon']
+        ];
 
         DB::table('rarities')->insert($rarities);
     }
