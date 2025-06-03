@@ -9,3 +9,7 @@ Route::get('/', function () {
 Route::get('newcreature', function() {
     return view('newCreature');
 });
+
+Route::get('randomize', function() {
+    return view('randomize');
+});
