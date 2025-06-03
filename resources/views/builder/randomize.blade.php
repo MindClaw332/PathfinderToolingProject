@@ -2,17 +2,32 @@
 
 @section('content')
     <div class="p-2">
+        <div class="flex flex-row justify-between">
         <!-- title -->
-        <div class="text-2xl m-1">Randomize</div>
+            <div class="text-2xl m-1">Randomize</div>
+            <!-- current player party -->
+            <div class="flex flex-row gap-4">
+                <div>Party size:</div>
+                <div>Party level:</div>
+            </div>
+        </div>
         <!-- add creatures -->
-        <div class="text-lg m-1">Add creatures</div>
+        <div class="flex flex-row justify-between">
+            <div class="text-lg m-1">Add creatures</div>
+            <!-- choose amount -->
+            <div>Amount:</div>
+        </div>
         <div class="divide-y-1 divide-y divide-tertiary m-1">
             <div class="p-2">creature</div>
             <div class="p-2">creature</div>
             <div class="p-2">creature</div>
         </div>
         <!-- add hazards -->
-        <div class="text-lg m-1">Add hazards</div>
+        <div class="flex flex-row justify-between">
+            <div class="text-lg m-1">Add hazards</div>
+            <!-- choose amount -->
+            <div>Amount:</div>
+        </div>
         <div class="divide-y-1 divide-y divide-tertiary m-1">
             <div class="p-2">hazard</div>
             <div class="p-2">hazard</div>
