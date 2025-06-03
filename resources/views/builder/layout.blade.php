@@ -29,7 +29,17 @@
                 <!-- list creatures -->
                 <div class="h-84 overflow-y-auto scrollbar-hide divide-y-1 divide-y divide-tertiary">
                     @foreach($creatures as $creature)
-                        <div class="p-2">{{$creature->name}} {{$creature->size->name}} {{ $creature->rarity->name}}</div>
+                        <div class="p-2">
+                            <div class="flex flex-row justify-between">
+                                <div class="text-lg">{{$creature->name}}</div>
+                                <div class="flex flex-row gap-2">
+                                    @foreach($creature->pathfindertraits as $trait)
+                                        <div class="bg-tertiary p-1 rounded-lg">{{ $trait->name }}</div>
+                                    @endforeach
+                                </div>
+                                
+                            </div>
+                        </div>
                     @endforeach
                 </div>
             </div>
@@ -42,7 +52,10 @@
                 <!-- list hazard -->
                 <div class="h-36 overflow-y-auto scrollbar-hide  divide-y-1 divide-y divide-tertiary">
                     @foreach($hazards as $hazard)             
-                        <div class="p-2">{{$hazard->name}} {{$hazard->type->name}} {{$hazard->rarity->name}}</div>
+                        <div class="flex flex-row justify-between p-2">
+                            <div>{{$hazard->name}}</div>
+                            <div class="bg-tertiary p-1 rounded-lg">{{$hazard->type->name}}</div>
+                        </div>
                     @endforeach
                 </div>
             </div>
@@ -58,6 +71,8 @@
                 </button>
             </div>
         </div>
+        <!-- hover popup -->
+        <div class="bg-secondary w-2/3 m-2 p-2 border border-accent rounded-lg hidden" id="popup">test</div>
         <!-- selected content -->
         <div class="w-2/3" id="content">
             @yield('content')

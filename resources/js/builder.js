@@ -3,6 +3,7 @@ let creatureHazard = document.getElementById('creatureHazard');
 let creature = document.getElementById('creature');
 let hazard = document.getElementById('hazard');
 let content = document.getElementById('content');
+let popup = document.getElementById('popup');
 
 // Show/hide creatures and hazards
 window.toggleCreatureHazard = function () {
@@ -31,3 +32,7 @@ window.toggleHazard = function () {
         creature.classList.add('block');
     }
 };
+
+// on hover, hide content, show popup
+
+// on not hover, show content, hide popup
