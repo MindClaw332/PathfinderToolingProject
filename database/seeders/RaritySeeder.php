@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class RaritySeeder extends Seeder
 {
@@ -12,6 +13,8 @@ class RaritySeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $rarities = ['name' => 'common', 'name' => 'unique', 'name' => 'rare', 'name' => 'uncommon'];
+
+        DB::table('rarities')->insert($rarities);
     }
 }

@@ -13,10 +13,9 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('traits', function (Blueprint $table) {
-            $table->id()->foreign('creature_trait.trait_id');
-            $table->bigInteger('name');
-            $table->string('type');
+        Schema::create('pathfinder_traits', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
         });
 
         Schema::enableForeignKeyConstraints();

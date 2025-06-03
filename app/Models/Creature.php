@@ -36,4 +36,8 @@ class Creature extends Model
     {
         return $this->belongsTo(Rarity::class);
     }
+
+    public function pathfindertraits(){
+        return $this->belongsToMany(PathfinderTrait::class);
+    }
 }

@@ -20,4 +20,8 @@ class Hazard extends Model
     public function type(){
         return $this->belongsTo(Type::class);
     }
+
+    public function pathfindertraits(){
+        return $this->belongsToMany(PathfinderTrait::class);
+    }
 }

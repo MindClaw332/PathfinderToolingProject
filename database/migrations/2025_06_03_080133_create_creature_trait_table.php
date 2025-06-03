@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('creature_trait', function (Blueprint $table) {
+        Schema::create('creature_pathfinder_trait', function (Blueprint $table) {
             $table->id();
             $table->foreignId('creature_id')->constrained('creatures');
-            $table->foreignId('trait_id')->constrained('traits');
+            $table->foreignId('pathfinder_trait_id')->constrained('traits');
         });
 
         Schema::enableForeignKeyConstraints();
