@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('creature_pathfinder_trait', function (Blueprint $table) {
             $table->id();
             $table->foreignId('creature_id')->constrained('creatures');
-            $table->foreignId('pathfinder_trait_id')->constrained('traits');
+            $table->foreignId('pathfinder_trait_id')->constrained('pathfinder_traits');
         });
 
         Schema::enableForeignKeyConstraints();

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\PathfinderTrait;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -23,6 +24,7 @@ class DatabaseSeeder extends Seeder
             RaritySeeder::class,
             SizeSeeder::class,
             TypeSeeder::class,
+            PathfinderTraitSeeder::class,
             HazardSeeder::class,
             CreatureSeeder::class,
         ]);
