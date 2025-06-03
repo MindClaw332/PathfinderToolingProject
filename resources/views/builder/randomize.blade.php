@@ -1,4 +1,4 @@
-@extends('builder')
+@extends('builder/layout')
 
 @section('content')
     <div class="p-2">

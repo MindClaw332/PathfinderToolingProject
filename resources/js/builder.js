@@ -2,11 +2,14 @@
 let creatureHazard = document.getElementById('creatureHazard');
 let creature = document.getElementById('creature');
 let hazard = document.getElementById('hazard');
+let content = document.getElementById('content');
 
 // Show/hide creatures and hazards
 window.toggleCreatureHazard = function () {
     creatureHazard.classList.toggle('hidden');
     creatureHazard.classList.toggle('block');
+    content.classList.toggle('w-2/3');
+    content.classList.toggle('w-full');
 };
 
 // Show/hide creatures

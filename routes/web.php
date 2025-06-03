@@ -7,17 +7,17 @@ Route::get('/', function () {
 });
 
 Route::get('newcreature', function () {
-    return view('newCreature');
+    return view('builder.newCreature');
 });
 
 Route::get('randomize', function () {
-    return view('randomize');
+    return view('builder.randomize');
 });
 
 Route::get('encounter', function () {
-    return view('encounter');
+    return view('builder.encounter');
 });
 
 Route::get('creature', function () {
-    return view('creature');
+    return view('builder.creature');
 });

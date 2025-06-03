@@ -8,12 +8,13 @@
             <button onclick="toggleCreatureHazard ()">
                 creatures/hazards
             </button>
+            <a href="randomize">randomize partially</a>
+            <a href="encounter">Encounter</a>
+            <a href="newcreature">create creature</a>
+            <a href="creature">My creatures</a>
             <div>randomize complete</div>
-            <div>randomize partially</div>
-            <div>clear</div>
             <div>export</div>
             <div>import</div>
-            <div>create creature</div>
         </div>
     </div>
     <div class="flex flex-row">
@@ -64,7 +65,7 @@
             </div>
         </div>
         <!-- selected content -->
-        <div class="w-2/3">
+        <div class="w-2/3" id="content">
             @yield('content')
         </div>
     </div>
