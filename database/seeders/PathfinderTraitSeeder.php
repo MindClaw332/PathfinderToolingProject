@@ -6,20 +6,18 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class RaritySeeder extends Seeder
+class PathfinderTraitSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $rarities = [
-            ['name' => 'common'],
-            ['name' => 'uncommon'],
-            ['name' => 'rare'],
-            ['name' => 'unique'],
+        $traits = [
+            ['name' => 'demon'],
+            ['name' => 'dragon'],
+            ['name' => 'humanoid'],
         ];
-
-        DB::table('rarities')->insert($rarities);
+        DB::table('pathfinder_traits')->insert($traits);
     }
 }
