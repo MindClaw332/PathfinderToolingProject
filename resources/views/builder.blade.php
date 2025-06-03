@@ -64,7 +64,7 @@
             </div>
         </div>
         <!-- selected content -->
-        <div>
+        <div class="w-2/3">
             @yield('content')
         </div>
     </div>
