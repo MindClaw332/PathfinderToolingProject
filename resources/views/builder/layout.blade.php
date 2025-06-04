@@ -35,7 +35,10 @@
                     <div class="p-2 hidden" id="filterCreature">
                         <div>
                             <!-- traits -->
-                            <div>Trait</div>
+                            <div class="flex flex-row justify-between">
+                                <div>Trait</div>
+                                <button onclick="resetCreatureFilters()" class="text-red-700">Reset</button>
+                            </div>
                             <div class="flex flex-row gap-2">
                                 @foreach($traits as $trait)
                                     <button onclick="toggleSelectCreatureTrait({{$trait->id}})" class="bg-tertiary p-1 rounded-lg" id="trait-{{$trait->id}}">
@@ -68,21 +71,7 @@
                         </div>
                     </div>
                     <!-- list of creatures -->
-                    <div class="h-84 overflow-y-auto scrollbar-hide divide-y-1 divide-y divide-tertiary">
-                        @foreach($creatures as $creature)
-                            <div class="p-2" id="{{$creature->id}}" onmouseover="showCreatureInfo(id)" onmouseout="hideCreatureInfo(id)">
-                                <div class="flex flex-row justify-between">
-                                    <div>{{$creature->name}}</div>
-                                    <div class="flex flex-row gap-2">
-                                        @foreach($creature->pathfindertraits as $trait)
-                                            <div class="bg-tertiary p-1 rounded-lg">{{ $trait->name }}</div>
-                                        @endforeach
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
+                    <div class="h-84 overflow-y-auto scrollbar-hide divide-y-1 divide-y divide-tertiary" id="creatureList"></div>
                 </div>
             @endif
             <!-- hazards -->
@@ -98,7 +87,10 @@
                     <div class="p-2 hidden" id="filterHazard">
                         <div>
                             <!-- type -->
-                            <div>Type</div>
+                            <div class="flex flex-row justify-between">
+                                <div>Type</div>
+                                <button onclick="resetHazardFilters()" class="text-red-700">Reset</button>
+                            </div>
                             <div class="flex flex-row gap-2">
                                 @foreach($types as $type)
                                     <button onclick="toggleSelectedHazardType({{$type->id}})" class="bg-tertiary p-1 rounded-lg" id="type-{{$type->id}}">
@@ -120,14 +112,7 @@
                         </div>
                     </div>
                     <!-- list of hazard -->
-                    <div class="h-36 overflow-y-auto scrollbar-hide divide-y-1 divide-y divide-tertiary">
-                        @foreach($hazards as $hazard)             
-                            <div class="flex flex-row justify-between p-2" id="{{$hazard->id}}" onmouseover="showHazardInfo(id)" onmouseout="hideHazardInfo()">
-                                <div>{{$hazard->name}}</div>
-                                <div class="bg-tertiary p-1 rounded-lg">{{$hazard->type->name}}</div>
-                            </div>
-                        @endforeach
-                    </div>
+                    <div class="h-36 overflow-y-auto scrollbar-hide divide-y-1 divide-y divide-tertiary" id="hazardList"></div>
                 </div>
             @endif
             <!-- show/hide buttons -->
