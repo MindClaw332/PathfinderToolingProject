@@ -138,11 +138,11 @@
     </div>
 </div>
 <!-- data for popup creatures/hazards -->
-<div id="data-container" 
-     data-hazards="{{ json_encode($hazards) }}" 
-     data-creatures="{{ json_encode($creatures) }}"
-     data-traits="{{ json_encode($traits) }}"
-     data-sizes="{{ json_encode($sizes) }}"
-     data-rarities="{{ json_encode($rarities) }}"
-     data-types="{{ json_encode($types) }}"
-     style="display: none;">data</div>
+<div id="data-container" style="display: none;"
+        @if(isset($hazards)) data-hazards="{{ json_encode($hazards) }}" @endif
+        @if(isset($creatures)) data-creatures="{{ json_encode($creatures) }}" @endif
+        @if(isset($traits)) data-traits="{{ json_encode($traits) }}" @endif
+        @if(isset($sizes)) data-sizes="{{ json_encode($sizes) }}" @endif
+        @if(isset($rarities)) data-rarities="{{ json_encode($rarities) }}" @endif
+        @if(isset($types)) data-types="{{ json_encode($types) }}" @endif
+    >data</div>
