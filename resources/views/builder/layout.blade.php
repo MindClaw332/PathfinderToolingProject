@@ -31,7 +31,7 @@
                     @foreach($creatures as $creature)
                         <div class="p-2" id="{{$creature->id}}" onmouseover="showCreatureInfo(id)" onmouseout="hideCreatureInfo(id)">
                             <div class="flex flex-row justify-between">
-                                <div class="text-lg">{{$creature->name}}</div>
+                                <div>{{$creature->name}}</div>
                                 <div class="flex flex-row gap-2">
                                     @foreach($creature->pathfindertraits as $trait)
                                         <div class="bg-tertiary p-1 rounded-lg">{{ $trait->name }}</div>
@@ -50,7 +50,7 @@
                     <input type="text" class="w-full p-1 bg-tertiary rounded-lg">
                 </div>
                 <!-- list hazard -->
-                <div class="h-36 overflow-y-auto scrollbar-hide  divide-y-1 divide-y divide-tertiary">
+                <div class="h-36 overflow-y-auto scrollbar-hide divide-y-1 divide-y divide-tertiary">
                     @foreach($hazards as $hazard)             
                         <div class="flex flex-row justify-between p-2" id="{{$hazard->id}}" onmouseover="showHazardInfo(id)" onmouseout="hideHazardInfo(id)">
                             <div>{{$hazard->name}}</div>
@@ -72,7 +72,7 @@
             </div>
         </div>
         <!-- hover popup -->
-        <div class="bg-secondary w-2/3 m-2 p-2 border border-accent rounded-lg hidden" id="popup"></div>
+        <div class="bg-secondary w-2/3 m-2 border border-accent rounded-lg hidden" id="popup"></div>
         <!-- selected content -->
         <div class="w-2/3 m-2" id="content">
             @yield('content')
@@ -94,16 +94,34 @@ function showHazardInfo(id) {
     content.classList.add('hidden');
     
     const traitsHtml = selectedHazard.pathfindertraits
-        .map(trait => `<div>${trait.name}</div>`)
+        .map(trait => `<div class="bg-tertiary p-1 rounded-lg">${trait.name}</div>`)
         .join('');
 
     popup.innerHTML = `
-        <div>${selectedHazard.name}</div>
-        <div>${selectedHazard.complexity}</div>
-        <div>${selectedHazard.type.name}</div>
-        <div>${selectedHazard.rarity.name}</div>
-        <div class="flex flex-row">${traitsHtml}</div>
-        <div>${selectedHazard.source}</div>
+        <div class="divide-y-1 divide-y divide-tertiary">
+            <div class="p-2">
+                <div class="text-2xl p-1">${selectedHazard.name}</div>
+                <div class="flex flex-row gap-2 p-1">${traitsHtml}</div>
+            </div>
+            <div class="p-3 flex flex-row text-center justify-evenly">
+                <div>
+                    <div class="font-semibold">Complexity</div>
+                    <div>${selectedHazard.complexity}</div>
+                </div>
+                <div>
+                    <div class="font-semibold">Type</div>
+                    <div>${selectedHazard.type.name}</div>
+                </div>
+                <div>
+                    <div class="font-semibold">Rarity</div>
+                    <div>${selectedHazard.rarity.name}</div>
+                </div>
+            </div>
+            <div class="p-3 pt-4">
+                <div class="font-semibold pb-1">Source</div>
+                <div class="text-justify">${selectedHazard.source}</div>
+            </div>
+        </div>
     `;
 }
 
@@ -120,23 +138,71 @@ function showCreatureInfo(id) {
     content.classList.add('hidden');
     
     const traitsHtml = selectedCreature.pathfindertraits
-        .map(trait => `<div>${trait.name}</div>`)
+        .map(trait => `<div class="bg-tertiary p-1 rounded-lg">${trait.name}</div>`)
         .join('');
 
     popup.innerHTML = `
-        <div>${selectedCreature.name}</div>
-        <div>${selectedCreature.size.name}</div>
-        <div>${selectedCreature.level}</div>
-        <div>${selectedCreature.hp}</div>
-        <div>${selectedCreature.ac}</div>
-        <div>${selectedCreature.fortitude}</div>
-        <div>${selectedCreature.reflex}</div>
-        <div>${selectedCreature.will}</div>
-        <div>${selectedCreature.perception}</div>
-        <div>${selectedCreature.senses}</div>
-        <div>${selectedCreature.speed}</div>
-        <div>${selectedCreature.rarity.name}</div>
-        <div class="flex flex-row">${traitsHtml}</div>
+        <div class="divide-y-1 divide-y divide-tertiary">
+            <div class="p-2 flex flex-row justify-between">
+                <div>
+                    <div class="text-2xl p-1">${selectedCreature.name}</div>
+                    <div class="flex flex-row gap-2 p-1">${traitsHtml}</div>
+                </div>
+                <div class="content-center pr-4">
+                    <div class="bg-tertiary w-14 h-14 text-center content-center rounded-full text-xl">${selectedCreature.level}</div>
+                </div>
+            </div>
+            <div class="flex flex-col">
+                <div class="flex flex-row gap-4 p-2 pt-4 justify-center">
+                    <div class="font-semibold">HP</div>
+                    <div class="w-1/3 bg-red-900 text-center rounded-lg">${selectedCreature.hp}</div>
+                </div>
+                <div class="p-3 flex flex-row text-center justify-evenly">
+                    <div class="justify-items-center">
+                        <div class="font-semibold">AC</div>
+                        <div class="bg-tertiary w-8 h-8 mt-1 rounded-lg content-center">${selectedCreature.ac}</div>
+                    </div>
+                    <div class="justify-items-center">
+                        <div class="font-semibold">Fortitude</div>
+                        <div class="bg-tertiary w-8 h-8 mt-1 rounded-lg content-center">${selectedCreature.fortitude}</div>
+                    </div>
+                    <div class="justify-items-center">
+                        <div class="font-semibold">Reflex</div>
+                        <div class="bg-tertiary w-8 h-8 mt-1 rounded-lg content-center">${selectedCreature.reflex}</div>
+                    </div>
+                    <div class="justify-items-center">
+                        <div class="font-semibold">Will</div>
+                        <div class="bg-tertiary w-8 h-8 mt-1 rounded-lg content-center">${selectedCreature.will}</div>
+                    </div>
+                    <div class="justify-items-center">
+                        <div class="font-semibold">Perception</div>
+                        <div class="bg-tertiary w-8 h-8 mt-1 rounded-lg content-center">${selectedCreature.perception}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-3 flex flex-row text-center justify-evenly">
+                <div>
+                    <div class="font-semibold">Size</div>
+                    <div>${selectedCreature.size.name}</div>
+                </div>
+                <div>
+                    <div class="font-semibold">Senses</div>
+                    <div>${selectedCreature.senses}</div>
+                </div>
+                <div>
+                    <div class="font-semibold">Speed</div>
+                    <div>${selectedCreature.speed}</div>
+                </div>
+                <div>
+                    <div class="font-semibold">Rarity</div>
+                    <div>${selectedCreature.rarity.name}</div>
+                </div>
+            </div>
+            <div class="p-3 pt-4">
+                <div class="font-semibold pb-1">Source</div>
+                <div class="text-justify">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</div>
+            </div>
+        </div>
     `;
 }
 
