@@ -13,37 +13,59 @@ use App\Models\Type;
 class BuilderController extends Controller
 {
     public function creature () {
-        $creatures = Creature::with('size', 'rarity', 'pathfindertraits')->get();
-        $hazards = Hazard::with('type', 'rarity', 'pathfindertraits')->get();
+        $creatures = null;
+        $hazards = null;
         return view('builder.creature', compact([
             'creatures',
-            'hazards'
+            'hazards',
         ]));
     }
 
     public function encounter () {
         $creatures = Creature::with('size', 'rarity', 'pathfindertraits')->get();
         $hazards = Hazard::with('type', 'rarity', 'pathfindertraits')->get();
+        $traits = PathfinderTrait::get();
+        $sizes = Size::get();
+        $rarities = Rarity::get();
+        $types = Type::get();
         return view('builder.encounter', compact([
             'creatures',
-            'hazards'
+            'hazards',
+            'traits',
+            'sizes',
+            'rarities',
+            'types'
         ]));
     }
 
     public function randomize () {
         $creatures = Creature::with('size', 'rarity', 'pathfindertraits')->get();
         $hazards = Hazard::with('type', 'rarity', 'pathfindertraits')->get();
+        $traits = PathfinderTrait::get();
+        $sizes = Size::get();
+        $rarities = Rarity::get();
+        $types = Type::get();
         return view('builder.randomize', compact([
             'creatures',
-            'hazards'
+            'hazards',
+            'traits',
+            'sizes',
+            'rarities',
+            'types'
         ]));
     }
 
     public function newcreature () {
         $creatures = Creature::with('size', 'rarity', 'pathfindertraits')->get();
-        $hazards = Hazard::with('type', 'rarity', 'pathfindertraits')->get();
+        $hazards = null;
+        $traits = PathfinderTrait::get();
+        $sizes = Size::get();
+        $rarities = Rarity::get();
         return view('builder.newcreature', compact([
             'creatures',
+            'traits',
+            'sizes',
+            'rarities',
             'hazards'
         ]));
     }
