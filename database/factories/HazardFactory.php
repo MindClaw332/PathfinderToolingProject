@@ -26,7 +26,7 @@ class HazardFactory extends Factory
         ];
     }
 
-    public function configure()
+    public function configure(): HazardFactory
     {
         return $this->afterCreating(function ($hazard) {
 

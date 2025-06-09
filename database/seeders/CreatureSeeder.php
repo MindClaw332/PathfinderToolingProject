@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Creature;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class CreatureSeeder extends Seeder
@@ -13,6 +12,7 @@ class CreatureSeeder extends Seeder
      */
     public function run(): void
     {
+        Creature::factory(50)->create();
         Creature::factory(50)->create();
     }
 }
