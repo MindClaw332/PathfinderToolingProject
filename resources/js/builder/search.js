@@ -3,6 +3,8 @@ const inputCreature = document.getElementById('inputCreature');
 const inputHazard = document.getElementById('inputHazard');
 const filterCreature = document.getElementById('filterCreature');
 const filterHazard = document.getElementById('filterHazard');
+const creatureList = document.getElementById('creatureList');
+const hazardList = document.getElementById('hazardList');
 
 let hazards, creatures, traits, sizes, rarities, types;
 
@@ -30,6 +32,8 @@ document.addEventListener('DOMContentLoaded', function() {
     window.toggleSelectedHazardRarity = toggleSelectedHazardRarity;
     window.resetCreatureFilters = resetCreatureFilters;
     window.resetHazardFilters = resetHazardFilters;
+    window.setCreature = setCreature;
+    window.setHazard = setHazard;
 
     // Initial render creatures/hazards
     renderCreatures(creatures);
@@ -40,12 +44,38 @@ document.addEventListener('DOMContentLoaded', function() {
 function toggleFilterCreature () {
     filterCreature.classList.toggle('hidden');
     filterCreature.classList.toggle('block');
+
+    // Set heights
+    const isH140 = creatureList.classList.contains('h-140');
+    const isH88 = creatureList.classList.contains('h-94');
+    const isH84 = creatureList.classList.contains('h-84');
+    const isH38 = creatureList.classList.contains('h-38');
+
+    // Check heights
+    if (isH84) {
+        creatureList.classList.remove('h-84');
+        creatureList.classList.add('h-38');
+    }
+    if (isH38) {
+        creatureList.classList.remove('h-38');
+        creatureList.classList.add('h-84');
+    }
+    if (isH140) {
+        creatureList.classList.remove('h-140');
+        creatureList.classList.add('h-94');
+    }
+    if (isH88) {
+        creatureList.classList.remove('h-94');
+        creatureList.classList.add('h-140');
+    }
 }
 
 // Show the hazard filters
 function toggleFilterHazard () {
     filterHazard.classList.toggle('hidden');
     filterHazard.classList.toggle('block');
+    hazardList.classList.toggle('h-36');
+    hazardList.classList.toggle('h-4');
 }
 
 // General function to select/deselect filters for creatures and hazards
@@ -211,6 +241,8 @@ function renderCreatures(list) {
         // add hover
         wrapper.setAttribute('onmouseover', `showCreatureInfo(${creature.id})`);
         wrapper.setAttribute('onmouseout', `hideCreatureInfo(${creature.id})`);
+        // add onclick
+        wrapper.setAttribute('onclick', `setCreature(${creature.id})`);
 
         // make row
         const row = document.createElement('div');
@@ -253,6 +285,8 @@ function renderHazards(list) {
         // add hover
         wrapper.setAttribute('onmouseover', `showHazardInfo(${hazard.id})`);
         wrapper.setAttribute('onmouseout', 'hideHazardInfo()');
+        // add onclick
+        wrapper.setAttribute('onclick', `setHazard(${hazard.id})`);
 
         // name
         const name = document.createElement('div');
@@ -305,4 +339,14 @@ function resetHazardFilters() {
 
     // Refresh hazard list
     updateFilteredHazards();
+}
+
+// Make creatures available for content
+function setCreature (id) {
+
+}
+
+// Make hazards available for content
+function setHazard (id) {
+    
 }

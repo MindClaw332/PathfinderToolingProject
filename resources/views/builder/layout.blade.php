@@ -71,7 +71,7 @@
                         </div>
                     </div>
                     <!-- list of creatures -->
-                    <div class="h-84 overflow-y-auto scrollbar-hide divide-y-1 divide-y divide-tertiary" id="creatureList"></div>
+                    <div class="{{ !empty($hazards) ? 'h-84' : 'h-140' }} overflow-y-auto scrollbar-hide divide-y-1 divide-y divide-tertiary" id="creatureList"></div>
                 </div>
             @endif
             <!-- hazards -->
