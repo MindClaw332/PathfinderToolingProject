@@ -7,10 +7,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('newcreature', [BuilderController::class, 'newcreature']);
+Route::get('/builder/encounter', [BuilderController::class, 'encounter'])->name('builder.encounter');
+Route::get('/builder/randomize', [BuilderController::class, 'randomize'])->name('builder.randomize');
+Route::get('/builder/newcreature', [BuilderController::class, 'newcreature'])->name('builder.newcreature');
 
-Route::get('randomize', [BuilderController::class, 'randomize']);
+Route::get('builder/creature', [BuilderController::class, 'creature'])->name('builder.creature');
 
-Route::get('encounter', [BuilderController::class, 'encounter']);
-
-Route::get('creature', [BuilderController::class, 'creature']);
+Route::post('/content/{content}/creatures', [BuilderController::class, 'addCreature']);

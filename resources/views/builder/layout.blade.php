@@ -10,10 +10,10 @@
                     creatures/hazards
                 </button>
             @endif
-            <a href="randomize">randomize partially</a>
-            <a href="encounter">Encounter</a>
-            <a href="newcreature">create creature</a>
-            <a href="creature">My creatures</a>
+            <a href="{{ route('builder.randomize', ['contentId' => $contentId]) }}">randomize partially</a>
+            <a href="{{ route('builder.encounter', ['contentId' => $contentId]) }}">Encounter</a>
+            <a href="{{ route('builder.newcreature', ['contentId' => $contentId]) }}">create creature</a>
+            <a href="{{ route('builder.creature', ['contentId' => $contentId]) }}">My creatures</a>
             <div>randomize complete</div>
             <div>export</div>
             <div>import</div>
@@ -145,4 +145,9 @@
         @if(isset($sizes)) data-sizes="{{ json_encode($sizes) }}" @endif
         @if(isset($rarities)) data-rarities="{{ json_encode($rarities) }}" @endif
         @if(isset($types)) data-types="{{ json_encode($types) }}" @endif
+        data-content-id="{{ $contentId ?? '' }}"
     >data</div>
+
+<script>
+  let contentId = "{{ $contentId ?? '' }}";
+</script>

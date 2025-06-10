@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 // Get elements
 const inputCreature = document.getElementById('inputCreature');
 const inputHazard = document.getElementById('inputHazard');
@@ -33,7 +35,6 @@ document.addEventListener('DOMContentLoaded', function() {
     window.resetCreatureFilters = resetCreatureFilters;
     window.resetHazardFilters = resetHazardFilters;
     window.setCreature = setCreature;
-    window.setHazard = setHazard;
 
     // Initial render creatures/hazards
     renderCreatures(creatures);
@@ -341,12 +342,15 @@ function resetHazardFilters() {
     updateFilteredHazards();
 }
 
-// Make creatures available for content
-function setCreature (id) {
+let baseUrl = `/content/${contentId}`;
 
+async function setCreature(creatureId) {
+    const response = await axios.post(`${baseUrl}/creatures`, {
+        creature_id: creatureId
+    });
+    return response.data;
 }
 
-// Make hazards available for content
-function setHazard (id) {
-    
+async function setHazard(hazardId) {
+   
 }
