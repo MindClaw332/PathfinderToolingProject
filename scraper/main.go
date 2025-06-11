@@ -4,7 +4,9 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"slices"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/MindClaw332/PathfinderToolingProject/config"
@@ -36,16 +38,18 @@ func browseToPage(browser *rod.Browser, link string) *rod.Page {
 	return page
 }
 
-func parseTableData(index int, creature *Creature, data *rod.Element) error {
+func parseTableData(index int, creature *Creature, data *rod.Element, sizes []string, rarities []string) error {
 	switch index {
 	case 0:
 		creature.name = data.MustElement("a").MustText()
 	case 1, 2:
 		return nil
 	case 3:
-		creature.rarity = data.MustText()
+		rarityIndex := helper.FindStringIndex(rarities, data.MustText())
+		creature.rarity = strconv.Itoa(rarityIndex + 1)
 	case 4:
-		creature.size = data.MustText()
+		sizeIndex := helper.FindStringIndex(sizes, data.MustText())
+		creature.size = strconv.Itoa(sizeIndex + 1)
 	case 5:
 		traitSlice := []string{}
 		traits, err := data.Elements("a")
@@ -165,9 +169,10 @@ func main() {
 		log.Fatal(err)
 	}
 	var creatures []Creature
+
 	// looop the rows
 	for index, row := range rows {
-		fmt.Printf("%d: adding...", index)
+		fmt.Printf("%d: adding...\n", index)
 
 		if index == 0 {
 			continue
@@ -177,9 +182,10 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-
+		sizes := []string{"tiny", "small", "medium", "large", "huge", "gargantuan"}
+		rarities := []string{"common", "uncommon", "rare", "unique"}
 		for index, tableData := range data {
-			err := parseTableData(index, &newCreature, tableData)
+			err := parseTableData(index, &newCreature, tableData, sizes, rarities)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -187,8 +193,51 @@ func main() {
 		creatures = append(creatures, newCreature)
 
 	}
+	lastID, err := helper.GetLastIdFromTable("creatures", db)
+	if err != nil {
+		log.Fatal(err)
+	}
+	creatureStatement, err := db.Prepare("INSERT INTO creatures(name, size_id, level, hp, ac, fortitude, reflex, will, perception, senses, speed, rarity_id, custom) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,0)")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer creatureStatement.Close()
+	traitStatement, err := db.Prepare("INSERT INTO pathfinder_traits (name) VALUES (?)")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer traitStatement.Close()
+	creatureTraitStatement, err := db.Prepare("INSERT INTO creature_pathfinder_trait (creature_id, pathfinder_trait_id) VALUES (?,?)")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer creatureTraitStatement.Close()
+	var traits []string
+	fmt.Println(traits)
+	for index, creature := range creatures {
+		fmt.Printf("adding #%v to database...\n", index)
+		_, err := creatureStatement.Exec(creature.name, creature.size, creature.level, creature.hp, creature.ac, creature.fortitude, creature.reflex, creature.will, creature.perception, creature.senses, creature.speed, creature.rarity)
+		if err != nil {
+			log.Fatal(err)
+		}
+		for _, element := range creature.traits {
+			element = strings.ToLower(element)
+			if !slices.Contains(traits, element) {
+				traits = append(traits, element)
+				_, err := traitStatement.Exec(element)
+				if err != nil {
+					log.Fatal(err)
+				}
+			}
+			_, err := creatureTraitStatement.Exec(index+1+lastID, helper.FindStringIndex(traits, element)+1)
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
+		fmt.Printf("\n#%v added.......✔\n", index)
 
+	}
 	// creatures = slices.Delete(creatures, 0, 1)
-	fmt.Printf("%v", creatures)
+	// fmt.Printf("%v", creatures)
 	fmt.Println("done")
 }

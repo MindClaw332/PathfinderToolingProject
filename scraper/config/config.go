@@ -16,10 +16,12 @@ type Config struct {
 }
 
 func GetConfig() (*Config, error) {
-
 	err := godotenv.Load("../.env")
 	if err != nil {
-		log.Fatal(err)
+		err := godotenv.Load(".env")
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 	cfg := &Config{
 		Host:     os.Getenv("DB_HOST"),
