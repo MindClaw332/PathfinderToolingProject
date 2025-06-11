@@ -14,6 +14,7 @@ Route::get('/builder/newcreature', [BuilderController::class, 'newcreature'])->n
 Route::get('builder/creature', [BuilderController::class, 'creature'])->name('builder.creature');
 
 Route::post('/content/{content}/creatures', [BuilderController::class, 'addCreature']);
+Route::put('/content/{content}/creatures/{index}', [BuilderController::class, 'updateCreature']);
 Route::delete('/content/{content}/creatures/{index}', [BuilderController::class, 'removeCreature']);
 
 Route::post('/content/{content}/hazards', [BuilderController::class, 'addHazard']);

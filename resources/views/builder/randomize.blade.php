@@ -19,6 +19,7 @@
             <div>Amount: </div>
         </div>
         <div class="divide-y-1 divide-y divide-tertiary m-1 max-h-46 overflow-y-auto scrollbar-hide" id="creature-list">
+            <!-- list chosen creatures -->
             @include('builder.partials.creatureList', ['chosenCreatures' => $chosenCreatures])
         </div>
         <!-- add hazards -->
@@ -27,7 +28,8 @@
             <!-- choose amount -->
             <div>Amount:</div>
         </div>
-        <div class="divide-y-1 divide-y divide-tertiary m-1" id="hazard-list">
+        <div class="divide-y-1 divide-y divide-tertiary m-1 max-h-46 overflow-y-auto scrollbar-hide" id="hazard-list">
+            <!-- list chosen hazards -->
             @include('builder.partials.hazardList', ['chosenHazards' => $chosenHazards])
         </div>
         <!-- choose difficulty -->

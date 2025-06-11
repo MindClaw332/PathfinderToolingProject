@@ -12,6 +12,7 @@ use App\Models\Type;
 
 class BuilderController extends Controller
 {
+    // Get My Creatures content
     public function creature () {
         $creatures = null;
         $hazards = null;
@@ -23,6 +24,7 @@ class BuilderController extends Controller
         ]));
     }
 
+    // Get encounter content
     public function encounter () {
         $creatures = Creature::with('size', 'rarity', 'pathfindertraits')->get();
         $hazards = Hazard::with('type', 'rarity', 'pathfindertraits')->get();
@@ -46,6 +48,7 @@ class BuilderController extends Controller
         ]));
     }
 
+    // Get randomize content
     public function randomize () {
         $creatures = Creature::with('size', 'rarity', 'pathfindertraits')->get();
         $hazards = Hazard::with('type', 'rarity', 'pathfindertraits')->get();
@@ -69,6 +72,7 @@ class BuilderController extends Controller
         ]));
     }
 
+    // Get Create New Creature content
     public function newcreature () {
         $creatures = Creature::with('size', 'rarity', 'pathfindertraits')->get();
         $hazards = null;
@@ -86,6 +90,7 @@ class BuilderController extends Controller
         ]));
     }
 
+    // Add creature to the correct content array
     public function addCreature(Request $request, $contentId)
     {
         $request->validate([
@@ -107,6 +112,30 @@ class BuilderController extends Controller
         ]);
     }
 
+    // Update creature level
+    public function updateCreature(Request $request, $contentId, $index)
+    {
+        $sessionKey = "content_{$contentId}_creatures";
+        $creatures = session($sessionKey, []);
+        
+        if (isset($creatures[$index])) {
+            $creatures[$index] = array_merge(
+                $creatures[$index], 
+                $request->only(['level'])
+            );
+            session([$sessionKey => $creatures]);
+        }
+
+        $html = view('builder.partials.creatureList', ['chosenCreatures' => $creatures])->render();
+        
+        return response()->json([
+            'success' => true,
+            'creature' => $creatures[$index] ?? null,
+            'html' => $html,
+        ]);
+    }
+
+    // Remove creature from the correct content array
     public function removeCreature($contentId, $index)
     {
         $sessionKey = "content_{$contentId}_creatures";
@@ -126,6 +155,7 @@ class BuilderController extends Controller
         ]);
     }
 
+    // Add hazard to the correct content array
     public function addHazard(Request $request, $contentId)
     {
         $request->validate([
@@ -147,7 +177,8 @@ class BuilderController extends Controller
         ]);
     }
 
-     public function removeHazard($contentId, $index)
+    // Remove hazard from the correct content array
+    public function removeHazard($contentId, $index)
     {
         $sessionKey = "content_{$contentId}_hazards";
         $hazards = session($sessionKey, []);

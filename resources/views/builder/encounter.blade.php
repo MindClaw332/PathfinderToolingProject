@@ -17,11 +17,13 @@
         <!-- current creatures -->
         <div class="text-lg m-1">creatures</div>
         <div class="divide-y-1 divide-y divide-tertiary m-1 max-h-52 overflow-y-auto scrollbar-hide" id="creature-list">
+            <!-- list chosen creatures -->
             @include('builder.partials.creatureList', ['chosenCreatures' => $chosenCreatures])
         </div>
         <!-- current hazards -->
         <div class="text-lg m-1">hazards</div>
-        <div class="divide-y-1 divide-y divide-tertiary m-1" id="hazard-list">
+        <div class="divide-y-1 divide-y divide-tertiary m-1 max-h-52 overflow-y-auto scrollbar-hide" id="hazard-list">
+            <!-- list chosen hazards -->
             @include('builder.partials.hazardList', ['chosenHazards' => $chosenHazards])
         </div>
     </div>

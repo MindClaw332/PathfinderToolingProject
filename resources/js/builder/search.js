@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 // Get elements
 const inputCreature = document.getElementById('inputCreature');
 const inputHazard = document.getElementById('inputHazard');
@@ -34,10 +32,6 @@ document.addEventListener('DOMContentLoaded', function() {
     window.toggleSelectedHazardRarity = toggleSelectedHazardRarity;
     window.resetCreatureFilters = resetCreatureFilters;
     window.resetHazardFilters = resetHazardFilters;
-    window.setCreature = setCreature;
-    window.removeCreature = removeCreature;
-    window.setHazard = setHazard;
-    window.removeHazard = removeHazard;
 
     // Initial render creatures/hazards
     renderCreatures(creatures);
@@ -343,38 +337,4 @@ function resetHazardFilters() {
 
     // Refresh hazard list
     updateFilteredHazards();
-}
-
-let baseUrl = `/content/${contentId}`;
-
-async function setCreature(creatureId) {
-    const response = await axios.post(`${baseUrl}/creatures`, {
-        creature_id: creatureId
-    });
-    if (response.data.success) {
-        document.getElementById('creature-list').innerHTML = response.data.html;
-    };
-}
-
-async function removeCreature(index) {
-    const response = await axios.delete(`${baseUrl}/creatures/${index}`);
-    if (response.data.success) {
-        document.getElementById('creature-list').innerHTML = response.data.html;
-    };
-}
-
-async function setHazard(hazardId) {
-    const response = await axios.post(`${baseUrl}/hazards`, {
-        hazard_id: hazardId
-    });
-    if (response.data.success) {
-        document.getElementById('hazard-list').innerHTML = response.data.html;
-    };
-}
-
-async function removeHazard(index) {
-    const response = await axios.delete(`${baseUrl}/hazards/${index}`);
-    if (response.data.success) {
-        document.getElementById('hazard-list').innerHTML = response.data.html;
-    };
 }
