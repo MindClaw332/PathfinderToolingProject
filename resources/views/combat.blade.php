@@ -692,24 +692,9 @@
             opacity: 1;
         }
         
-        /* Custom dice styling for d4, d8, d12 */
-        .custom-dice {
-            font-size: 1.2rem;
-            font-weight: 700;
-            font-family: 'Instrument Sans', sans-serif;
-        }
+
         
-        .d4-dice {
-            color: #ff6b6b;
-        }
-        
-        .d8-dice {
-            color: #4ecdc4;
-        }
-        
-        .d12-dice {
-            color: #ffd166;
-        }
+
         
         /* Combat tracker header */
         .header-content {
@@ -924,25 +909,25 @@
             <!-- Dice buttons with free icons -->
             <div class="dice-header">
                 <div class="dice-btn" @click="rollD20" title="Roll d20">
-                    <i class="fas fa-dice-d20"></i>
+                    <span>d20</span>
                 </div>
                 <div class="dice-btn" @click="rollDice('d4')" title="Roll d4">
-                    <span class="custom-dice d4-dice">d4</span>
+                    <span>d4</span>
                 </div>
                 <div class="dice-btn" @click="rollDice('d6')" title="Roll d6">
-                    <i class="fas fa-dice"></i>
+                    <span>d6</span>
                 </div>
                 <div class="dice-btn" @click="rollDice('d8')" title="Roll d8">
-                    <span class="custom-dice d8-dice">d8</span>
+                    <span>d8</span>
                 </div>
                 <div class="dice-btn" @click="rollDice('d10')" title="Roll d10">
-                    <i class="fas fa-dice-d10"></i>
+                    <span>d10</span>
                 </div>
                 <div class="dice-btn" @click="rollDice('d12')" title="Roll d12">
-                    <span class="custom-dice d12-dice">d12</span>
+                    <span>d12</span>
                 </div>
                 <div class="dice-btn" @click="rollDice('d100')" title="Roll d100 (percentile)">
-                    <i class="fas fa-percent"></i>
+                    <span>%</span>
                 </div>
             </div>
             
