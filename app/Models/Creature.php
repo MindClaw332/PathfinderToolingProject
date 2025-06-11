@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class Creature extends Model
 {
@@ -26,18 +29,27 @@ class Creature extends Model
         'rarity_id',
         'custom'
     ];
-
-    public function size()
+    /**
+     * @return BelongsTo
+     */
+    public function size():BelongsTo
     {
         return $this->belongsTo(Size::class);
     }
 
-    public function rarity()
+    /**
+    * @return BelongsTo
+    */
+
+    public function rarity():BelongsTo
     {
         return $this->belongsTo(Rarity::class);
     }
-
-    public function pathfindertraits(){
+    /**
+     * @return BelongsToMany<PathfinderTrait,Creature,Pivot>
+     */
+    public function pathfinderTraits():BelongsToMany
+    {
         return $this->belongsToMany(PathfinderTrait::class);
     }
 }

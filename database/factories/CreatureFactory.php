@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Creature;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\DB;
 
@@ -35,7 +34,7 @@ class CreatureFactory extends Factory
         ];
     }
 
-    public function configure()
+    public function configure(): CreatureFactory
     {
         return $this->afterCreating(function ($creature) {
 
