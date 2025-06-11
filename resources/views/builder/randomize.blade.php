@@ -27,10 +27,8 @@
             <!-- choose amount -->
             <div>Amount:</div>
         </div>
-        <div class="divide-y-1 divide-y divide-tertiary m-1">
-            <div class="p-2">hazard</div>
-            <div class="p-2">hazard</div>
-            <div class="p-2">hazard</div>
+        <div class="divide-y-1 divide-y divide-tertiary m-1" id="hazard-list">
+            @include('builder.partials.hazardList', ['chosenHazards' => $chosenHazards])
         </div>
         <!-- choose difficulty -->
         <div class="text-lg m-1">Choose threat</div>

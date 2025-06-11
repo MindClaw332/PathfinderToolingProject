@@ -32,6 +32,7 @@ class BuilderController extends Controller
         $types = Type::get();
         $contentId = 'encounter';
         $chosenCreatures = session("content_{$contentId}_creatures", []);
+        $chosenHazards = session("content_{$contentId}_hazards", []);
         return view('builder.encounter', compact([
             'contentId',
             'creatures',
@@ -40,7 +41,8 @@ class BuilderController extends Controller
             'sizes',
             'rarities',
             'types',
-            'chosenCreatures'
+            'chosenCreatures',
+            'chosenHazards'
         ]));
     }
 
@@ -53,6 +55,7 @@ class BuilderController extends Controller
         $types = Type::get();
         $contentId = 'randomize';
         $chosenCreatures = session("content_{$contentId}_creatures", []);
+        $chosenHazards = session("content_{$contentId}_hazards", []);
         return view('builder.randomize', compact([
             'contentId',
             'creatures',
@@ -61,7 +64,8 @@ class BuilderController extends Controller
             'sizes',
             'rarities',
             'types',
-            'chosenCreatures'
+            'chosenCreatures',
+            'chosenHazards'
         ]));
     }
 
@@ -116,6 +120,46 @@ class BuilderController extends Controller
 
         $html = view('builder.partials.creatureList', ['chosenCreatures' => $creatures])->render();
 
+        return response()->json([
+            'success' => true,
+            'html' => $html,
+        ]);
+    }
+
+    public function addHazard(Request $request, $contentId)
+    {
+        $request->validate([
+            'hazard_id' => 'required|exists:hazards,id'
+        ]);
+        
+        $hazard = Hazard::find($request->hazard_id);
+        $sessionKey = "content_{$contentId}_hazards";
+        $hazards = session($sessionKey, []);
+        $hazards[] = $hazard->toArray();
+        session([$sessionKey => $hazards]);
+
+        $html = view('builder.partials.hazardList', ['chosenHazards' => $hazards])->render();
+        
+        return response()->json([
+            'success' => true,
+            'hazard' => $hazard,
+            'html' => $html,
+        ]);
+    }
+
+     public function removeHazard($contentId, $index)
+    {
+        $sessionKey = "content_{$contentId}_hazards";
+        $hazards = session($sessionKey, []);
+        
+        if (isset($hazards[$index])) {
+            unset($hazards[$index]);
+            $hazards = array_values($hazards);
+            session([$sessionKey => $hazards]);
+        }
+
+        $html = view('builder.partials.hazardList', ['chosenHazards' => $hazards])->render();
+        
         return response()->json([
             'success' => true,
             'html' => $html,

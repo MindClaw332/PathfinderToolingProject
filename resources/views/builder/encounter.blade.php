@@ -21,10 +21,8 @@
         </div>
         <!-- current hazards -->
         <div class="text-lg m-1">hazards</div>
-        <div class="divide-y-1 divide-y divide-tertiary m-1">
-            <div class="p-2">hazard</div>
-            <div class="p-2">hazard</div>
-            <div class="p-2">hazard</div>
+        <div class="divide-y-1 divide-y divide-tertiary m-1" id="hazard-list">
+            @include('builder.partials.hazardList', ['chosenHazards' => $chosenHazards])
         </div>
     </div>
 @endsection

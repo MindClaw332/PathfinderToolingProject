@@ -36,6 +36,8 @@ document.addEventListener('DOMContentLoaded', function() {
     window.resetHazardFilters = resetHazardFilters;
     window.setCreature = setCreature;
     window.removeCreature = removeCreature;
+    window.setHazard = setHazard;
+    window.removeHazard = removeHazard;
 
     // Initial render creatures/hazards
     renderCreatures(creatures);
@@ -362,5 +364,17 @@ async function removeCreature(index) {
 }
 
 async function setHazard(hazardId) {
-   
+    const response = await axios.post(`${baseUrl}/hazards`, {
+        hazard_id: hazardId
+    });
+    if (response.data.success) {
+        document.getElementById('hazard-list').innerHTML = response.data.html;
+    };
+}
+
+async function removeHazard(index) {
+    const response = await axios.delete(`${baseUrl}/hazards/${index}`);
+    if (response.data.success) {
+        document.getElementById('hazard-list').innerHTML = response.data.html;
+    };
 }
