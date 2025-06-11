@@ -93,11 +93,13 @@ class BuilderController extends Controller
         $creatures = session($sessionKey, []);
         $creatures[] = $creature->toArray();
         session([$sessionKey => $creatures]);
+
+        $html = view('builder.partials.creatureList', ['chosenCreatures' => $creatures])->render();
         
         return response()->json([
             'success' => true,
             'creature' => $creature,
-            'creatures' => $creatures
+            'html' => $html,
         ]);
     }
 
@@ -111,10 +113,12 @@ class BuilderController extends Controller
             $creatures = array_values($creatures);
             session([$sessionKey => $creatures]);
         }
-        
+
+        $html = view('builder.partials.creatureList', ['chosenCreatures' => $creatures])->render();
+
         return response()->json([
             'success' => true,
-            'creatures' => $creatures
+            'html' => $html,
         ]);
     }
 }

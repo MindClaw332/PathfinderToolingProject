@@ -16,10 +16,8 @@
         <div class="text-lg m-1">threat</div>
         <!-- current creatures -->
         <div class="text-lg m-1">creatures</div>
-        <div class="divide-y-1 divide-y divide-tertiary m-1 max-h-52 overflow-y-auto scrollbar-hide">
-            @foreach($chosenCreatures as $creature)
-                <div class="p-2">{{$creature['name']}}</div>
-            @endforeach
+        <div class="divide-y-1 divide-y divide-tertiary m-1 max-h-52 overflow-y-auto scrollbar-hide" id="creature-list">
+            @include('builder.partials.creatureList', ['chosenCreatures' => $chosenCreatures])
         </div>
         <!-- current hazards -->
         <div class="text-lg m-1">hazards</div>

@@ -349,12 +349,16 @@ async function setCreature(creatureId) {
     const response = await axios.post(`${baseUrl}/creatures`, {
         creature_id: creatureId
     });
-    return response.data;
+    if (response.data.success) {
+        document.getElementById('creature-list').innerHTML = response.data.html;
+    };
 }
 
 async function removeCreature(index) {
     const response = await axios.delete(`${baseUrl}/creatures/${index}`);
-    return response.data;
+    if (response.data.success) {
+        document.getElementById('creature-list').innerHTML = response.data.html;
+    };
 }
 
 async function setHazard(hazardId) {
