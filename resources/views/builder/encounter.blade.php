@@ -17,7 +17,7 @@
         <!-- current creatures -->
         <div class="text-lg m-1">creatures</div>
         <div class="divide-y-1 divide-y divide-tertiary m-1 max-h-52 overflow-y-auto scrollbar-hide">
-            @foreach($availableCreatures as $creature)
+            @foreach($chosenCreatures as $creature)
                 <div class="p-2">{{$creature['name']}}</div>
             @endforeach
         </div>

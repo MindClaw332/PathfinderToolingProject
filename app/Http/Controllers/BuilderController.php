@@ -31,7 +31,7 @@ class BuilderController extends Controller
         $rarities = Rarity::get();
         $types = Type::get();
         $contentId = 'encounter';
-        $availableCreatures = session("content_{$contentId}_creatures", []);
+        $chosenCreatures = session("content_{$contentId}_creatures", []);
         return view('builder.encounter', compact([
             'contentId',
             'creatures',
@@ -40,7 +40,7 @@ class BuilderController extends Controller
             'sizes',
             'rarities',
             'types',
-            'availableCreatures'
+            'chosenCreatures'
         ]));
     }
 
@@ -52,7 +52,7 @@ class BuilderController extends Controller
         $rarities = Rarity::get();
         $types = Type::get();
         $contentId = 'randomize';
-        $availableCreatures = session("content_{$contentId}_creatures", []);
+        $chosenCreatures = session("content_{$contentId}_creatures", []);
         return view('builder.randomize', compact([
             'contentId',
             'creatures',
@@ -61,7 +61,7 @@ class BuilderController extends Controller
             'sizes',
             'rarities',
             'types',
-            'availableCreatures'
+            'chosenCreatures'
         ]));
     }
 
@@ -97,6 +97,23 @@ class BuilderController extends Controller
         return response()->json([
             'success' => true,
             'creature' => $creature,
+            'creatures' => $creatures
+        ]);
+    }
+
+    public function removeCreature($contentId, $index)
+    {
+        $sessionKey = "content_{$contentId}_creatures";
+        $creatures = session($sessionKey, []);
+        
+        if (isset($creatures[$index])) {
+            unset($creatures[$index]);
+            $creatures = array_values($creatures);
+            session([$sessionKey => $creatures]);
+        }
+        
+        return response()->json([
+            'success' => true,
             'creatures' => $creatures
         ]);
     }

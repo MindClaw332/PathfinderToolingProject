@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.resetCreatureFilters = resetCreatureFilters;
     window.resetHazardFilters = resetHazardFilters;
     window.setCreature = setCreature;
+    window.removeCreature = removeCreature;
 
     // Initial render creatures/hazards
     renderCreatures(creatures);
@@ -348,6 +349,11 @@ async function setCreature(creatureId) {
     const response = await axios.post(`${baseUrl}/creatures`, {
         creature_id: creatureId
     });
+    return response.data;
+}
+
+async function removeCreature(index) {
+    const response = await axios.delete(`${baseUrl}/creatures/${index}`);
     return response.data;
 }
 
