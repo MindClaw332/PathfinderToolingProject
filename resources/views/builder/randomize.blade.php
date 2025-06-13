@@ -47,14 +47,14 @@
             <option>Severe-threat</option>
             <option>Extreme-threat</option>
         </select>
-        <!-- encounter threat level -->
-        <div class="flex justify-center m-2">
-            @include('builder.partials.encounterBudget', ['threatLevel' => $threatLevel])
-        </div>
         <!-- buttons -->
         <div class="flex justify-between gap-4">
             <button class="bg-secondary w-1/2 p-1 rounded-lg">randomize</button>
             <button class="bg-secondary w-1/2 p-1 rounded-lg">clear</button>
+        </div>
+        <!-- encounter threat level -->
+        <div class="flex justify-center m-2">
+            @include('builder.partials.encounterBudget', ['threatLevel' => $threatLevel, 'skippedCreatures' => $skippedCreatures])
         </div>
     </div>
 @endsection

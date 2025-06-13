@@ -273,14 +273,11 @@ async function removeHazard(index) {
 
 // Calculate encounter XP
 async function calculateXP () {
-    console.log("calculateXP called");
     const response = await axios.post(`${baseUrl}/calculate`, {
         party_size: partySize.value,
         party_level: partyLevel.value,
     });
     if (response.data.success) {
-        console.log("success", response.data.threat_level);
-        console.log(response.data.skipped);
         document.getElementById('encounterBar').innerHTML = response.data.html;
     }
 }

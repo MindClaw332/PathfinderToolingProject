@@ -22,3 +22,17 @@
         <div class="h-6 rounded-lg" style="width: 0;"></div>
     @endif
 </div>
+<!-- skipped creatures -->
+@if($skippedCreatures)
+    <div>
+        Creatures with a too low or too high level:
+    </div>
+    <ul class="list-disc ml-6">
+        @foreach($skippedCreatures as $creature)
+            <li>{{ $creature['name'] }}</li>
+        @endforeach
+    </ul>
+    <div>
+        Please remove or adjust the level by clicking on the creatures.
+    </div>
+@endif
