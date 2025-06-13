@@ -52,4 +52,8 @@ class Creature extends Model
     {
         return $this->belongsToMany(PathfinderTrait::class);
     }
+
+    public function user(){
+        return $this->hasOne(user::class);
+    }
 }
