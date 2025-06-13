@@ -35,6 +35,7 @@ class BuilderController extends Controller
         $contentId = 'encounter';
         $chosenCreatures = session("content_{$contentId}_creatures", []);
         $chosenHazards = session("content_{$contentId}_hazards", []);
+        $threatLevel = null;
         return view('builder.encounter', compact([
             'contentId',
             'creatures',
@@ -44,7 +45,8 @@ class BuilderController extends Controller
             'rarities',
             'types',
             'chosenCreatures',
-            'chosenHazards'
+            'chosenHazards',
+            'threatLevel'
         ]));
     }
 
@@ -59,6 +61,7 @@ class BuilderController extends Controller
         $contentId = 'randomize';
         $chosenCreatures = session("content_{$contentId}_creatures", []);
         $chosenHazards = session("content_{$contentId}_hazards", []);
+        $threatLevel = null;
         return view('builder.randomize', compact([
             'contentId',
             'creatures',
@@ -68,7 +71,8 @@ class BuilderController extends Controller
             'rarities',
             'types',
             'chosenCreatures',
-            'chosenHazards'
+            'chosenHazards',
+            'threatLevel'
         ]));
     }
 
@@ -193,6 +197,107 @@ class BuilderController extends Controller
         
         return response()->json([
             'success' => true,
+            'html' => $html,
+        ]);
+    }
+
+    // Calculate encounter XP 
+    public function calculateXP (Request $request, $contentId) {
+        // Get the selected creatures
+        $sessionKey = "content_{$contentId}_creatures";
+        $creatures = session($sessionKey, []);
+
+        $partyLevel = (int) $request->input('party_level');
+        $partySize  = (int) $request->input('party_size');
+
+        $totalXP = 0;
+        $skippedCreatures = [];
+
+        // Creature XP table
+        $xpTable = [
+            -4 => 10,
+            -3 => 15,
+            -2 => 20,
+            -1 => 30,
+            0 => 40,
+            1 => 60,
+            2 => 80,
+            3 => 120,
+            4 => 160,
+        ];
+
+        // Base threat XP budgets for party size 4 or 5
+        $baseBudgets = [
+            'Trivial' => 40,
+            'Low' => 60,
+            'Moderate' => 80,
+            'Severe' => 120,
+            'Extreme' => 160,
+        ];
+
+        // Adjustment XP per character if party size is smaller or larger than 4-5
+        $adjustments = [
+            'Trivial' => 10,
+            'Low' => 20,
+            'Moderate' => 20,
+            'Severe' => 30,
+            'Extreme' => 40,
+        ];
+
+        // Calculate XP of all creatures
+        foreach ($creatures as $creature) {
+            $creatureLevel = (int) $creature['level'];
+            $diff = $creatureLevel - $partyLevel;
+
+            if ($diff >= -4 && $diff <= 4) {
+                $xpPerCreature = $xpTable[$diff] ?? 0;
+                $totalXP += $xpPerCreature;
+            } else {
+                // save info about skipped creature
+                $skippedCreatures[] = [
+                    'name' => $creature['name'],
+                    'level' => $creatureLevel,
+                ];
+            }
+        }
+
+        // Calculate base budgets based on party size
+        if ($partySize >= 4 && $partySize <= 5) {
+            $finalBudgets = $baseBudgets;
+        } else {
+            // Calculate difference from the standard range (4-5)
+            $diff = $partySize < 4 ? $partySize - 4 : $partySize - 5;
+            $finalBudgets = [];
+            foreach ($baseBudgets as $level => $base) {
+                $finalBudgets[$level] = max(0, $base + ($adjustments[$level] * $diff));
+            }
+        }
+
+        // Determine threat level
+        $threatLevel = 'None';
+        if ($totalXP > 0) {
+            if ($totalXP > $finalBudgets['Extreme']) {
+                $threatLevel = 'Over Extreme';
+            } elseif ($totalXP > $finalBudgets['Severe']) {
+                $threatLevel = 'Extreme';
+            } elseif ($totalXP > $finalBudgets['Moderate']) {
+                $threatLevel = 'Severe';
+            } elseif ($totalXP > $finalBudgets['Low']) {
+                $threatLevel = 'Moderate';
+            } elseif ($totalXP > $finalBudgets['Trivial']) {
+                $threatLevel = 'Low';
+            } else {
+                $threatLevel = 'Trivial';
+            }
+        }
+
+        $html = view('builder.partials.encounterBudget', ['threatLevel' => $threatLevel])->render();
+
+        return response()->json([
+            'success' => true,
+            'total_xp' => $totalXP,
+            'threat_level' => $threatLevel,
+            'skipped' => $skippedCreatures,
             'html' => $html,
         ]);
     }

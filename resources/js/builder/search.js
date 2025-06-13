@@ -240,7 +240,10 @@ function renderCreatures(list) {
         wrapper.setAttribute('onmouseover', `showCreatureInfo(${creature.id})`);
         wrapper.setAttribute('onmouseout', `hideCreatureInfo(${creature.id})`);
         // add onclick
-        wrapper.setAttribute('onclick', `setCreature(${creature.id})`);
+        wrapper.onclick = async () => {
+            await setCreature(creature.id);
+            await calculateXP();
+        }; 
 
         // make row
         const row = document.createElement('div');

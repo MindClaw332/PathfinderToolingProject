@@ -4,6 +4,8 @@ let creature = document.getElementById('creature');
 let hazard = document.getElementById('hazard');
 let content = document.getElementById('content');
 let popup = document.getElementById('popup');
+let partySize = document.getElementById('partySize');
+let partyLevel = document.getElementById('partyLevel');
 
 let hazards, creatures;
 
@@ -33,6 +35,9 @@ document.addEventListener('DOMContentLoaded', function() {
     window.showCreatureEdit = showCreatureEdit;
     window.hideCreatureEdit = hideCreatureEdit;
     window.toggleTheme = toggleTheme;
+    window.calculateXP = calculateXP;
+
+    calculateXP();
 });
 
 
@@ -266,6 +271,21 @@ async function removeHazard(index) {
     };
 }
 
+// Calculate encounter XP
+async function calculateXP () {
+    console.log("calculateXP called");
+    const response = await axios.post(`${baseUrl}/calculate`, {
+        party_size: partySize.value,
+        party_level: partyLevel.value,
+    });
+    if (response.data.success) {
+        console.log("success", response.data.threat_level);
+        console.log(response.data.skipped);
+        document.getElementById('encounterBar').innerHTML = response.data.html;
+    }
+}
+
+// Change between light and dark mode
 function toggleTheme() {
   const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', theme);

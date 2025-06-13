@@ -7,9 +7,15 @@
         <!-- title -->
             <div class="text-2xl m-1">Encounter</div>
             <!-- current player party -->
-            <div class="flex flex-row gap-4">
-                <div>Party size:</div>
-                <div>Party level:</div>
+            <div class="flex flex-row content-center">
+                <div class="flex flex-row">
+                    <div>Party size:</div>
+                    <input class="m-2" type="number" id="partySize" value="4" onchange="calculateXP()">
+                </div>
+                <div class="flex flex-row">
+                    <div>Party level:</div>
+                    <input class="m-2" type="number" id="partyLevel" value="2" onchange="calculateXP()">
+                </div>
             </div>
         </div>
         <!-- current threat level -->
@@ -25,6 +31,10 @@
         <div class="divide-y-1 divide-y divide-tertiary m-1 max-h-52 overflow-y-auto scrollbar-hide" id="hazard-list">
             <!-- list chosen hazards -->
             @include('builder.partials.hazardList', ['chosenHazards' => $chosenHazards])
+        </div>
+        <!-- Encounter threat level -->
+        <div class="flex justify-center m-2">
+            @include('builder.partials.encounterBudget', ['threatLevel' => $threatLevel])
         </div>
     </div>
 @endsection

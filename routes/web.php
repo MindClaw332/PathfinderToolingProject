@@ -19,3 +19,5 @@ Route::delete('/content/{content}/creatures/{index}', [BuilderController::class,
 
 Route::post('/content/{content}/hazards', [BuilderController::class, 'addHazard']);
 Route::delete('/content/{content}/hazards/{index}', [BuilderController::class, 'removeHazard']);
+
+Route::post('/content/{content}/calculate', [BuilderController::class, 'calculateXP']);

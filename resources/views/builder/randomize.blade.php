@@ -7,9 +7,15 @@
         <!-- title -->
             <div class="text-2xl m-1">Randomize</div>
             <!-- current player party -->
-            <div class="flex flex-row gap-4">
-                <div>Party size:</div>
-                <div>Party level:</div>
+            <div class="flex flex-row content-center">
+                <div class="flex flex-row">
+                    <div>Party size:</div>
+                    <input class="m-2" type="number" id="partySize" value="4" onchange="calculateXP()">
+                </div>
+                <div class="flex flex-row">
+                    <div>Party level:</div>
+                    <input class="m-2" type="number" id="partyLevel" value="2" onchange="calculateXP()">
+                </div>
             </div>
         </div>
         <!-- add creatures -->
@@ -41,6 +47,10 @@
             <option>Severe-threat</option>
             <option>Extreme-threat</option>
         </select>
+        <!-- encounter threat level -->
+        <div class="flex justify-center m-2">
+            @include('builder.partials.encounterBudget', ['threatLevel' => $threatLevel])
+        </div>
         <!-- buttons -->
         <div class="flex justify-between gap-4">
             <button class="bg-secondary w-1/2 p-1 rounded-lg">randomize</button>
