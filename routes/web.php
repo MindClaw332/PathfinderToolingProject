@@ -10,8 +10,8 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('home');
+})->name('home');
 
 Route::get('/builder/encounter', [BuilderController::class, 'encounter'])->name('builder.encounter');
 Route::get('/builder/randomize', [BuilderController::class, 'randomize'])->name('builder.randomize');

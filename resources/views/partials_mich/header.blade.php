@@ -14,7 +14,7 @@
         <div class="bg-secondary m-4 border border-accent rounded-lg block">
             <ul class="flex justify-between m-6 text-white flex-wrap gap-4 items-center">
                 <li>
-                    <a class="hover:underline hover:text-accent" href="">Home</a>
+                    <a class="hover:underline hover:text-accent" href="{{ route('home') }}">Home</a>
                 </li>
                 <li>
                     <a class="hover:underline hover:text-accent" href="">Contact</a>
