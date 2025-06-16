@@ -23,6 +23,11 @@ func GetConfig() (*Config, error) {
 			log.Fatal(err)
 		}
 	}
+
+	if os.Getenv("DB_HOST") != "mysql" {
+		log.Printf("Wrong database driver need mysql has: %v", os.Getenv("DB_HOST"))
+	}
+
 	cfg := &Config{
 		Host:     os.Getenv("DB_HOST"),
 		Port:     os.Getenv("DB_PORT"),

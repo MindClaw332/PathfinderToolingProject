@@ -29,6 +29,6 @@ class DatabaseSeeder extends Seeder
             HazardSeeder::class,
             // CreatureSeeder::class,
         ]);
-        Process::timeout(800)->run("./scraper/PathfinderToolingProject");
+        Process::timeout(800)->run("cd ./scraper && go run .");
     }
 }
