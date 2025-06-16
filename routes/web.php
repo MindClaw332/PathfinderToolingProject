@@ -3,6 +3,8 @@
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BuilderController;
+use App\Http\Controllers\CombatController;
+use App\Http\Controllers\CreatureController;
 
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -55,6 +57,15 @@ Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('regi
 Route::post('/register', [AuthController::class, 'register'])->name('register.register');
 
 
+
+Route::get('/combat', [CombatController::class, 'index'])->name('combat');
+Route::get('/creatures/search', [CreatureController::class, 'search'])->name('creatures.search');
+
+Route::get('newcreature', [BuilderController::class, 'newcreature']);
+Route::get('randomize', [BuilderController::class, 'randomize']);
+Route::get('encounter', [BuilderController::class, 'encounter']);
+Route::get('creature', [BuilderController::class, 'creature']);
+
 Route::get('/login/test', function () {
     return view('auth.authtest');
 })->middleware(['auth', 'verified']);
@@ -66,3 +77,4 @@ Route::post('/content/{content}/hazards', [BuilderController::class, 'addHazard'
 Route::delete('/content/{content}/hazards/{index}', [BuilderController::class, 'removeHazard']);
 
 Route::post('/content/{content}/calculate', [BuilderController::class, 'calculateXP']);
+
