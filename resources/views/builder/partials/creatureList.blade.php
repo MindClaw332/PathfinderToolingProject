@@ -1,6 +1,7 @@
 @foreach($chosenCreatures as $index => $creature)
     <!-- show chosen creatures -->
-    <div class="flex flex-row justify-between block" id="creature-{{ $index }}">
+    <div class="flex flex-row justify-between block" id="creature-{{ $index }}" 
+    onmouseover="showStatsInfo({{ $index }})" onmouseout="hideStatsInfo({{ $index }})">
         <div class="w-10/12 p-2" onclick="showCreatureEdit({{ $index }})">{{$creature['name']}} {{$creature['level']}}</div>
         <button onclick="(async () => { await removeCreature({{ $index }}); await calculateXP(); })()" class="w-2/12 m-2 p-1 text-sm rounded-lg bg-red-800" type="button">
             Delete
@@ -19,4 +20,6 @@
             </button>
         </div>
     </form>
+    <!-- show stats -->
+    <div class="flex flex-col hidden" id="hover-{{ $index }}"></div>
 @endforeach

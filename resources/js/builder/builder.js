@@ -4,8 +4,6 @@ let creature = document.getElementById('creature');
 let hazard = document.getElementById('hazard');
 let content = document.getElementById('content');
 let popup = document.getElementById('popup');
-let partySize = document.getElementById('partySize');
-let partyLevel = document.getElementById('partyLevel');
 
 let hazards, creatures;
 
@@ -20,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Make functions globally available
+    window.toggleTheme = toggleTheme;
     window.toggleCreatureHazard = toggleCreatureHazard;
     window.toggleCreature = toggleCreature;
     window.toggleHazard = toggleHazard;
@@ -27,19 +26,20 @@ document.addEventListener('DOMContentLoaded', function() {
     window.hideHazardInfo = hideHazardInfo;
     window.showCreatureInfo = showCreatureInfo;
     window.hideCreatureInfo = hideCreatureInfo;
-    window.setCreature = setCreature;
-    window.removeCreature = removeCreature;
-    window.setHazard = setHazard;
-    window.removeHazard = removeHazard;
-    window.updateCreature = updateCreature;
-    window.showCreatureEdit = showCreatureEdit;
-    window.hideCreatureEdit = hideCreatureEdit;
-    window.toggleTheme = toggleTheme;
-    window.calculateXP = calculateXP;
-
-    calculateXP();
 });
 
+// Change between light and dark mode
+function toggleTheme() {
+  const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+}
+
+// Persist on load
+document.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+});
 
 // Show/hide creatures and hazards
 function toggleCreatureHazard () {
@@ -193,104 +193,3 @@ function hideCreatureInfo() {
     popup.classList.add('hidden');
     content.classList.remove('hidden');
 }
-
-let baseUrl = `/content/${contentId}`;
-
-// Add the clicked creature to the correct content array
-async function setCreature(creatureId) {
-    const response = await axios.post(`${baseUrl}/creatures`, {
-        creature_id: creatureId
-    });
-    if (response.data.success) {
-        document.getElementById('creature-list').innerHTML = response.data.html;
-    };
-}
-
-// Show the edit form for creatures
-function showCreatureEdit (index) {
-    let creature = document.getElementById(`creature-${index}`);
-    let edit = document.getElementById(`edit-${index}`);
-
-    creature.classList.remove('block');
-    creature.classList.add('hidden');
-    edit.classList.remove('hidden');
-    edit.classList.add('block');
-}
-
-// Hide the edit form for creatures
-function hideCreatureEdit (index) {
-    let creature = document.getElementById(`creature-${index}`);
-    let edit = document.getElementById(`edit-${index}`);
-    let level = document.getElementById(`level-${index}`);
-
-    creature.classList.remove('hidden');
-    creature.classList.add('block');
-    edit.classList.remove('block');
-    edit.classList.add('hidden');
-
-    level.value = level.dataset.default;
-}
-
-// Update the creature level
-async function updateCreature(index) {
-    const levelInput = document.getElementById(`level-${index}`);
-    const level = levelInput.value;
-
-    const response = await axios.put(`${baseUrl}/creatures/${index}`, {
-        level: level,
-    });
-
-    if (response.data.success) {
-        document.getElementById('creature-list').innerHTML = response.data.html;
-    };
-}
-
-// Remove the creature from the correct content array
-async function removeCreature(index) {
-    const response = await axios.delete(`${baseUrl}/creatures/${index}`);
-    if (response.data.success) {
-        document.getElementById('creature-list').innerHTML = response.data.html;
-    };
-}
-
-// Add the clicked hazard to the correct content array
-async function setHazard(hazardId) {
-    const response = await axios.post(`${baseUrl}/hazards`, {
-        hazard_id: hazardId
-    });
-    if (response.data.success) {
-        document.getElementById('hazard-list').innerHTML = response.data.html;
-    };
-}
-
-// Remove the hazard from the correct content array
-async function removeHazard(index) {
-    const response = await axios.delete(`${baseUrl}/hazards/${index}`);
-    if (response.data.success) {
-        document.getElementById('hazard-list').innerHTML = response.data.html;
-    };
-}
-
-// Calculate encounter XP
-async function calculateXP () {
-    const response = await axios.post(`${baseUrl}/calculate`, {
-        party_size: partySize.value,
-        party_level: partyLevel.value,
-    });
-    if (response.data.success) {
-        document.getElementById('encounterBar').innerHTML = response.data.html;
-    }
-}
-
-// Change between light and dark mode
-function toggleTheme() {
-  const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', theme);
-  localStorage.setItem('theme', theme);
-}
-
-// Persist on load
-document.addEventListener('DOMContentLoaded', () => {
-  const saved = localStorage.getItem('theme') || 'dark';
-  document.documentElement.setAttribute('data-theme', saved);
-});
