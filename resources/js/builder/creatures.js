@@ -6,13 +6,6 @@ let chosenCreatures;
 
 // Get data + Make functions globally available
 document.addEventListener('DOMContentLoaded', function() {   
-    const dataContainer = document.getElementById('data-container');
-    
-    // Get data
-    if (dataContainer) {
-        chosenCreatures = JSON.parse(dataContainer.dataset.chosenCreatures || '[]');
-    }
-    
     // Make functions globally available
     window.setCreature = setCreature;
     window.removeCreature = removeCreature;
@@ -23,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.showStatsInfo = showStatsInfo;
     window.hideStatsInfo = hideStatsInfo;
 
+    refreshChosenCreatures ();
     calculateXP();
 });
 
@@ -33,6 +27,7 @@ async function setCreature(creatureId) {
     });
     if (response.data.success) {
         document.getElementById('creature-list').innerHTML = response.data.html;
+        refreshChosenCreatures ();
     };
 }
 
@@ -72,6 +67,7 @@ async function updateCreature(index) {
 
     if (response.data.success) {
         document.getElementById('creature-list').innerHTML = response.data.html;
+        refreshChosenCreatures ();
     };
 }
 
@@ -80,6 +76,7 @@ async function removeCreature(index) {
     const response = await axios.delete(`${baseUrl}/creatures/${index}`);
     if (response.data.success) {
         document.getElementById('creature-list').innerHTML = response.data.html;
+        refreshChosenCreatures ();
     };
 }
 
@@ -94,6 +91,7 @@ async function calculateXP () {
     }
 }
 
+// Show Stats on mouseover
 function showStatsInfo (index) {
     let selectedCreature = chosenCreatures[index];
     let hover = document.getElementById(`hover-${index}`);
@@ -129,8 +127,19 @@ function showStatsInfo (index) {
         </div>`
 }
 
+// Hide stats on mouseout
 function hideStatsInfo (index) {
     let hover = document.getElementById(`hover-${index}`);
     hover.classList.remove('block');
     hover.classList.add('hidden');
+}
+
+// Refresh chosen creatures array
+function refreshChosenCreatures () {
+    const dataContainer = document.getElementById('creatureData-container');
+    
+    // Get data
+    if (dataContainer) {
+        chosenCreatures = JSON.parse(dataContainer.dataset.chosenCreatures || '[]');
+    }
 }

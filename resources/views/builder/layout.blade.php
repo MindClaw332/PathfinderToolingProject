@@ -153,7 +153,6 @@
         @if(isset($sizes)) data-sizes="{{ json_encode($sizes) }}" @endif
         @if(isset($rarities)) data-rarities="{{ json_encode($rarities) }}" @endif
         @if(isset($types)) data-types="{{ json_encode($types) }}" @endif
-        @if(isset($chosenCreatures)) data-chosen-creatures="{{ json_encode($chosenCreatures) }}" @endif
         data-content-id="{{ $contentId ?? '' }}"
     >data</div>
 

@@ -22,4 +22,7 @@
     </form>
     <!-- show stats -->
     <div class="flex flex-col hidden" id="hover-{{ $index }}"></div>
+<div id="creatureData-container" style="display: none;"
+    @if(isset($chosenCreatures)) data-chosen-creatures="{{ json_encode($chosenCreatures) }}" @endif
+    >data</div>
 @endforeach
