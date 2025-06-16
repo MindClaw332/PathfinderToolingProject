@@ -8,10 +8,26 @@
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+    --color-primary: #e0e0e0;
+    --color-secondary: #c0c0c0;
+    --color-tertiary: #a0a0a0;
+    --color-accent:  #FFAA00;
+}
+
+/* Then define light and dark values */
+@layer base {
+  :root {
+    --color-primary: #e0e0e0;
+    --color-secondary: #c0c0c0;
+    --color-tertiary: #a0a0a0;
+    --color-accent:  #FFAA00;
+  }
+  [data-theme="dark"] {
     --color-primary: #000917;
     --color-secondary: #00162E;
     --color-tertiary: #002445;
-    --color-accent: #AE8708;
+    --color-accent:  #AE8708;
+  }
 }
 
 .scrollbar-hide {

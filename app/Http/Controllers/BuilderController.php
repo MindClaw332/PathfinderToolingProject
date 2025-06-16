@@ -12,6 +12,7 @@ use App\Models\Type;
 
 class BuilderController extends Controller
 {
+    // Get My Creatures content
     public function creature () {
         $creatures = null;
         $hazards = null;
@@ -23,6 +24,7 @@ class BuilderController extends Controller
         ]));
     }
 
+    // Get encounter content
     public function encounter () {
         $creatures = Creature::with('size', 'rarity', 'pathfindertraits')->get();
         $hazards = Hazard::with('type', 'rarity', 'pathfindertraits')->get();
@@ -32,6 +34,9 @@ class BuilderController extends Controller
         $types = Type::get();
         $contentId = 'encounter';
         $chosenCreatures = session("content_{$contentId}_creatures", []);
+        $chosenHazards = session("content_{$contentId}_hazards", []);
+        $threatLevel = null;
+        $skippedCreatures = null;
         return view('builder.encounter', compact([
             'contentId',
             'creatures',
@@ -40,10 +45,14 @@ class BuilderController extends Controller
             'sizes',
             'rarities',
             'types',
-            'chosenCreatures'
+            'chosenCreatures',
+            'chosenHazards',
+            'threatLevel',
+            'skippedCreatures'
         ]));
     }
 
+    // Get randomize content
     public function randomize () {
         $creatures = Creature::with('size', 'rarity', 'pathfindertraits')->get();
         $hazards = Hazard::with('type', 'rarity', 'pathfindertraits')->get();
@@ -53,6 +62,9 @@ class BuilderController extends Controller
         $types = Type::get();
         $contentId = 'randomize';
         $chosenCreatures = session("content_{$contentId}_creatures", []);
+        $chosenHazards = session("content_{$contentId}_hazards", []);
+        $threatLevel = null;
+        $skippedCreatures = null;
         return view('builder.randomize', compact([
             'contentId',
             'creatures',
@@ -61,10 +73,14 @@ class BuilderController extends Controller
             'sizes',
             'rarities',
             'types',
-            'chosenCreatures'
+            'chosenCreatures',
+            'chosenHazards',
+            'threatLevel',
+            'skippedCreatures'
         ]));
     }
 
+    // Get Create New Creature content
     public function newcreature () {
         $creatures = Creature::with('size', 'rarity', 'pathfindertraits')->get();
         $hazards = null;
@@ -82,6 +98,7 @@ class BuilderController extends Controller
         ]));
     }
 
+    // Add creature to the correct content array
     public function addCreature(Request $request, $contentId)
     {
         $request->validate([
@@ -93,14 +110,40 @@ class BuilderController extends Controller
         $creatures = session($sessionKey, []);
         $creatures[] = $creature->toArray();
         session([$sessionKey => $creatures]);
+
+        $html = view('builder.partials.creatureList', ['chosenCreatures' => $creatures])->render();
         
         return response()->json([
             'success' => true,
             'creature' => $creature,
-            'creatures' => $creatures
+            'html' => $html,
         ]);
     }
 
+    // Update creature level
+    public function updateCreature(Request $request, $contentId, $index)
+    {
+        $sessionKey = "content_{$contentId}_creatures";
+        $creatures = session($sessionKey, []);
+        
+        if (isset($creatures[$index])) {
+            $creatures[$index] = array_merge(
+                $creatures[$index], 
+                $request->only(['level'])
+            );
+            session([$sessionKey => $creatures]);
+        }
+
+        $html = view('builder.partials.creatureList', ['chosenCreatures' => $creatures])->render();
+        
+        return response()->json([
+            'success' => true,
+            'creature' => $creatures[$index] ?? null,
+            'html' => $html,
+        ]);
+    }
+
+    // Remove creature from the correct content array
     public function removeCreature($contentId, $index)
     {
         $sessionKey = "content_{$contentId}_creatures";
@@ -111,10 +154,155 @@ class BuilderController extends Controller
             $creatures = array_values($creatures);
             session([$sessionKey => $creatures]);
         }
+
+        $html = view('builder.partials.creatureList', ['chosenCreatures' => $creatures])->render();
+
+        return response()->json([
+            'success' => true,
+            'html' => $html,
+        ]);
+    }
+
+    // Add hazard to the correct content array
+    public function addHazard(Request $request, $contentId)
+    {
+        $request->validate([
+            'hazard_id' => 'required|exists:hazards,id'
+        ]);
+        
+        $hazard = Hazard::find($request->hazard_id);
+        $sessionKey = "content_{$contentId}_hazards";
+        $hazards = session($sessionKey, []);
+        $hazards[] = $hazard->toArray();
+        session([$sessionKey => $hazards]);
+
+        $html = view('builder.partials.hazardList', ['chosenHazards' => $hazards])->render();
         
         return response()->json([
             'success' => true,
-            'creatures' => $creatures
+            'hazard' => $hazard,
+            'html' => $html,
+        ]);
+    }
+
+    // Remove hazard from the correct content array
+    public function removeHazard($contentId, $index)
+    {
+        $sessionKey = "content_{$contentId}_hazards";
+        $hazards = session($sessionKey, []);
+        
+        if (isset($hazards[$index])) {
+            unset($hazards[$index]);
+            $hazards = array_values($hazards);
+            session([$sessionKey => $hazards]);
+        }
+
+        $html = view('builder.partials.hazardList', ['chosenHazards' => $hazards])->render();
+        
+        return response()->json([
+            'success' => true,
+            'html' => $html,
+        ]);
+    }
+
+    // Calculate encounter XP 
+    public function calculateXP (Request $request, $contentId) {
+        // Get the selected creatures
+        $sessionKey = "content_{$contentId}_creatures";
+        $creatures = session($sessionKey, []);
+
+        $partyLevel = (int) $request->input('party_level');
+        $partySize  = (int) $request->input('party_size');
+
+        $totalXP = 0;
+        $skippedCreatures = [];
+
+        // Creature XP table
+        $xpTable = [
+            -4 => 10,
+            -3 => 15,
+            -2 => 20,
+            -1 => 30,
+            0 => 40,
+            1 => 60,
+            2 => 80,
+            3 => 120,
+            4 => 160,
+        ];
+
+        // Base threat XP budgets for party size 4 or 5
+        $baseBudgets = [
+            'Trivial' => 40,
+            'Low' => 60,
+            'Moderate' => 80,
+            'Severe' => 120,
+            'Extreme' => 160,
+        ];
+
+        // Adjustment XP per character if party size is smaller or larger than 4-5
+        $adjustments = [
+            'Trivial' => 10,
+            'Low' => 20,
+            'Moderate' => 20,
+            'Severe' => 30,
+            'Extreme' => 40,
+        ];
+
+        // Calculate XP of all creatures
+        foreach ($creatures as $creature) {
+            $creatureLevel = (int) $creature['level'];
+            $diff = $creatureLevel - $partyLevel;
+
+            if ($diff >= -4 && $diff <= 4) {
+                $xpPerCreature = $xpTable[$diff] ?? 0;
+                $totalXP += $xpPerCreature;
+            } else {
+                // save info about skipped creature
+                $skippedCreatures[] = [
+                    'name' => $creature['name'],
+                    'level' => $creatureLevel,
+                ];
+            }
+        }
+
+        // Calculate base budgets based on party size
+        if ($partySize >= 4 && $partySize <= 5) {
+            $finalBudgets = $baseBudgets;
+        } else {
+            // Calculate difference from the standard range (4-5)
+            $diff = $partySize < 4 ? $partySize - 4 : $partySize - 5;
+            $finalBudgets = [];
+            foreach ($baseBudgets as $level => $base) {
+                $finalBudgets[$level] = max(0, $base + ($adjustments[$level] * $diff));
+            }
+        }
+
+        // Determine threat level
+        $threatLevel = 'None';
+        if ($totalXP > 0) {
+            if ($totalXP > $finalBudgets['Extreme']) {
+                $threatLevel = 'Over Extreme';
+            } elseif ($totalXP > $finalBudgets['Severe']) {
+                $threatLevel = 'Extreme';
+            } elseif ($totalXP > $finalBudgets['Moderate']) {
+                $threatLevel = 'Severe';
+            } elseif ($totalXP > $finalBudgets['Low']) {
+                $threatLevel = 'Moderate';
+            } elseif ($totalXP > $finalBudgets['Trivial']) {
+                $threatLevel = 'Low';
+            } else {
+                $threatLevel = 'Trivial';
+            }
+        }
+
+        $html = view('builder.partials.encounterBudget', ['threatLevel' => $threatLevel, 'skippedCreatures' => $skippedCreatures])->render();
+
+        return response()->json([
+            'success' => true,
+            'total_xp' => $totalXP,
+            'threat_level' => $threatLevel,
+            'skippedCreatures' => $skippedCreatures,
+            'html' => $html,
         ]);
     }
 }

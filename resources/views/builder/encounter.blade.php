@@ -7,26 +7,34 @@
         <!-- title -->
             <div class="text-2xl m-1">Encounter</div>
             <!-- current player party -->
-            <div class="flex flex-row gap-4">
-                <div>Party size:</div>
-                <div>Party level:</div>
+            <div class="flex flex-row content-center">
+                <div class="flex flex-row">
+                    <div>Party size:</div>
+                    <input class="m-2" type="number" id="partySize" value="4" onchange="calculateXP()">
+                </div>
+                <div class="flex flex-row">
+                    <div>Party level:</div>
+                    <input class="m-2" type="number" id="partyLevel" value="2" onchange="calculateXP()">
+                </div>
             </div>
         </div>
         <!-- current threat level -->
         <div class="text-lg m-1">threat</div>
         <!-- current creatures -->
         <div class="text-lg m-1">creatures</div>
-        <div class="divide-y-1 divide-y divide-tertiary m-1 max-h-52 overflow-y-auto scrollbar-hide">
-            @foreach($chosenCreatures as $creature)
-                <div class="p-2">{{$creature['name']}}</div>
-            @endforeach
+        <div class="divide-y-1 divide-y divide-tertiary m-1 max-h-52 overflow-y-auto scrollbar-hide" id="creature-list">
+            <!-- list chosen creatures -->
+            @include('builder.partials.creatureList', ['chosenCreatures' => $chosenCreatures])
         </div>
         <!-- current hazards -->
         <div class="text-lg m-1">hazards</div>
-        <div class="divide-y-1 divide-y divide-tertiary m-1">
-            <div class="p-2">hazard</div>
-            <div class="p-2">hazard</div>
-            <div class="p-2">hazard</div>
+        <div class="divide-y-1 divide-y divide-tertiary m-1 max-h-52 overflow-y-auto scrollbar-hide" id="hazard-list">
+            <!-- list chosen hazards -->
+            @include('builder.partials.hazardList', ['chosenHazards' => $chosenHazards])
+        </div>
+        <!-- Encounter threat level -->
+        <div class="flex justify-center m-2">
+            @include('builder.partials.encounterBudget', ['threatLevel' => $threatLevel, 'skippedCreatures' => $skippedCreatures])
         </div>
     </div>
 @endsection
