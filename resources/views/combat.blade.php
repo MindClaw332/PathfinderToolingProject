@@ -1001,142 +1001,79 @@
         
 /* PRINT OPTIMIZATION - Single page solution */
 @media print {
-    /* Hide everything except the export content */
+    /* Reset document styles */
+    @page {
+        size: landscape !important;
+        margin: 10mm 5mm !important;
+    }
+
+    /* Hide everything initially */
     body * {
-        visibility: hidden;
+        visibility: hidden !important;
         margin: 0 !important;
         padding: 0 !important;
     }
-    
-    .export-modal.visible,
-    .export-modal.visible * {
-        visibility: visible;
+
+    /* Show only export content */
+    .export-content, 
+    .export-content * {
+        visibility: visible !important;
     }
-    
-    .export-modal.visible {
+
+    /* Position export content */
+    .export-content {
         position: absolute !important;
         left: 0 !important;
         top: 0 !important;
         width: 100% !important;
-        height: auto !important;
-        background: white !important;
-        z-index: 9999;
-        margin: 0 !important;
-        padding: 0 !important;
-        border: none !important;
-        box-shadow: none !important;
-    }
-    
-    .export-content {
-        width: 100% !important;
-        max-width: 100% !important;
-        max-height: none !important;
-        box-shadow: none !important;
-        border-radius: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        border: none !important;
-    }
-    
-    .export-header, .export-actions {
-        display: none !important;
-    }
-    
-    .export-body {
         padding: 0 !important;
         margin: 0 !important;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-    }
-    
-    .export-table {
-        width: 100% !important;
-        font-size: 6pt !important; /* Smaller font */
-        border-collapse: collapse;
-        margin: 0 !important;
-        padding: 0 !important;
-        border-spacing: 0;
-        page-break-inside: avoid;
-        table-layout: fixed; /* Ensures consistent column widths */
-    }
-    
-    .export-table thead {
-        display: table-header-group;
-    }
-    
-    .export-table th {
-        background: #f2f2f2 !important;
-        color: #000 !important;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-        padding: 0.05rem !important; /* Reduced padding */
-        font-weight: bold;
-        border: 1px solid #ccc;
-        position: static; /* Remove sticky positioning */
-        word-wrap: break-word; /* Handle long words */
-    }
-    
-    .export-table td {
-        padding: 0.05rem !important; /* Reduced padding */
-        border: 1px solid #ccc;
-        font-size: 6pt !important; /* Smaller font */
-        line-height: 1.1;
-        word-wrap: break-word; /* Handle long words */
-    }
-    
-    /* Remove alternating row colors */
-    .export-table tr:nth-child(even) {
-        background: transparent !important;
     }
 
-    /* Prevent row breaks */
-    tr {
-        page-break-inside: avoid;
-        page-break-after: auto;
+    /* Table styles */
+    .export-table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+        font-size: 9pt !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        table-layout: fixed !important;
     }
     
-    /* Set specific column widths */
-    .export-table th:nth-child(1), 
-    .export-table td:nth-child(1) { width: 15%; } /* Name */
-    .export-table th:nth-child(2), 
-    .export-table td:nth-child(2) { width: 8%; }  /* Type */
-    .export-table th:nth-child(3), 
-    .export-table td:nth-child(3) { width: 5%; }  /* AC */
-    .export-table th:nth-child(4), 
-    .export-table td:nth-child(4) { width: 8%; }  /* HP */
-    .export-table th:nth-child(5), 
-    .export-table td:nth-child(5) { width: 8%; }  /* Fortitude */
-    .export-table th:nth-child(6), 
-    .export-table td:nth-child(6) { width: 7%; }  /* Reflex */
-    .export-table th:nth-child(7), 
-    .export-table td:nth-child(7) { width: 6%; }  /* Will */
-    .export-table th:nth-child(8), 
-    .export-table td:nth-child(8) { width: 8%; }  /* Initiative */
-    .export-table th:nth-child(9), 
-    .export-table td:nth-child(9) { width: 8%; }  /* Perception */
-    
-    /* Remove all extra spacing */
+    .export-table th,
+    .export-table td {
+        padding: 3px !important;
+        border: 1px solid #ddd !important;
+        text-align: left !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+
+    /* Hide modal parts */
+    .export-modal {
+        all: unset !important;
+        display: block !important;
+    }
+
+    .export-header,
+    header,
+    footer {
+        display: none !important;
+    }
+
+    .export-body {
+        all: unset !important;
+        display: block !important;
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+    /* Remove any page breaks */
     * {
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    
-    /* Remove URL and date footer */
-    .export-body > div:last-child {
-        display: none;
-    }
-    
-    /* Minimal page margins */
-    @page {
-        margin: 0.1cm 0.3cm !important; /* Reduced margins */
-        size: landscape; /* Force landscape orientation */
-    }
-    
-    /* Remove the special case container */
-    .export-table-container {
-        display: none;
+        page-break-before: avoid !important;
+        page-break-after: avoid !important;
+        page-break-inside: avoid !important;
     }
 }
     </style>
