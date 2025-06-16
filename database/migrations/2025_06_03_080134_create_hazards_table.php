@@ -15,7 +15,7 @@ return new class extends Migration
 
         Schema::create('hazards', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('name');
+            $table->string('name');
             $table->tinyInteger('complexity');
             $table->foreignId('type_id')->constrained('types');
             $table->foreignId('rarity_id')->constrained('rarities');

@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Size extends Model
 {
     public $timestamps = false;
-
-    public function creatures()
+    /**
+     * @return HasMany<Creature,Size>
+     */
+    public function creatures(): HasMany
     {
         return $this->hasMany(Creature::class);
     }
