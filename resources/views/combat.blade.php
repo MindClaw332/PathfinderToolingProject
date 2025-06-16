@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* Custom Combat Manager Styles - Using App Theme Colors */
+        /* Custom Combat Manager Styles */
         :root {
             --color-primary: #000917;
             --color-secondary: #00162E;
@@ -31,7 +31,6 @@
             --dice-roll: #4a2b0d;
         }
         
-        /* Apply theme colors directly using CSS custom properties */
         .combat-manager {
             --primary: var(--color-primary);
             --secondary: var(--color-secondary);
@@ -39,7 +38,6 @@
             --accent: var(--color-accent);
         }
         
-        /* Fix for white edges */
         html, body {
             margin: 0;
             padding: 0;
@@ -234,7 +232,6 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.15);
         }
         
-        /* New grid layout for combatants */
         .combatants-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -249,7 +246,7 @@
             padding: 1rem;
             transition: all 0.2s ease;
             cursor: pointer;
-            scroll-margin-top: 100px; /* Space for sticky header */
+            scroll-margin-top: 100px;
         }
         
         .dark .combatant-card {
@@ -278,33 +275,37 @@
             background: linear-gradient(135deg, var(--color-dark-card) 0%, rgba(174, 135, 8, 0.12) 100%);
         }
         
-        .combatant-card.monster .tag {
-            background: rgba(174, 135, 8, 0.15);
-            color: var(--color-accent);
-            font-weight: 600;
+        .combatant-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
         }
         
-        .combatant-card.player .tag {
-            background: rgba(0, 36, 69, 0.15);
-            color: var(--color-tertiary);
-            font-weight: 600;
+        .combatant-type {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-weight: 700;
         }
         
-        .dark .combatant-card.player .tag {
-            color: #4d9cff;
+        .player-type {
+            background-color: rgba(59, 130, 246, 0.15);
+            color: #3b82f6;
         }
         
-        .stat-block {
-            background: rgba(0, 22, 46, 0.06);
-            border: 1px solid rgba(0, 22, 46, 0.1);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-top: 1.5rem;
+        .monster-type {
+            background-color: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
         }
         
-        .dark .stat-block {
-            background: rgba(0, 22, 46, 0.2);
-            border-color: rgba(0, 22, 46, 0.3);
+        .active-indicator {
+            background-color: #f59e0b;
+            color: #7c2d12;
+            padding: 0.15rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 700;
         }
         
         .hp-controls {
@@ -341,13 +342,6 @@
         
         .dark .hp-btn:hover {
             background: rgba(255, 255, 255, 0.3);
-        }
-        
-        /* Improved HP input styling for dark mode */
-        .dark .combatant-card input[type="number"] {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
         .detail-header {
@@ -400,37 +394,6 @@
             font-size: 1.1rem;
         }
         
-        .attack {
-            background: rgba(0, 0, 0, 0.03);
-            border-radius: 6px;
-            padding: 1rem;
-            margin-bottom: 0.75rem;
-            position: relative;
-        }
-        
-        .dark .attack {
-            background: rgba(255, 255, 255, 0.05);
-        }
-        
-        .roll-btn {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            background: var(--color-accent);
-            color: var(--color-primary);
-            border: none;
-            border-radius: 4px;
-            padding: 0.25rem 0.5rem;
-            font-size: 0.75rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .roll-btn:hover {
-            background: #c59a0b;
-            transform: translateY(-2px);
-        }
-        
         .save-rolls {
             margin-top: 1.5rem;
             padding: 1rem;
@@ -440,15 +403,6 @@
         
         .dark .save-rolls {
             background: rgba(255, 255, 255, 0.05);
-        }
-        
-        .save-rolls h4 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
         }
         
         .save-buttons {
@@ -475,64 +429,6 @@
             transform: translateY(-2px);
         }
         
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .combatants-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .stat-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .header-buttons {
-                flex-direction: column;
-                gap: 0.5rem;
-                align-items: flex-start;
-            }
-            
-            .header-buttons .btn-group {
-                flex-wrap: wrap;
-            }
-            
-            .dice-header {
-                position: static;
-                margin-top: 1rem;
-                justify-content: center;
-                width: 100%;
-            }
-            
-            .header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
-        
-        /* Smooth scrolling */
-        html {
-            scroll-behavior: smooth;
-        }
-        
-        .combatants-section {
-            position: relative;
-        }
-        
-        .section-header {
-            position: sticky;
-            top: 0;
-            background: var(--color-bg);
-            z-index: 10;
-            padding: 1rem 0;
-            border-bottom: 2px solid rgba(0, 22, 46, 0.1);
-            margin-bottom: 1rem;
-        }
-        
-        .dark .section-header {
-            background: var(--color-dark-bg);
-            border-bottom-color: rgba(174, 135, 8, 0.2);
-        }
-        
-        /* Theme Toggle Styles */
         .theme-toggle {
             position: relative;
             width: 60px;
@@ -562,22 +458,6 @@
             transform: translateX(30px);
         }
         
-        .theme-toggle i {
-            position: absolute;
-            font-size: 14px;
-            color: white;
-            top: 8px;
-        }
-        
-        .theme-toggle .sun {
-            left: 7px;
-        }
-        
-        .theme-toggle .moon {
-            right: 7px;
-        }
-        
-        /* Scroll to info button */
         .scroll-to-info {
             position: fixed;
             bottom: 20px;
@@ -606,180 +486,10 @@
             pointer-events: none;
         }
         
-        /* Conditions styling */
         .conditions-section {
             margin-top: 1rem;
         }
         
-        .conditions-label {
-            font-size: 0.875rem;
-            font-weight: 500;
-            margin-bottom: 0.25rem;
-            display: block;
-        }
-        
-        .conditions-input {
-            width: 100%;
-            padding: 0.5rem;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-            font-size: 0.875rem;
-        }
-        
-        .dark .conditions-input {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.2);
-            color: white;
-        }
-        
-        /* Initiative roll button */
-        .initiative-roll-btn {
-            background: var(--color-tertiary);
-            color: white;
-            border-radius: 4px;
-            padding: 0.25rem 0.5rem;
-            font-size: 0.75rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin-left: 0.5rem;
-        }
-        
-        .initiative-roll-btn:hover {
-            background: #003a6e;
-            transform: translateY(-1px);
-        }
-        
-        /* Combatant initiative container */
-        .initiative-container {
-            display: flex;
-            align-items: center;
-        }
-        
-        /* Dice icon improvements */
-        .dice-btn i {
-            font-size: 1.2rem;
-        }
-        
-        .dice-header {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-        
-        /* Dice tooltips */
-        .dice-btn {
-            position: relative;
-        }
-        
-        .dice-btn::after {
-            content: attr(title);
-            position: absolute;
-            bottom: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        
-        .dice-btn:hover::after {
-            opacity: 1;
-        }
-        
-
-        
-
-        
-        /* Combat tracker header */
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            flex-wrap: wrap;
-        }
-        
-        .header-title {
-            font-size: 1.75rem;
-            margin-right: 1rem;
-        }
-        
-        .header-controls {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-        }
-        
-        .header-buttons {
-            display: flex;
-            gap: 0.5rem;
-        }
-        
-        /* Dice roller animation */
-        @keyframes diceRoll {
-            0% { transform: rotate(0deg) scale(1); }
-            25% { transform: rotate(90deg) scale(1.2); }
-            50% { transform: rotate(180deg) scale(1.3); }
-            75% { transform: rotate(270deg) scale(1.2); }
-            100% { transform: rotate(360deg) scale(1); }
-        }
-        
-        .dice-btn.rolling {
-            animation: diceRoll 0.5s ease-in-out;
-        }
-        
-        /* Dice results styling */
-        .critical-success {
-            color: #4ade80;
-            text-shadow: 0 0 10px rgba(74, 222, 128, 0.7);
-        }
-        
-        .critical-failure {
-            color: #f87171;
-            text-shadow: 0 0 10px rgba(248, 113, 113, 0.7);
-        }
-        
-        /* Combatant card enhancements */
-        .combatant-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
-        }
-        
-        .combatant-type {
-            font-size: 0.75rem;
-            padding: 0.25rem 0.5rem;
-            border-radius: 12px;
-            font-weight: 700;
-        }
-        
-        .player-type {
-            background-color: rgba(59, 130, 246, 0.15);
-            color: #3b82f6;
-        }
-        
-        .monster-type {
-            background-color: rgba(239, 68, 68, 0.15);
-            color: #ef4444;
-        }
-        
-        .active-indicator {
-            background-color: #f59e0b;
-            color: #7c2d12;
-            padding: 0.15rem 0.5rem;
-            border-radius: 12px;
-            font-size: 0.7rem;
-            font-weight: 700;
-        }
-        
-        /* Custom Dice Roller Styles */
         .custom-dice-roller {
             margin-top: 1rem;
             background: rgba(0, 0, 0, 0.1);
@@ -790,30 +500,6 @@
         
         .dark .custom-dice-roller {
             background: rgba(255, 255, 255, 0.1);
-        }
-        
-        .custom-dice-controls {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        
-        .custom-dice-input {
-            flex: 1;
-            min-width: 150px;
-            height: 40px;
-            padding: 0 10px;
-            border-radius: 8px;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            background: rgba(255, 255, 255, 0.8);
-            color: var(--color-text);
-        }
-        
-        .dark .custom-dice-input {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border-color: rgba(255, 255, 255, 0.2);
         }
         
         .dice-history {
@@ -849,10 +535,610 @@
             color: var(--color-accent);
         }
         
-        .history-details {
-            font-size: 0.8rem;
-            opacity: 0.8;
+        /* Add Combatant Modal Styles */
+        .creature-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
         }
+        
+        .creature-modal.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .modal-content {
+            background: var(--color-card);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 1000px;
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .dark .modal-content {
+            background: var(--color-dark-card);
+        }
+        
+        .modal-header {
+            padding: 1.5rem;
+            background: var(--color-secondary);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-body {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .search-container {
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(0,0,0,0.1);
+            font-size: 1rem;
+        }
+        
+        .dark .search-input {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.2);
+            color: white;
+        }
+        
+        /* Scrollable creature grid container */
+        .creature-grid-container {
+            flex: 1;
+            overflow-y: auto;
+            max-height: 60vh;
+            padding-right: 0.5rem;
+        }
+        
+        .creature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .creature-card {
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: rgba(0,0,0,0.03);
+        }
+        
+        .dark .creature-card {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.1);
+        }
+        
+        .creature-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-color: var(--color-accent);
+        }
+        
+        .creature-name {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .creature-stats {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .dark .creature-stats {
+            color: #aaa;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+        
+        .dark .no-results {
+            color: #aaa;
+        }
+        
+        /* Scrollbar styling */
+        .creature-grid-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .creature-grid-container::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+            border-radius: 4px;
+        }
+        
+        .creature-grid-container::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.2);
+            border-radius: 4px;
+        }
+        
+        .dark .creature-grid-container::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .dark .creature-grid-container::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        /* Combatant detail section */
+        .detail-content {
+            padding: 1.5rem;
+        }
+        
+        .conditions-textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            font-size: 0.875rem;
+            min-height: 100px;
+        }
+        
+        .dark .conditions-textarea {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+        
+        .header-title {
+            font-size: 1.75rem;
+            margin-right: 1rem;
+        }
+        
+        .header-controls {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        
+        .header-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .combatants-section {
+            position: relative;
+        }
+        
+        .section-header {
+            position: sticky;
+            top: 0;
+            background: var(--color-bg);
+            z-index: 10;
+            padding: 1rem 0;
+            border-bottom: 2px solid rgba(0, 22, 46, 0.1);
+            margin-bottom: 1rem;
+        }
+        
+        .dark .section-header {
+            background: var(--color-dark-bg);
+            border-bottom-color: rgba(174, 135, 8, 0.2);
+        }
+        
+        /* Initiative container */
+        .initiative-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .initiative-roll-btn {
+            background: var(--color-tertiary);
+            color: white;
+            border-radius: 4px;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-left: 0.5rem;
+        }
+        
+        .initiative-roll-btn:hover {
+            background: #003a6e;
+            transform: translateY(-1px);
+        }
+        
+        /* Dice animations */
+        @keyframes diceRoll {
+            0% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(90deg) scale(1.2); }
+            50% { transform: rotate(180deg) scale(1.3); }
+            75% { transform: rotate(270deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+        
+        .dice-btn.rolling {
+            animation: diceRoll 0.5s ease-in-out;
+        }
+        
+        .critical-success {
+            color: #4ade80;
+            text-shadow: 0 0 10px rgba(74, 222, 128, 0.7);
+        }
+        
+        .critical-failure {
+            color: #f87171;
+            text-shadow: 0 0 10px rgba(248, 113, 113, 0.7);
+        }
+
+        /* Tab styles */
+        .tabs-container {
+            display: flex;
+            background: var(--color-secondary);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .tab-button {
+            padding: 0.75rem 1rem;
+            width: 100%;
+            text-align: center;
+            cursor: pointer;
+            background-color: var(--color-secondary);
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.2s ease;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab-button:hover {
+            color: white;
+            background-color: rgba(0, 22, 46, 0.8);
+        }
+        
+        .active-tab {
+            color: white;
+            background-color: var(--color-tertiary);
+            border-bottom: 3px solid var(--color-accent);
+        }
+        
+        /* Player form styles */
+        .player-form {
+            padding: 1rem;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        
+        .player-form input {
+            width: 100%;
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            background: white;
+            color: var(--color-text);
+        }
+        
+        .dark .player-form input {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        .player-form label {
+            display: block;
+            margin-bottom: 0.25rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+        
+        .player-form .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        /* Custom scrollbar for player form */
+        .player-form::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        .player-form::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+            border-radius: 4px;
+        }
+        
+        .player-form::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.2);
+            border-radius: 4px;
+        }
+        
+        .dark .player-form::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .dark .player-form::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        /* Export modal styles */
+        .export-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .export-modal.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .export-content {
+            background: var(--color-card);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .dark .export-content {
+            background: var(--color-dark-card);
+        }
+        
+        .export-header {
+            padding: 1.5rem;
+            background: var(--color-secondary);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .export-body {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .export-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+        
+        .export-table th {
+            background: var(--color-tertiary);
+            color: white;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .export-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .dark .export-table td {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .export-table tr:nth-child(even) {
+            background: rgba(0,0,0,0.03);
+        }
+        
+        .dark .export-table tr:nth-child(even) {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .export-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+        }
+        
+        .print-btn {
+            background: var(--color-accent);
+            color: var(--color-primary);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .print-btn:hover {
+            background: #c59a0b;
+        }
+        
+/* PRINT OPTIMIZATION - Single page solution */
+@media print {
+    /* Hide everything except the export content */
+    body * {
+        visibility: hidden;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    .export-modal.visible,
+    .export-modal.visible * {
+        visibility: visible;
+    }
+    
+    .export-modal.visible {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        background: white !important;
+        z-index: 9999;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+    
+    .export-content {
+        width: 100% !important;
+        max-width: 100% !important;
+        max-height: none !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+    }
+    
+    .export-header, .export-actions {
+        display: none !important;
+    }
+    
+    .export-body {
+        padding: 0 !important;
+        margin: 0 !important;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+    
+    .export-table {
+        width: 100% !important;
+        font-size: 6pt !important; /* Smaller font */
+        border-collapse: collapse;
+        margin: 0 !important;
+        padding: 0 !important;
+        border-spacing: 0;
+        page-break-inside: avoid;
+        table-layout: fixed; /* Ensures consistent column widths */
+    }
+    
+    .export-table thead {
+        display: table-header-group;
+    }
+    
+    .export-table th {
+        background: #f2f2f2 !important;
+        color: #000 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        padding: 0.05rem !important; /* Reduced padding */
+        font-weight: bold;
+        border: 1px solid #ccc;
+        position: static; /* Remove sticky positioning */
+        word-wrap: break-word; /* Handle long words */
+    }
+    
+    .export-table td {
+        padding: 0.05rem !important; /* Reduced padding */
+        border: 1px solid #ccc;
+        font-size: 6pt !important; /* Smaller font */
+        line-height: 1.1;
+        word-wrap: break-word; /* Handle long words */
+    }
+    
+    /* Remove alternating row colors */
+    .export-table tr:nth-child(even) {
+        background: transparent !important;
+    }
+
+    /* Prevent row breaks */
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+    }
+    
+    /* Set specific column widths */
+    .export-table th:nth-child(1), 
+    .export-table td:nth-child(1) { width: 15%; } /* Name */
+    .export-table th:nth-child(2), 
+    .export-table td:nth-child(2) { width: 8%; }  /* Type */
+    .export-table th:nth-child(3), 
+    .export-table td:nth-child(3) { width: 5%; }  /* AC */
+    .export-table th:nth-child(4), 
+    .export-table td:nth-child(4) { width: 8%; }  /* HP */
+    .export-table th:nth-child(5), 
+    .export-table td:nth-child(5) { width: 8%; }  /* Fortitude */
+    .export-table th:nth-child(6), 
+    .export-table td:nth-child(6) { width: 7%; }  /* Reflex */
+    .export-table th:nth-child(7), 
+    .export-table td:nth-child(7) { width: 6%; }  /* Will */
+    .export-table th:nth-child(8), 
+    .export-table td:nth-child(8) { width: 8%; }  /* Initiative */
+    .export-table th:nth-child(9), 
+    .export-table td:nth-child(9) { width: 8%; }  /* Perception */
+    
+    /* Remove all extra spacing */
+    * {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    /* Remove URL and date footer */
+    .export-body > div:last-child {
+        display: none;
+    }
+    
+    /* Minimal page margins */
+    @page {
+        margin: 0.1cm 0.3cm !important; /* Reduced margins */
+        size: landscape; /* Force landscape orientation */
+    }
+    
+    /* Remove the special case container */
+    .export-table-container {
+        display: none;
+    }
+}
     </style>
 </head>
 <body>
@@ -869,6 +1155,222 @@
                 x-text="diceResult">
             </div>
             <div class="dice-label" x-text="diceLabel"></div>
+        </div>
+        
+        <!-- Add Combatant Modal -->
+        <div class="creature-modal" :class="{ 'visible': showAddCreatureModal }">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="text-xl font-bold">Add Combatant</h3>
+                    <button @click="showAddCreatureModal = false" class="text-white text-2xl">&times;</button>
+                </div>
+                
+                <!-- Tabs for Monster/Player -->
+                <div class="tabs-container">
+                    <button 
+                        @click="activeTab = 'monsters'"
+                        :class="{
+                            'tab-button': true,
+                            'active-tab': activeTab === 'monsters'
+                        }"
+                    >
+                        Monsters
+                    </button>
+                    <button 
+                        @click="activeTab = 'players'"
+                        :class="{
+                            'tab-button': true,
+                            'active-tab': activeTab === 'players'
+                        }"
+                    >
+                        Player Characters
+                    </button>
+                </div>
+                
+                <div class="modal-body">
+                    <!-- Monster Tab -->
+                    <div x-show="activeTab === 'monsters'">
+                        <div class="search-container">
+                            <input 
+                                type="text" 
+                                x-model="creatureSearch" 
+                                placeholder="Search creatures by name..." 
+                                class="search-input"
+                                @input="filterCreatures"
+                            >
+                        </div>
+                        
+                        <div class="creature-grid-container">
+                            <div class="creature-grid">
+                                <template x-for="creature in filteredCreatures" :key="creature.id">
+                                    <div class="creature-card" @click="addCreature(creature)">
+                                        <div class="creature-name" x-text="creature.name"></div>
+                                        <div class="creature-stats">
+                                            <div>Level: <span x-text="creature.level"></span></div>
+                                            <div>AC: <span x-text="creature.ac"></span></div>
+                                            <div>HP: <span x-text="creature.hp"></span></div>
+                                            <div>Perception: <span x-text="creature.perception"></span></div>
+                                            <div>Speed: <span x-text="creature.speed"></span></div>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                            
+                            <div x-show="filteredCreatures.length === 0" class="no-results">
+                                <p class="text-lg">No creatures found</p>
+                                <p class="mt-2">Try a different search term</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Player Tab -->
+                    <div x-show="activeTab === 'players'">
+                        <div class="player-form">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="form-group">
+                                    <label>Character Name *</label>
+                                    <input 
+                                        type="text" 
+                                        x-model="playerForm.name" 
+                                        placeholder="Character name"
+                                    >
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Class</label>
+                                    <input 
+                                        type="text" 
+                                        x-model="playerForm.class" 
+                                        placeholder="Class"
+                                    >
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Level</label>
+                                    <input 
+                                        type="number" 
+                                        x-model="playerForm.level" 
+                                        min="1"
+                                        placeholder="Level"
+                                    >
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Armor Class (AC) *</label>
+                                    <input 
+                                        type="number" 
+                                        x-model="playerForm.ac" 
+                                        min="0"
+                                        placeholder="AC"
+                                    >
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Max HP *</label>
+                                    <input 
+                                        type="number" 
+                                        x-model="playerForm.maxHp" 
+                                        min="1"
+                                        placeholder="Max HP"
+                                    >
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Perception Bonus</label>
+                                    <input 
+                                        type="number" 
+                                        x-model="playerForm.perception" 
+                                        placeholder="Perception"
+                                    >
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Speed</label>
+                                    <input 
+                                        type="text" 
+                                        x-model="playerForm.speed" 
+                                        placeholder="e.g. 25 ft"
+                                    >
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Saving Throws</label>
+                                    <input 
+                                        type="text" 
+                                        x-model="playerForm.saves" 
+                                        placeholder="Fort +X, Ref +Y, Will +Z"
+                                    >
+                                </div>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button 
+                                    @click="resetPlayerForm" 
+                                    class="btn btn-secondary"
+                                >
+                                    Reset
+                                </button>
+                                <button 
+                                    @click="addPlayerCombatant" 
+                                    class="btn btn-primary"
+                                    :disabled="!playerForm.name || !playerForm.ac || !playerForm.maxHp"
+                                >
+                                    Add Player
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Export Modal -->
+        <div class="export-modal" :class="{ 'visible': showExportModal }">
+            <div class="export-content">
+                <div class="export-header">
+                    <h3 class="text-xl font-bold">Export Combatants</h3>
+                    <button @click="showExportModal = false" class="text-white text-2xl">&times;</button>
+                </div>
+                
+                <div class="export-body">
+                    <table class="export-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>AC</th>
+                                <th>HP</th>
+                                <th>Fortitude</th>
+                                <th>Reflex</th>
+                                <th>Will</th>
+                                <th>Initiative</th>
+                                <th>Perception</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template x-for="combatant in combatants" :key="combatant.id">
+                                <tr>
+                                    <td x-text="combatant.name"></td>
+                                    <td x-text="combatant.type"></td>
+                                    <td x-text="combatant.ac"></td>
+                                    <td x-text="`${combatant.currentHp}/${combatant.maxHp}`"></td>
+                                    <td x-text="combatant.fortSave || combatant.fortitude || '-'"></td>
+                                    <td x-text="combatant.refSave || combatant.reflex || '-'"></td>
+                                    <td x-text="combatant.willSave || combatant.will || '-'"></td>
+                                    <td x-text="combatant.initiative"></td>
+                                    <td x-text="combatant.perception"></td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                    
+                    <div class="export-actions">
+                        <button class="print-btn" @click="printCombatants">
+                            <i class="fas fa-print"></i> Print
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
         
         <!-- Scroll to info button -->
@@ -888,10 +1390,16 @@
                 
                 <div class="header-controls">
                     <div class="header-buttons">
-                        <button class="btn btn-primary">
+                        <button class="btn btn-primary" @click="openAddCombatantModal">
                             <i class="fas fa-plus mr-1"></i> Add Combatant
                         </button>
-                        <button class="btn btn-secondary">
+                        <button class="btn btn-secondary" @click="exportCombatants">
+                            <i class="fas fa-file-export mr-1"></i> Export
+                        </button>
+                        <button class="btn btn-secondary" @click="saveCombatState">
+                            <i class="fas fa-save mr-1"></i> Save Combat
+                        </button>
+                        <button class="btn btn-secondary" @click="endCombat">
                             <i class="fas fa-stop mr-1"></i> End Combat
                         </button>
                     </div>
@@ -906,7 +1414,7 @@
                 </div>
             </div>
             
-            <!-- Dice buttons with free icons -->
+            <!-- Dice buttons -->
             <div class="dice-header">
                 <div class="dice-btn" @click="rollD20" title="Roll d20">
                     <span>d20</span>
@@ -1162,47 +1670,6 @@
                             <!-- Stat Block -->
                             <template x-if="selectedCombatant.type === 'monster'">
                                 <div>
-                                    <div class="stat-block">
-                                        <h4 class="font-bold text-lg mb-3">Special Abilities</h4>
-                                        
-                                        <div class="mb-4 text-sm">
-                                            <strong>Immunities:</strong> acid, clumsy, disease, drained, enfeebled, 
-                                            mental, paralyzed, persistent damage, petrified, poison, polymorph, stunned
-                                        </div>
-                                        
-                                        <div class="mb-4 text-sm">
-                                            <strong>Resistances:</strong> fire 20, physical 15 (except adamantine)
-                                        </div>
-                                        
-                                        <div class="mb-4 text-sm">
-                                            <strong>Regeneration:</strong> 50 HP (deactivated by acid damage)
-                                        </div>
-                                        
-                                        <h4 class="font-bold text-lg mb-3">Attacks</h4>
-                                        <div class="space-y-3">
-                                            <div class="attack">
-                                                <div class="font-bold">Jaws</div>
-                                                <div class="text-sm">+35 (magical, reach 20 ft), Damage 4d12+25 piercing</div>
-                                                <button class="roll-btn" @click="rollAttack('Jaws', 35, '4d12+25')">Roll</button>
-                                            </div>
-                                            <div class="attack">
-                                                <div class="font-bold">Claw</div>
-                                                <div class="text-sm">+35 (agile, magical, reach 15 ft), Damage 4d10+25 slashing</div>
-                                                <button class="roll-btn" @click="rollAttack('Claw', 35, '4d10+25')">Roll</button>
-                                            </div>
-                                            <div class="attack">
-                                                <div class="font-bold">Tail</div>
-                                                <div class="text-sm">+33 (magical, reach 30 ft), Damage 4d8+25 bludgeoning</div>
-                                                <button class="roll-btn" @click="rollAttack('Tail', 33, '4d8+25')">Roll</button>
-                                            </div>
-                                            <div class="attack">
-                                                <div class="font-bold">Spine Volley</div>
-                                                <div class="text-sm">(2 actions) 120 ft cone, 8d6 piercing, DC 43 Reflex</div>
-                                                <button class="roll-btn" @click="rollDice('8d6', 'Spine Volley Damage')">Roll Dmg</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
                                     <!-- Saving Throw Roller -->
                                     <div class="save-rolls">
                                         <h4 class="font-bold text-lg mb-2">
@@ -1268,6 +1735,11 @@
         </div>
     </div>
 
+    <!-- Pass PHP data to JavaScript -->
+    <script>
+        window.creaturesFromDatabase = @json($creatures);
+    </script>
+
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('combatManager', () => ({
@@ -1281,112 +1753,145 @@
                 customDiceExpression: "", // For custom dice input
                 diceHistory: [], // To store roll history
                 
+                // Creature modal properties
+                showAddCreatureModal: false,
+                creatureSearch: "",
+                allCreatures: [],
+                filteredCreatures: [],
+                
+                // Player form properties
+                activeTab: 'monsters',
+                playerForm: {
+                    name: '',
+                    class: '',
+                    level: 1,
+                    ac: 0,
+                    maxHp: 0,
+                    perception: 0,
+                    speed: '25 ft',
+                    saves: 'Fort +0, Ref +0, Will +0'
+                },
+                
+                // Export modal property
+                showExportModal: false,
+                
                 init() {
                     // Initialize theme
                     const savedTheme = localStorage.getItem('theme');
                     this.theme = savedTheme || 'dark';
                     document.documentElement.className = this.theme;
                     
-                    // Initialize with example combatants
-                    this.combatants = [
-                        {
-                            id: 1,
-                            name: 'Tarrasque',
-                            type: 'monster',
-                            ac: 54,
-                            maxHp: 540,
-                            currentHp: 540,
-                            initiative: 30,
-                            initiativeBonus: 35, // Perception bonus
-                            speed: '40 ft',
-                            perception: '+35',
-                            saves: 'Fort +38, Ref +32, Will +34',
-                            fortSave: 38,
-                            refSave: 32,
-                            willSave: 34,
-                            actions: '3',
-                            active: true,
-                            conditions: 'Frightened 2, Slowed'
-                        },
-                        {
-                            id: 2,
-                            name: 'Valeros',
-                            type: 'player',
-                            ac: 28,
-                            maxHp: 120,
-                            currentHp: 98,
-                            initiative: 20,
-                            initiativeBonus: 18, // Perception bonus
-                            speed: '25 ft',
-                            class: 'Fighter',
-                            level: 12,
-                            perception: '+18',
-                            saves: 'Fort +22, Ref +16, Will +14',
-                            actions: '3',
-                            active: false,
-                            conditions: 'Wounded 1'
-                        },
-                        {
-                            id: 3,
-                            name: 'Kyra',
-                            type: 'player',
-                            ac: 26,
-                            maxHp: 110,
-                            currentHp: 85,
-                            initiative: 18,
-                            initiativeBonus: 20, // Perception bonus
-                            speed: '25 ft',
-                            class: 'Cleric',
-                            level: 12,
-                            perception: '+20',
-                            saves: 'Fort +20, Ref +14, Will +22',
-                            actions: '3',
-                            active: false,
-                            conditions: ''
-                        },
-                        {
-                            id: 4,
-                            name: 'Ezren',
-                            type: 'player',
-                            ac: 24,
-                            maxHp: 95,
-                            currentHp: 72,
-                            initiative: 17,
-                            initiativeBonus: 16, // Perception bonus
-                            speed: '25 ft',
-                            class: 'Wizard',
-                            level: 12,
-                            perception: '+16',
-                            saves: 'Fort +16, Ref +16, Will +20',
-                            actions: '3',
-                            active: false,
-                            conditions: 'Drained 1'
-                        },
-                        {
-                            id: 5,
-                            name: 'Merisiel',
-                            type: 'player',
-                            ac: 30,
-                            maxHp: 105,
-                            currentHp: 92,
-                            initiative: 12,
-                            initiativeBonus: 18, // Perception bonus
-                            speed: '35 ft',
-                            class: 'Rogue',
-                            level: 12,
-                            perception: '+18',
-                            saves: 'Fort +16, Ref +22, Will +16',
-                            actions: '3',
-                            active: false,
-                            conditions: 'Clumsy 1'
-                        }
-                    ];
+                    // Initialize creature list from database
+                    this.allCreatures = window.creaturesFromDatabase || [];
+                    this.filteredCreatures = [...this.allCreatures];
+                    
+                    // Load combat state from localStorage
+                    this.loadCombatState();
+                    
+                    // If no saved state, initialize with example combatants
+                    if (this.combatants.length === 0) {
+                        this.combatants = [
+                            {
+                                id: 1,
+                                name: 'Tarrasque',
+                                type: 'monster',
+                                ac: 54,
+                                maxHp: 540,
+                                currentHp: 540,
+                                initiative: 30,
+                                initiativeBonus: 35, // Perception bonus
+                                speed: '40 ft',
+                                perception: '+35',
+                                saves: 'Fort +38, Ref +32, Will +34',
+                                fortSave: 38,
+                                refSave: 32,
+                                willSave: 34,
+                                actions: '3',
+                                active: true,
+                                conditions: 'Frightened 2, Slowed'
+                            },
+                            {
+                                id: 2,
+                                name: 'Valeros',
+                                type: 'player',
+                                ac: 28,
+                                maxHp: 120,
+                                currentHp: 98,
+                                initiative: 20,
+                                initiativeBonus: 18, // Perception bonus
+                                speed: '25 ft',
+                                class: 'Fighter',
+                                level: 12,
+                                perception: '+18',
+                                saves: 'Fort +22, Ref +16, Will +14',
+                                actions: '3',
+                                active: false,
+                                conditions: 'Wounded 1'
+                            },
+                            {
+                                id: 3,
+                                name: 'Kyra',
+                                type: 'player',
+                                ac: 26,
+                                maxHp: 110,
+                                currentHp: 85,
+                                initiative: 18,
+                                initiativeBonus: 20, // Perception bonus
+                                speed: '25 ft',
+                                class: 'Cleric',
+                                level: 12,
+                                perception: '+20',
+                                saves: 'Fort +20, Ref +14, Will +22',
+                                actions: '3',
+                                active: false,
+                                conditions: ''
+                            },
+                            {
+                                id: 4,
+                                name: 'Ezren',
+                                type: 'player',
+                                ac: 24,
+                                maxHp: 95,
+                                currentHp: 72,
+                                initiative: 17,
+                                initiativeBonus: 16, // Perception bonus
+                                speed: '25 ft',
+                                class: 'Wizard',
+                                level: 12,
+                                perception: '+16',
+                                saves: 'Fort +16, Ref +16, Will +20',
+                                actions: '3',
+                                active: false,
+                                conditions: 'Drained 1'
+                            },
+                            {
+                                id: 5,
+                                name: 'Merisiel',
+                                type: 'player',
+                                ac: 30,
+                                maxHp: 105,
+                                currentHp: 92,
+                                initiative: 12,
+                                initiativeBonus: 18, // Perception bonus
+                                speed: '35 ft',
+                                class: 'Rogue',
+                                level: 12,
+                                perception: '+18',
+                                saves: 'Fort +16, Ref +22, Will +16',
+                                actions: '3',
+                                active: false,
+                                conditions: 'Clumsy 1'
+                            }
+                        ];
+                    }
                     
                     // Sort by initiative (highest first)
                     this.combatants.sort((a, b) => b.initiative - a.initiative);
                     
-                    // Select first combatant by default
-                    this.selectedCombatant = this.combatants[0];
+                    // Select first combatant by default if none selected
+                    if (this.combatants.length > 0 && !this.selectedCombatant) {
+                        this.selectedCombatant = this.combatants[0];
+                    }
                     
                     // Initialize dice history
                     this.diceHistory = [];
@@ -1420,6 +1925,9 @@
                     if (activeIndex !== -1) {
                         this.selectedCombatant = this.combatants[activeIndex];
                     }
+                    
+                    // Save state
+                    this.saveCombatState();
                 },
                 
                 setCurrentTurnAndScroll(index, combatant) {
@@ -1453,6 +1961,9 @@
                     if (this.selectedCombatant && this.selectedCombatant.id === combatant.id) {
                         this.selectedCombatant = {...combatant};
                     }
+                    
+                    // Save state
+                    this.saveCombatState();
                 },
                 
                 // Scroll to character info section
@@ -1464,6 +1975,203 @@
                             block: 'start'
                         });
                     }
+                },
+                
+                // Save combat state to localStorage
+                saveCombatState() {
+                    try {
+                        // Create a simplified state for saving
+                        const state = {
+                            combatants: this.combatants.map(c => ({
+                                id: c.id,
+                                name: c.name,
+                                type: c.type,
+                                ac: c.ac,
+                                maxHp: c.maxHp,
+                                currentHp: c.currentHp,
+                                initiative: c.initiative,
+                                initiativeBonus: c.initiativeBonus,
+                                speed: c.speed,
+                                perception: c.perception,
+                                saves: c.saves,
+                                fortSave: c.fortSave,
+                                refSave: c.refSave,
+                                willSave: c.willSave,
+                                actions: c.actions,
+                                active: c.active,
+                                conditions: c.conditions,
+                                class: c.class,
+                                level: c.level
+                            })),
+                            selectedCombatantId: this.selectedCombatant ? this.selectedCombatant.id : null
+                        };
+                        
+                        localStorage.setItem('combatState', JSON.stringify(state));
+                        
+                        // Show success message
+                        alert('Combat state saved successfully!');
+                    } catch (error) {
+                        console.error('Error saving combat state:', error);
+                        alert('Error saving combat state. See console for details.');
+                    }
+                },
+                
+                // Load combat state from localStorage
+                loadCombatState() {
+                    try {
+                        const savedState = localStorage.getItem('combatState');
+                        if (savedState) {
+                            const state = JSON.parse(savedState);
+                            
+                            // Restore combatants
+                            this.combatants = state.combatants || [];
+                            
+                            // Restore selected combatant
+                            if (state.selectedCombatantId) {
+                                this.selectedCombatant = this.combatants.find(
+                                    c => c.id === state.selectedCombatantId
+                                );
+                            }
+                            
+                            // Re-sort combatants
+                            this.combatants.sort((a, b) => b.initiative - a.initiative);
+                            
+                            // Show status message
+                            console.log('Combat state loaded successfully');
+                        }
+                    } catch (e) {
+                        console.error('Error loading combat state:', e);
+                    }
+                },
+                
+                // End combat
+                endCombat() {
+                    if (confirm('Are you sure you want to end this combat?')) {
+                        // Clear combat state
+                        this.combatants = [];
+                        this.selectedCombatant = null;
+                        localStorage.removeItem('combatState');
+                        alert('Combat ended successfully!');
+                    }
+                },
+                
+                // Filter creatures based on search term
+                filterCreatures() {
+                    if (!this.creatureSearch) {
+                        this.filteredCreatures = [...this.allCreatures];
+                        return;
+                    }
+                    
+                    const searchTerm = this.creatureSearch.toLowerCase();
+                    this.filteredCreatures = this.allCreatures.filter(creature => 
+                        creature.name.toLowerCase().includes(searchTerm)
+                    );
+                },
+                
+                // Add a creature to combat
+                addCreature(creature) {
+                    const newCombatant = {
+                        id: Date.now(),
+                        name: creature.name,
+                        type: 'monster',
+                        ac: creature.ac,
+                        maxHp: creature.hp,
+                        currentHp: creature.hp,
+                        initiative: 0,
+                        initiativeBonus: creature.perception,
+                        speed: creature.speed,
+                        perception: `+${creature.perception}`,
+                        saves: `Fort +${creature.fortitude}, Ref +${creature.reflex}, Will +${creature.will}`,
+                        fortSave: creature.fortitude,
+                        refSave: creature.reflex,
+                        willSave: creature.will,
+                        actions: '3',
+                        active: false,
+                        conditions: ''
+                    };
+
+                    this.combatants.push(newCombatant);
+                    this.showAddCreatureModal = false;
+                    
+                    // Sort combatants
+                    this.combatants.sort((a, b) => b.initiative - a.initiative);
+                    
+                    // Save state
+                    this.saveCombatState();
+                    
+                    // Select the new combatant
+                    this.selectCombatant(newCombatant);
+                },
+                
+                // Open the add combatant modal with proper initialization
+                openAddCombatantModal() {
+                    this.showAddCreatureModal = true;
+                    this.activeTab = 'monsters';
+                    this.creatureSearch = '';
+                    this.filterCreatures();
+                    this.resetPlayerForm();
+                },
+                
+                // Reset player form to default values
+                resetPlayerForm() {
+                    this.playerForm = {
+                        name: '',
+                        class: '',
+                        level: 1,
+                        ac: 0,
+                        maxHp: 0,
+                        perception: 0,
+                        speed: '25 ft',
+                        saves: 'Fort +0, Ref +0, Will +0'
+                    };
+                },
+                
+                // Add a player combatant from the form
+                addPlayerCombatant() {
+                    if (!this.playerForm.name || !this.playerForm.ac || !this.playerForm.maxHp) {
+                        alert('Please fill in all required fields (Name, AC, and Max HP)');
+                        return;
+                    }
+
+                    const newPlayer = {
+                        id: Date.now(),
+                        name: this.playerForm.name,
+                        type: 'player',
+                        ac: parseInt(this.playerForm.ac),
+                        maxHp: parseInt(this.playerForm.maxHp),
+                        currentHp: parseInt(this.playerForm.maxHp),
+                        initiative: 0,
+                        initiativeBonus: parseInt(this.playerForm.perception) || 0,
+                        speed: this.playerForm.speed || '25 ft',
+                        class: this.playerForm.class || '',
+                        level: parseInt(this.playerForm.level) || 1,
+                        perception: this.playerForm.perception ? `+${this.playerForm.perception}` : '+0',
+                        saves: this.playerForm.saves || 'Fort +0, Ref +0, Will +0',
+                        actions: '3',
+                        active: false,
+                        conditions: ''
+                    };
+
+                    this.combatants.push(newPlayer);
+                    this.combatants.sort((a, b) => b.initiative - a.initiative);
+                    this.saveCombatState();
+                    this.selectCombatant(newPlayer);
+                    this.showAddCreatureModal = false;
+                    this.resetPlayerForm();
+                },
+                
+                // Export combatants for printing
+                exportCombatants() {
+                    if (this.combatants.length === 0) {
+                        alert('No combatants to export!');
+                        return;
+                    }
+                    this.showExportModal = true;
+                },
+                
+                // Print combatant summary
+                printCombatants() {
+                    window.print();
                 },
                 
                 // Dice roller functions
@@ -1565,58 +2273,9 @@
                             this.showDiceResult = false;
                         }, 2000);
                     });
-                },
-                
-                // Roll attack for monsters
-                rollAttack(attackName, attackBonus, damageDice) {
-                    const attackRoll = Math.floor(Math.random() * 20) + 1;
-                    const totalAttack = attackRoll + attackBonus;
                     
-                    let damage = 0;
-                    if (damageDice) {
-                        // Calculate damage
-                        const parts = damageDice.split('d');
-                        const numDice = parseInt(parts[0]) || 1;
-                        const diceSize = parseInt(parts[1]);
-                        
-                        for (let i = 0; i < numDice; i++) {
-                            damage += Math.floor(Math.random() * diceSize) + 1;
-                        }
-                        
-                        // Check for modifiers (like +5 in "2d6+5")
-                        if (damageDice.includes('+')) {
-                            const modifier = parseInt(damageDice.split('+')[1]);
-                            if (!isNaN(modifier)) {
-                                damage += modifier;
-                            }
-                        }
-                    }
-                    
-                    let resultText = `${attackName} Attack:\n`;
-                    resultText += `Attack: ${attackRoll} + ${attackBonus} = ${totalAttack}\n`;
-                    
-                    if (damageDice) {
-                        resultText += `Damage: ${damageDice} = ${damage}`;
-                    }
-                    
-                    this.showDiceResult = true;
-                    this.diceResult = totalAttack;
-                    this.diceLabel = `${attackName} Attack`;
-                    
-                    // Check for critical success/failure
-                    this.diceCritical = null;
-                    if (attackRoll === 20) this.diceCritical = 'success';
-                    if (attackRoll === 1) this.diceCritical = 'failure';
-                    
-                    // Create a more detailed alert for the full result
-                    setTimeout(() => {
-                        alert(resultText);
-                    }, 500);
-                    
-                    // Auto hide the dice display after 2 seconds
-                    setTimeout(() => {
-                        this.showDiceResult = false;
-                    }, 2000);
+                    // Save state
+                    this.saveCombatState();
                 },
                 
                 // Roll saving throw
