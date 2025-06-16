@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 // Get elements
 const inputCreature = document.getElementById('inputCreature');
 const inputHazard = document.getElementById('inputHazard');
@@ -34,8 +32,6 @@ document.addEventListener('DOMContentLoaded', function() {
     window.toggleSelectedHazardRarity = toggleSelectedHazardRarity;
     window.resetCreatureFilters = resetCreatureFilters;
     window.resetHazardFilters = resetHazardFilters;
-    window.setCreature = setCreature;
-    window.removeCreature = removeCreature;
 
     // Initial render creatures/hazards
     renderCreatures(creatures);
@@ -244,7 +240,10 @@ function renderCreatures(list) {
         wrapper.setAttribute('onmouseover', `showCreatureInfo(${creature.id})`);
         wrapper.setAttribute('onmouseout', `hideCreatureInfo(${creature.id})`);
         // add onclick
-        wrapper.setAttribute('onclick', `setCreature(${creature.id})`);
+        wrapper.onclick = async () => {
+            await setCreature(creature.id);
+            await calculateXP();
+        }; 
 
         // make row
         const row = document.createElement('div');
@@ -341,22 +340,4 @@ function resetHazardFilters() {
 
     // Refresh hazard list
     updateFilteredHazards();
-}
-
-let baseUrl = `/content/${contentId}`;
-
-async function setCreature(creatureId) {
-    const response = await axios.post(`${baseUrl}/creatures`, {
-        creature_id: creatureId
-    });
-    return response.data;
-}
-
-async function removeCreature(index) {
-    const response = await axios.delete(`${baseUrl}/creatures/${index}`);
-    return response.data;
-}
-
-async function setHazard(hazardId) {
-   
 }

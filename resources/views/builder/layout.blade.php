@@ -14,6 +14,7 @@
             <a href="{{ route('builder.encounter', ['contentId' => $contentId]) }}">Encounter</a>
             <a href="{{ route('builder.newcreature', ['contentId' => $contentId]) }}">create creature</a>
             <a href="{{ route('builder.creature', ['contentId' => $contentId]) }}">My creatures</a>
+            <button onclick="toggleTheme()">Toggle Theme</button>
             <div>randomize complete</div>
             <div>export</div>
             <div>import</div>
