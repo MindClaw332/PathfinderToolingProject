@@ -24,7 +24,7 @@
                         Builder</a>
                 </li>
                 <li>
-                    <a class="hover:underline hover:text-accent" href="">Encounter manager</a>
+                    <a class="hover:underline hover:text-accent" href="{{ route('combat') }}">Combat manager</a>
                 </li>
                 <li>
                     <a class="hover:underline hover:text-accent" href="">About us</a>
