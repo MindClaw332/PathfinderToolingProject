@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\PathfinderTrait;
 use App\Models\User;
+use Illuminate\Support\Facades\Process;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -26,7 +27,8 @@ class DatabaseSeeder extends Seeder
             TypeSeeder::class,
             PathfinderTraitSeeder::class,
             HazardSeeder::class,
-            CreatureSeeder::class,
+            // CreatureSeeder::class,
         ]);
+        Process::timeout(800)->run("./scraper/PathfinderToolingProject");
     }
 }
