@@ -207,16 +207,22 @@ function refreshChosenCreatures () {
     }
 }
 
+const buttonPressCount = {};
+
 // Add a level to a creature
 function addLevel (index) {
     const levelInput = document.getElementById(`level-${index}`);
+
+    if (!buttonPressCount[index]) buttonPressCount[index] = 0;
 
     // Change input value
     if (levelInput.value <= 0){
         levelInput.stepUp();
         levelInput.stepUp();
+        buttonPressCount[index] += 1;
     } else {
         levelInput.stepUp();
+        buttonPressCount[index] += 1;
     }
     
     // Calculate and show adjustments for this specific creature
@@ -226,13 +232,17 @@ function addLevel (index) {
 // Subtract a level for a creature
 function subtractLevel (index) {
     const levelInput = document.getElementById(`level-${index}`);
+
+    if (!buttonPressCount[index]) buttonPressCount[index] = 0;
     
     // Change input value
     if (levelInput.value === "1") {
         levelInput.stepDown();
         levelInput.stepDown();
+        buttonPressCount[index] -= 1;
     } else {
         levelInput.stepDown();
+        buttonPressCount[index] -= 1;
     }
     
     // Calculate and show adjustments for this specific creature
@@ -243,15 +253,16 @@ function calculateAndShowAdjustments(index) {
     const levelInput = document.getElementById(`level-${index}`);
     const creature = chosenCreatures[index];
     
-    // Calculate total adjustments based on difference from original
+    // Calculate level based on difference from original
     const adjustmentCount = Number(levelInput.value) - creature.level;
     
+    // Calculate HP and other stats based on buttons pressed
     let hpDiff = 0;
     let statDiff = 0;
     
-    if (adjustmentCount > 0) {
+    if (buttonPressCount[index] > 0) {
         // Elite adjustments
-        for (let i = 0; i < adjustmentCount; i++) {
+        for (let i = 0; i < buttonPressCount[index]; i++) {
             const currentLevel = creature.level + i;
             
             // HP adjustment
@@ -264,14 +275,14 @@ function calculateAndShowAdjustments(index) {
             } else if (currentLevel >= 20) {
                 hpDiff += 30;
             }
+
+            // Stats: +2 per adjustment
+            statDiff += 2;
         }
 
-        // Stats: +2 per adjustment
-        statDiff += 2;
-
-    } else if (adjustmentCount < 0) {
+    } else if (buttonPressCount[index] < 0) {
         // Weak adjustments
-        for (let i = 0; i < Math.abs(adjustmentCount); i++) {
+        for (let i = 0; i < Math.abs(buttonPressCount[index]); i++) {
             const currentLevel = creature.level - i;
             
             // HP adjustment
@@ -284,10 +295,10 @@ function calculateAndShowAdjustments(index) {
             } else if (currentLevel >= 21) {
                 hpDiff -= 30;
             }
-        }
 
-        // Stats: -2 per adjustment
-        statDiff -= 2;
+            // Stats: -2 per adjustment
+            statDiff -= 2;
+        }
     }
     
     // Show changes for this specific creature
