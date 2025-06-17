@@ -22,21 +22,66 @@
         <div class="flex flex-row justify-between">
             <div class="text-lg m-1">Add creatures</div>
             <!-- choose amount -->
-            <div>Amount: </div>
+            <div class="flex flex-row">
+                <div>Amount:</div>
+                <input type="number">
+                <div class="p-1" id="creatureAmount"></div>
+            </div>
         </div>
         <div class="divide-y-1 divide-y divide-tertiary m-1 max-h-46 overflow-y-auto scrollbar-hide" id="creature-list">
             <!-- list chosen creatures -->
             @include('builder.partials.creatureList', ['chosenCreatures' => $chosenCreatures])
         </div>
+        <!-- select traits and/or sizes -->
+        <div class="flex flex-row justify-between m-2">
+            <div>
+                <!-- traits -->
+                <div class="p-1">Trait</div>
+                <div class="flex flex-row gap-2">
+                    @foreach($traits as $trait)
+                        <button onclick="" class="bg-tertiary p-1 rounded-lg" id="randomize-trait-{{$trait->id}}">
+                            {{$trait->name}}
+                        </button>
+                    @endforeach
+                </div>
+            </div>
+            <div>
+                <!-- sizes -->
+                <div class="p-1">Size</div>
+                <div class="flex flex-row gap-2">
+                    @foreach($sizes as $size)
+                        <button onclick="" class="bg-tertiary p-1 rounded-lg" id="randomize-size-{{$size->id}}">
+                            {{$size->name}}
+                        </button>
+                    @endforeach
+                </div>
+            </div>
+        </div>
         <!-- add hazards -->
         <div class="flex flex-row justify-between">
             <div class="text-lg m-1">Add hazards</div>
             <!-- choose amount -->
-            <div>Amount:</div>
+            <div class="flex flex-row">
+                <div>Amount:</div>
+                <input type="number">
+                <div class="p-1" id="hazardAmount"></div>
+            </div>
         </div>
         <div class="divide-y-1 divide-y divide-tertiary m-1 max-h-46 overflow-y-auto scrollbar-hide" id="hazard-list">
             <!-- list chosen hazards -->
             @include('builder.partials.hazardList', ['chosenHazards' => $chosenHazards])
+        </div>
+        <!-- select types -->
+        <div class="m-2">
+            <!-- Types -->
+            <div class="p-1">Type</div>
+            <div class="flex flex-row gap-2">
+                @foreach($types as $type)
+                    <button onclick="toggleSelectedHazardType({{$type->id}})" class="bg-tertiary p-1 rounded-lg" id="type-{{$type->id}}">
+                        {{$type->name}}
+                    </button>
+                @endforeach
+            </div>
         </div>
         <!-- choose difficulty -->
         <div>

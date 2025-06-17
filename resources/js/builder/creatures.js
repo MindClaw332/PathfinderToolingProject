@@ -8,7 +8,7 @@ let baseUrl = `/content/${contentId}`;
 let chosenCreatures;
 
 // Get data + Make functions globally available
-document.addEventListener('DOMContentLoaded', function() {   
+document.addEventListener('DOMContentLoaded', function() { 
     // Make functions globally available
     window.setCreature = setCreature;
     window.removeCreature = removeCreature;
@@ -168,6 +168,11 @@ async function calculateXP () {
     if (response.data.success) {
         document.getElementById('encounterBar').innerHTML = response.data.html;
         document.getElementById('selectThreat').innerHTML = response.data.select;
+        if (response.data.creatureCount > 0) {
+            document.getElementById('creatureAmount').innerHTML = '+' + response.data.creatureCount;
+        } else {
+            document.getElementById('creatureAmount').innerHTML = '';
+        }
     }
 }
 

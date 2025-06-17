@@ -15,6 +15,11 @@ async function setHazard(hazardId) {
     });
     if (response.data.success) {
         document.getElementById('hazard-list').innerHTML = response.data.html;
+        if (response.data.hazardCount > 0) {
+            document.getElementById('hazardAmount').innerHTML = '+' + response.data.hazardCount;
+        } else {
+            document.getElementById('hazardAmount').innerHTML = '';
+        }
     };
 }
 
@@ -23,5 +28,10 @@ async function removeHazard(index) {
     const response = await axios.delete(`${baseUrl}/hazards/${index}`);
     if (response.data.success) {
         document.getElementById('hazard-list').innerHTML = response.data.html;
+        if (response.data.hazardCount > 0) {
+            document.getElementById('hazardAmount').innerHTML = '+' + response.data.hazardCount;
+        } else {
+            document.getElementById('hazardAmount').innerHTML = '';
+        }
     };
 }
