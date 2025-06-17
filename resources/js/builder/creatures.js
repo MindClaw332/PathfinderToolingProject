@@ -98,7 +98,8 @@ function showCreatureEdit (index) {
                     <div class="text-center content-center text-accent hidden" id="preview-perception-${index}"></div>
                 </div>
             </div>
-        </div>`;
+        </div>
+        <div class="text-center hidden" id="warning-${index}"></div>`;
 }
 
 // Hide the edit form for creatures
@@ -209,9 +210,14 @@ function refreshChosenCreatures () {
 // Add a level to a creature
 function addLevel (index) {
     const levelInput = document.getElementById(`level-${index}`);
-    
-    // Change input value first
-    levelInput.stepUp();
+
+    // Change input value
+    if (levelInput.value <= 0){
+        levelInput.stepUp();
+        levelInput.stepUp();
+    } else {
+        levelInput.stepUp();
+    }
     
     // Calculate and show adjustments for this specific creature
     calculateAndShowAdjustments(index);
@@ -221,8 +227,13 @@ function addLevel (index) {
 function subtractLevel (index) {
     const levelInput = document.getElementById(`level-${index}`);
     
-    // Change input value first
-    levelInput.stepDown();
+    // Change input value
+    if (levelInput.value === "1") {
+        levelInput.stepDown();
+        levelInput.stepDown();
+    } else {
+        levelInput.stepDown();
+    }
     
     // Calculate and show adjustments for this specific creature
     calculateAndShowAdjustments(index);
@@ -235,7 +246,6 @@ function calculateAndShowAdjustments(index) {
     // Calculate total adjustments based on difference from original
     const adjustmentCount = Number(levelInput.value) - creature.level;
     
-    let levelDiff = 0;
     let hpDiff = 0;
     let statDiff = 0;
     
@@ -243,13 +253,6 @@ function calculateAndShowAdjustments(index) {
         // Elite adjustments
         for (let i = 0; i < adjustmentCount; i++) {
             const currentLevel = creature.level + i;
-            
-            // Level adjustment: +1 (or +2 if creature is level -1 or 0)
-            if (currentLevel <= 0) {
-                levelDiff += 2;
-            } else {
-                levelDiff += 1;
-            }
             
             // HP adjustment
             if (currentLevel <= 1) {
@@ -261,21 +264,15 @@ function calculateAndShowAdjustments(index) {
             } else if (currentLevel >= 20) {
                 hpDiff += 30;
             }
-            
-            // Stats: +2 per adjustment
-            statDiff += 2;
         }
+
+        // Stats: +2 per adjustment
+        statDiff += 2;
+
     } else if (adjustmentCount < 0) {
         // Weak adjustments
         for (let i = 0; i < Math.abs(adjustmentCount); i++) {
             const currentLevel = creature.level - i;
-            
-            // Level adjustment: -1 (or -2 if creature is level 1)
-            if (currentLevel <= 1) {
-                levelDiff -= 2;
-            } else {
-                levelDiff -= 1;
-            }
             
             // HP adjustment
             if (currentLevel >= 1 && currentLevel <= 2) {
@@ -287,21 +284,18 @@ function calculateAndShowAdjustments(index) {
             } else if (currentLevel >= 21) {
                 hpDiff -= 30;
             }
-            
-            // Stats: -2 per adjustment
-            statDiff -= 2;
         }
+
+        // Stats: -2 per adjustment
+        statDiff -= 2;
     }
     
-    // Calculate final level
-    const finalLevel = creature.level + levelDiff;
-    
     // Show changes for this specific creature
-    showStatDiff(index, finalLevel, levelDiff, hpDiff, statDiff);
+    showStatDiff(index, adjustmentCount, hpDiff, statDiff);
 }
 
 // Show +/- values that will apply for changing the level
-function showStatDiff (index, level, levelDiff, hpDiff, statDiff) {
+function showStatDiff (index, adjustmentCount, hpDiff, statDiff) {
     // Get elements
     const levelPreview = document.getElementById(`preview-level-${index}`);
     const hpPreview = document.getElementById(`preview-hp-${index}`);
@@ -310,14 +304,24 @@ function showStatDiff (index, level, levelDiff, hpDiff, statDiff) {
     const reflexPreview = document.getElementById(`preview-reflex-${index}`);
     const willPreview = document.getElementById(`preview-will-${index}`);
     const perceptionPreview = document.getElementById(`preview-perception-${index}`);
+    const warning = document.getElementById(`warning-${index}`);
 
+    // Set warning
+    if (adjustmentCount > 1) {
+        warning.innerHTML = `
+            Multiple elite/weak adjustments are not recommended. 
+            Consider using the creature builder for building creatures instead.`;
+     } else {
+        warning.innerHTML = '';
+     }
+ 
     // Signs
-    let levelSign = levelDiff > 0 ? '+' : '';
+    let levelSign = adjustmentCount > 0 ? '+' : '';
     let hpSign = hpDiff > 0 ? '+' : '';
     let statSign = statDiff > 0 ? '+' : '';
 
     // Set signs and numbers
-    levelPreview.textContent = (levelDiff !== 0 ? ` ${levelSign}${levelDiff}` : '');
+    levelPreview.textContent = (adjustmentCount !== 0 ? ` ${levelSign}${adjustmentCount}` : '');
     hpPreview.textContent = (hpDiff !== 0 ? ` ${hpSign}${hpDiff}` : '');
     acPreview.textContent = (statDiff !== 0 ? ` ${statSign}${statDiff}` : '');
     fortitudePreview.textContent = (statDiff !== 0 ? `${statSign}${statDiff}` : '');
@@ -328,7 +332,8 @@ function showStatDiff (index, level, levelDiff, hpDiff, statDiff) {
     // Show signs and numbers
     const elements = [
         `preview-level-${index}`, `preview-hp-${index}`, `preview-ac-${index}`, 
-        `preview-fortitude-${index}`, `preview-reflex-${index}`, `preview-will-${index}`, `preview-perception-${index}`
+        `preview-fortitude-${index}`, `preview-reflex-${index}`, `preview-will-${index}`, 
+        `preview-perception-${index}`, `warning-${index}`
     ];
     
     elements.forEach(id => {

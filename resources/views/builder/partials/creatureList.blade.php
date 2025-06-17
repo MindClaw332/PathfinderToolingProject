@@ -12,7 +12,7 @@
         <!-- level -->
         <div class="w-2/3">
             <input class="w-1/6 m-1 p-1 text-center" id="level-{{ $index }}" type="number" name="level" 
-                value={{$creature['level']}} data-default="{{ $creature['level'] }}" placeholder="level" min="-1">
+                value={{$creature['level']}} data-default="{{ $creature['level'] }}" placeholder="level" min="-1" readonly>
             <button onclick="addLevel({{ $index }})" type="button" class="w-1/12 p-1 bg-tertiary rounded-lg">+1</button>
             <button onclick="subtractLevel({{ $index }})" type="button" class="w-1/12 p-1 bg-tertiary rounded-lg">-1</button>
         </div>
