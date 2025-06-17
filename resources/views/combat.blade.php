@@ -733,6 +733,7 @@
         .header-buttons {
             display: flex;
             gap: 0.5rem;
+            flex-wrap: wrap;
         }
         
         .combatants-section {
@@ -999,83 +1000,131 @@
             background: #c59a0b;
         }
         
-/* PRINT OPTIMIZATION - Single page solution */
-@media print {
-    /* Reset document styles */
-    @page {
-        size: landscape !important;
-        margin: 10mm 5mm !important;
-    }
-
-    /* Hide everything initially */
-    body * {
-        visibility: hidden !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-
-    /* Show only export content */
-    .export-content, 
-    .export-content * {
-        visibility: visible !important;
-    }
-
-    /* Position export content */
-    .export-content {
-        position: absolute !important;
-        left: 0 !important;
-        top: 0 !important;
-        width: 100% !important;
-        padding: 0 !important;
-        margin: 0 !important;
-    }
-
-    /* Table styles */
-    .export-table {
-        width: 100% !important;
-        border-collapse: collapse !important;
-        font-size: 9pt !important;
-        page-break-inside: avoid !important;
-        break-inside: avoid !important;
-        table-layout: fixed !important;
-    }
-    
-    .export-table th,
-    .export-table td {
-        padding: 3px !important;
-        border: 1px solid #ddd !important;
-        text-align: left !important;
-        white-space: nowrap !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
-    }
-
-    /* Hide modal parts */
-    .export-modal {
-        all: unset !important;
-        display: block !important;
-    }
-
-    .export-header,
-    header,
-    footer {
-        display: none !important;
-    }
-
-    .export-body {
-        all: unset !important;
-        display: block !important;
-        height: auto !important;
-        overflow: visible !important;
-    }
-
-    /* Remove any page breaks */
-    * {
-        page-break-before: avoid !important;
-        page-break-after: avoid !important;
-        page-break-inside: avoid !important;
-    }
-}
+        /* CSV Import Modal */
+        .csv-import-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .csv-import-modal.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .csv-modal-content {
+            background: var(--color-card);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .dark .csv-modal-content {
+            background: var(--color-dark-card);
+        }
+        
+        .csv-modal-header {
+            padding: 1.5rem;
+            background: var(--color-secondary);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .csv-modal-body {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .csv-import-instructions {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(0,0,0,0.05);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            overflow-wrap: break-word;
+        }
+        
+        .dark .csv-import-instructions {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .csv-file-input {
+            margin-bottom: 1.5rem;
+        }
+        
+        .csv-preview {
+            max-height: 300px;
+            overflow-y: auto;
+            overflow-x: auto;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .dark .csv-preview {
+            border-color: rgba(255,255,255,0.1);
+        }
+        
+        .csv-preview-table {
+            min-width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .csv-preview-table th {
+            background: rgba(0,0,0,0.05);
+            padding: 0.5rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+        
+        .dark .csv-preview-table th {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .csv-preview-table td {
+            padding: 0.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+        
+        .dark .csv-preview-table td {
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .csv-import-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+        }
+        
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -1310,6 +1359,74 @@
             </div>
         </div>
         
+        <!-- CSV Import Modal -->
+        <div class="csv-import-modal" :class="{ 'visible': showCsvImportModal }">
+            <div class="csv-modal-content">
+                <div class="csv-modal-header">
+                    <h3 class="text-xl font-bold">Import Combatants from CSV</h3>
+                    <button @click="showCsvImportModal = false" class="text-white text-2xl">&times;</button>
+                </div>
+                
+                <div class="csv-modal-body">
+                    <div class="csv-import-instructions">
+                        <p><strong>Instructions:</strong></p>
+                        <p>1. Your CSV file should have the following columns: <code>name,type,ac,maxHp,currentHp,initiative,initiativeBonus,speed,perception,saves,fortSave,refSave,willSave,actions,conditions,class,level</code></p>
+                        <p>2. The first row should be headers</p>
+                        <p>3. Required fields: name, type, ac, maxHp, currentHp</p>
+                    </div>
+                    
+                    <div class="csv-file-input">
+                        <input type="file" accept=".csv" @change="handleCsvFileSelect">
+                    </div>
+                    
+                    <div class="csv-preview" x-show="csvPreviewData.length > 0">
+                        <h4 class="font-bold mb-2">Preview (first 5 rows)</h4>
+                        <table class="csv-preview-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>AC</th>
+                                    <th>HP</th>
+                                    <th>Initiative</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template x-for="row in csvPreviewData.slice(0, 5)" :key="row.id">
+                                    <tr>
+                                        <td x-text="row.name"></td>
+                                        <td x-text="row.type"></td>
+                                        <td x-text="row.ac"></td>
+                                        <td x-text="`${row.currentHp}/${row.maxHp}`"></td>
+                                        <td x-text="row.initiative"></td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="csv-import-actions">
+                        <button 
+                            class="btn btn-secondary" 
+                            @click="showCsvImportModal = false"
+                        >
+                            Cancel
+                        </button>
+                        <button 
+                            class="btn btn-primary" 
+                            @click="importCsvData"
+                            :disabled="csvPreviewData.length === 0"
+                        >
+                            Import Combatants
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Hidden file input for CSV export -->
+        <input type="file" id="csv-import" accept=".csv" class="hidden">
+        
         <!-- Scroll to info button -->
         <div 
             class="scroll-to-info" 
@@ -1338,6 +1455,13 @@
                         </button>
                         <button class="btn btn-secondary" @click="endCombat">
                             <i class="fas fa-stop mr-1"></i> End Combat
+                        </button>
+                        <!-- New CSV buttons -->
+                        <button class="btn btn-secondary" @click="exportToCSV">
+                            <i class="fas fa-file-csv mr-1"></i> Export CSV
+                        </button>
+                        <button class="btn btn-secondary" @click="showCsvImportModal = true">
+                            <i class="fas fa-file-import mr-1"></i> Import CSV
                         </button>
                     </div>
                     
@@ -1639,19 +1763,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
-                                    <!-- Player Attack Roller -->
-                                    <div class="mt-4">
-                                        <h4 class="font-bold text-lg mb-2">Attack Roller</h4>
-                                        <div class="flex gap-2">
-                                            <button class="btn btn-primary flex-1" @click="rollD20">
-                                                Roll d20
-                                            </button>
-                                            <button class="btn btn-secondary flex-1" @click="rollDice('2d6')">
-                                                Roll 2d6
-                                            </button>
-                                        </div>
-                                    </div>
                                 </div>
                             </template>
                         </div>
@@ -1711,6 +1822,10 @@
                 
                 // Export modal property
                 showExportModal: false,
+                
+                // CSV Import properties
+                showCsvImportModal: false,
+                csvPreviewData: [],
                 
                 init() {
                     // Initialize theme
@@ -1862,9 +1977,6 @@
                     if (activeIndex !== -1) {
                         this.selectedCombatant = this.combatants[activeIndex];
                     }
-                    
-                    // Save state
-                    this.saveCombatState();
                 },
                 
                 setCurrentTurnAndScroll(index, combatant) {
@@ -1898,9 +2010,6 @@
                     if (this.selectedCombatant && this.selectedCombatant.id === combatant.id) {
                         this.selectedCombatant = {...combatant};
                     }
-                    
-                    // Save state
-                    this.saveCombatState();
                 },
                 
                 // Scroll to character info section
@@ -2106,10 +2215,77 @@
                     this.showExportModal = true;
                 },
                 
-                // Print combatant summary
-                printCombatants() {
-                    window.print();
-                },
+               printCombatants() {
+            // Create a temporary iframe for printing
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+            
+            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+            
+            // Write print-specific content to iframe
+            iframeDoc.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Combat Export</title>
+                    <style>
+                        @page { size: landscape; margin: 5mm; }
+                        body { font-family: Arial; font-size: 9pt; }
+                        table { width: 100%; border-collapse: collapse; }
+                        th { background: #00162E; color: white; padding: 2mm; text-align: left; }
+                        td { padding: 2mm; border: 1px solid #ddd; }
+                        tr:nth-child(even) { background: #f8f8f8; }
+                    </style>
+                </head>
+                <body>
+                    <h1 style="text-align:center">Pathfinder 2e Combat Export</h1>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>AC</th>
+                                <th>HP</th>
+                                <th>Fortitude</th>
+                                <th>Reflex</th>
+                                <th>Will</th>
+                                <th>Initiative</th>
+                                <th>Perception</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${this.combatants.map(c => `
+                                <tr>
+                                    <td>${c.name}</td>
+                                    <td>${c.type}</td>
+                                    <td>${c.ac}</td>
+                                    <td>${c.currentHp}/${c.maxHp}</td>
+                                    <td>${c.fortSave || c.fortitude || '-'}</td>
+                                    <td>${c.refSave || c.reflex || '-'}</td>
+                                    <td>${c.willSave || c.will || '-'}</td>
+                                    <td>${c.initiative}</td>
+                                    <td>${c.perception}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                    <div style="text-align:center;margin-top:5mm">
+                        Generated by Pathfinder 2e Combat Manager
+                    </div>
+                </body>
+                </html>
+            `);
+            
+            iframeDoc.close();
+            
+            // Print the iframe content
+            iframe.contentWindow.focus();
+            iframe.contentWindow.print();
+            
+            // Clean up
+            setTimeout(() => document.body.removeChild(iframe), 1000);
+        },
                 
                 // Dice roller functions
                 rollD20() {
@@ -2210,9 +2386,6 @@
                             this.showDiceResult = false;
                         }, 2000);
                     });
-                    
-                    // Save state
-                    this.saveCombatState();
                 },
                 
                 // Roll saving throw
@@ -2315,6 +2488,158 @@
                 // Clear dice history
                 clearDiceHistory() {
                     this.diceHistory = [];
+                },
+                
+                // Export combatants to CSV
+                exportToCSV() {
+                    if (this.combatants.length === 0) {
+                        alert('No combatants to export!');
+                        return;
+                    }
+                    
+                    // Define CSV headers
+                    const headers = [
+                        'name', 'type', 'ac', 'maxHp', 'currentHp', 'initiative', 
+                        'initiativeBonus', 'speed', 'perception', 'saves', 'fortSave', 
+                        'refSave', 'willSave', 'actions', 'conditions', 'class', 'level'
+                    ];
+                    
+                    // Create CSV content
+                    let csvContent = headers.join(',') + '\n';
+                    
+                    this.combatants.forEach(combatant => {
+                        const row = headers.map(header => {
+                            let value = combatant[header] || '';
+                            
+                            // Handle special cases
+                            if (header === 'active') {
+                                value = combatant.active ? '1' : '0';
+                            }
+                            
+                            // Escape quotes and wrap in quotes if the field contains a comma
+                            if (typeof value === 'string' && (value.includes(',') || value.includes('"'))) {
+                                value = `"${value.replace(/"/g, '""')}"`;
+                            }
+                            
+                            return value;
+                        }).join(',');
+                        
+                        csvContent += row + '\n';
+                    });
+                    
+                    // Create a Blob and download
+                    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.setAttribute('href', url);
+                    link.setAttribute('download', 'pathfinder-combat-encounter.csv');
+                    link.style.visibility = 'hidden';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                },
+                
+                // Handle CSV file selection
+                handleCsvFileSelect(event) {
+                    const file = event.target.files[0];
+                    if (!file) return;
+                    
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const csvData = e.target.result;
+                        this.parseCsvData(csvData);
+                    };
+                    reader.readAsText(file);
+                },
+                
+                // Parse CSV data
+                parseCsvData(csvData) {
+                    this.csvPreviewData = [];
+                    
+                    // Split CSV into lines
+                    const lines = csvData.split('\n').filter(line => line.trim() !== '');
+                    
+                    // Extract headers
+                    const headers = lines[0].split(',').map(header => header.trim());
+                    
+                    // Process each row
+                    for (let i = 1; i < lines.length; i++) {
+                        const line = lines[i];
+                        const values = line.split(',');
+                        
+                        // Skip if not enough values
+                        if (values.length < headers.length) continue;
+                        
+                        const combatant = {};
+                        
+                        headers.forEach((header, index) => {
+                            let value = values[index].trim();
+                            
+                            // Remove quotes if present
+                            if (value.startsWith('"') && value.endsWith('"')) {
+                                value = value.substring(1, value.length - 1);
+                            }
+                            
+                            // Convert numeric fields
+                            if ([
+                                'ac', 'maxHp', 'currentHp', 'initiative', 
+                                'initiativeBonus', 'fortSave', 'refSave', 
+                                'willSave', 'level'
+                            ].includes(header)) {
+                                value = value ? parseFloat(value) : 0;
+                            }
+                            
+                            // Convert boolean fields
+                            if (header === 'active') {
+                                value = value === '1';
+                            }
+                            
+                            combatant[header] = value;
+                        });
+                        
+                        // Generate a unique ID
+                        combatant.id = Date.now() + i;
+                        
+                        // Set default values if missing
+                        if (!combatant.actions) combatant.actions = '3';
+                        if (!combatant.conditions) combatant.conditions = '';
+                        if (!combatant.active) combatant.active = false;
+                        
+                        this.csvPreviewData.push(combatant);
+                    }
+                },
+                
+                // Import CSV data into combatants
+                importCsvData() {
+                    if (this.csvPreviewData.length === 0) {
+                        alert('No valid combatants to import!');
+                        return;
+                    }
+                    
+                    // Clear current combatants
+                    this.combatants = [];
+                    
+                    // Add imported combatants
+                    this.csvPreviewData.forEach(combatant => {
+                        this.combatants.push(combatant);
+                    });
+                    
+                    // Sort by initiative
+                    this.combatants.sort((a, b) => b.initiative - a.initiative);
+                    
+                    // Select first combatant
+                    if (this.combatants.length > 0) {
+                        this.selectedCombatant = this.combatants[0];
+                    }
+                    
+                    // Save state
+                    this.saveCombatState();
+                    
+                    // Close modal
+                    this.showCsvImportModal = false;
+                    this.csvPreviewData = [];
+                    
+                    alert(`Successfully imported ${this.combatants.length} combatants!`);
                 }
             }));
         });
