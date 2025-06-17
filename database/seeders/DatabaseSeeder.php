@@ -25,10 +25,10 @@ class DatabaseSeeder extends Seeder
             RaritySeeder::class,
             SizeSeeder::class,
             TypeSeeder::class,
-            PathfinderTraitSeeder::class,
-            HazardSeeder::class,
+            // PathfinderTraitSeeder::class,,
             // CreatureSeeder::class,
         ]);
         Process::timeout(800)->run("cd ./scraper && go run .");
+        $this->call(HazardSeeder::class);
     }
 }
