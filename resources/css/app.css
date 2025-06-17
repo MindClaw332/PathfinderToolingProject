@@ -16,14 +16,7 @@
 
 /* Then define light and dark values */
 @layer base {
-    :root {
-    --color-primary: #000917;
-    --color-secondary: #00162E;
-    --color-tertiary: #002445;
-    --color-accent:  #AE8708;
-    --color-highlight: white;
-  }
-  /* :root {
+   :root {
     --color-primary: #e0e0e0;
     --color-secondary: #c0c0c0;
     --color-tertiary: #a0a0a0;
@@ -36,7 +29,7 @@
     --color-tertiary: #002445;
     --color-accent:  #AE8708;
     --color-highlight: white;
-  } */
+  } 
 }
 
 .scrollbar-hide {
