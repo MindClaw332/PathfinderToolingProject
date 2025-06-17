@@ -213,6 +213,11 @@ const buttonPressCount = {};
 function addLevel (index) {
     const levelInput = document.getElementById(`level-${index}`);
 
+     // Prevent going above 25
+    if (levelInput.value === "25") {
+        return;
+    }
+
     if (!buttonPressCount[index]) buttonPressCount[index] = 0;
 
     // Change input value
@@ -232,6 +237,11 @@ function addLevel (index) {
 // Subtract a level for a creature
 function subtractLevel (index) {
     const levelInput = document.getElementById(`level-${index}`);
+
+    // Prevent going below -1
+    if (levelInput.value === "-1") {
+        return;
+    }
 
     if (!buttonPressCount[index]) buttonPressCount[index] = 0;
     
