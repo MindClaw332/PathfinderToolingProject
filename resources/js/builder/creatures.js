@@ -253,6 +253,8 @@ function addLevel (index) {
 // Subtract a level for a creature
 function subtractLevel (index) {
     const levelInput = document.getElementById(`level-${index}`);
+    const creature = chosenCreatures[index];
+    const originalLevel = creature.original_level || creature.level;
 
     // Prevent going below -1
     if (levelInput.value === "-1") {
@@ -265,6 +267,10 @@ function subtractLevel (index) {
     
     // Change input value
     if (levelInput.value === "1") {
+        levelInput.stepDown();
+        levelInput.stepDown();
+        buttonPressCount[index] -= 1;
+    } else if (levelInput.value === "2" && originalLevel === 0) {
         levelInput.stepDown();
         levelInput.stepDown();
         buttonPressCount[index] -= 1;
