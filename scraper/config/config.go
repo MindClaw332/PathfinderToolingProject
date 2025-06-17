@@ -15,7 +15,10 @@ type Config struct {
 	Password string
 }
 
+// get the config from the .env
+
 func GetConfig() (*Config, error) {
+	// if this is executed in the subfolder of the project look up one directory otherwise look inside this directory
 	err := godotenv.Load("../.env")
 	if err != nil {
 		err := godotenv.Load(".env")
@@ -23,11 +26,12 @@ func GetConfig() (*Config, error) {
 			log.Fatal(err)
 		}
 	}
-
+	// error if the connection is not mysql
 	if os.Getenv("DB_HOST") != "mysql" {
 		log.Printf("Wrong database driver need mysql has: %v", os.Getenv("DB_HOST"))
 	}
 
+	// add it to a memory address we can return and modify later if necessary
 	cfg := &Config{
 		Host:     os.Getenv("DB_HOST"),
 		Port:     os.Getenv("DB_PORT"),

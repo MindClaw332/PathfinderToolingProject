@@ -8,6 +8,7 @@ import (
 	"unicode"
 )
 
+// find the first number in the string and return only the number as an integer
 func ExtractNumber(s string) (int, error) {
 	trimmed := strings.TrimSpace(s)
 	var numStr strings.Builder
@@ -26,6 +27,8 @@ func ExtractNumber(s string) (int, error) {
 
 	return strconv.Atoi(numStr.String())
 }
+
+// finds the index of a string inside of a given slice
 func FindStringIndex(slice []string, target string) int {
 	target = strings.ToLower(target)
 
@@ -36,6 +39,8 @@ func FindStringIndex(slice []string, target string) int {
 	}
 	return -1
 }
+
+// gets the last id from a given table in a database
 func GetLastIdFromTable(tableName string, databaseConn *sql.DB) (int, error) {
 	var maxID int
 	query := fmt.Sprintf("SELECT MAX(id) FROM %v", tableName)
