@@ -309,6 +309,7 @@ class BuilderController extends Controller
         }
 
         $html = view('builder.partials.encounterBudget', ['threatLevel' => $threatLevel, 'skippedCreatures' => $skippedCreatures])->render();
+        $select = view('builder.partials.selectThreat', ['threatLevel' => $threatLevel])->render();
 
         return response()->json([
             'success' => true,
@@ -316,6 +317,7 @@ class BuilderController extends Controller
             'threat_level' => $threatLevel,
             'skippedCreatures' => $skippedCreatures,
             'html' => $html,
+            'select' => $select,
         ]);
     }
 }

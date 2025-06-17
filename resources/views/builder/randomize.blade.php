@@ -39,14 +39,9 @@
             @include('builder.partials.hazardList', ['chosenHazards' => $chosenHazards])
         </div>
         <!-- choose difficulty -->
-        <div class="text-lg m-1">Choose threat</div>
-        <select class="w-full p-3">
-            <option>Trivial-threat</option>
-            <option>Low-threat</option>
-            <option>Moderate-threat</option>
-            <option>Severe-threat</option>
-            <option>Extreme-threat</option>
-        </select>
+        <div>
+            @include('builder.partials.selectThreat', ['threatLevel' => $threatLevel])
+        </div>
         <!-- buttons -->
         <div class="flex justify-between gap-4">
             <button class="bg-secondary w-1/2 p-1 rounded-lg">randomize</button>

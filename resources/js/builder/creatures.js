@@ -167,6 +167,7 @@ async function calculateXP () {
     });
     if (response.data.success) {
         document.getElementById('encounterBar').innerHTML = response.data.html;
+        document.getElementById('selectThreat').innerHTML = response.data.select;
     }
 }
 

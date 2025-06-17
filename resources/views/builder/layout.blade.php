@@ -5,6 +5,7 @@
     'resources/js/builder/search.js', 
     'resources/js/builder/hazards.js',
     'resources/js/builder/creatures.js',
+    'resources/js/builder/randomize.js',
 ])
 
 <div class="bg-primary text-white h-full w-full">
