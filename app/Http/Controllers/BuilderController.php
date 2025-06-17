@@ -127,9 +127,22 @@ class BuilderController extends Controller
         $creatures = session($sessionKey, []);
         
         if (isset($creatures[$index])) {
+            // Store original level if it doesn't exist yet
+            if (!isset($creatures[$index]['original_level'])) {
+                $creatures[$index]['original_level'] = $creatures[$index]['level'];
+            }
+            
             $creatures[$index] = array_merge(
                 $creatures[$index], 
-                $request->only(['level'])
+                $request->only([
+                    'level',
+                    'hp',
+                    'ac',
+                    'fortitude',
+                    'reflex',
+                    'will',
+                    'perception',
+                ])
             );
             session([$sessionKey => $creatures]);
         }

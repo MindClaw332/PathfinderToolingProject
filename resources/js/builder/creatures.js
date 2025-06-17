@@ -1,6 +1,9 @@
 let partySize = document.getElementById('partySize');
 let partyLevel = document.getElementById('partyLevel');
 
+const buttonPressCount = {};
+const editCreature = {};
+
 let baseUrl = `/content/${contentId}`;
 let chosenCreatures;
 
@@ -117,20 +120,33 @@ function hideCreatureEdit (index) {
     stat.classList.add('hidden');
 
     level.value = level.dataset.default;
+    buttonPressCount[index] = 0;
+    delete editCreature[index];
 }
 
 // Update the creature level
 async function updateCreature(index) {
-    const levelInput = document.getElementById(`level-${index}`);
-    const level = levelInput.value;
+    // Check if values are present
+    if (!editCreature[index]) {
+        console.error('No edit data found for creature', index);
+        return;
+    }
 
-    const response = await axios.put(`${baseUrl}/creatures/${index}`, {
-        level: level,
-    });
+    // Set the values
+    const updateData = {
+        ...editCreature[index]
+    };
 
+    // Send the values
+    const response = await axios.put(`${baseUrl}/creatures/${index}`, updateData);
+
+    // If success rerender/reset everything
     if (response.data.success) {
         document.getElementById('creature-list').innerHTML = response.data.html;
         refreshChosenCreatures ();
+        buttonPressCount[index] = 0;
+        delete editCreature[index];
+        calculateXP ();
     };
 }
 
@@ -207,8 +223,6 @@ function refreshChosenCreatures () {
     }
 }
 
-const buttonPressCount = {};
-
 // Add a level to a creature
 function addLevel (index) {
     const levelInput = document.getElementById(`level-${index}`);
@@ -218,7 +232,9 @@ function addLevel (index) {
         return;
     }
 
-    if (!buttonPressCount[index]) buttonPressCount[index] = 0;
+    if (!buttonPressCount[index]) { 
+        buttonPressCount[index] = 0;
+    }
 
     // Change input value
     if (levelInput.value <= 0){
@@ -231,7 +247,7 @@ function addLevel (index) {
     }
     
     // Calculate and show adjustments for this specific creature
-    calculateAndShowAdjustments(index);
+    calculateAdjustments(index);
 }
 
 // Subtract a level for a creature
@@ -243,7 +259,9 @@ function subtractLevel (index) {
         return;
     }
 
-    if (!buttonPressCount[index]) buttonPressCount[index] = 0;
+    if (!buttonPressCount[index]) { 
+        buttonPressCount[index] = 0;
+    }
     
     // Change input value
     if (levelInput.value === "1") {
@@ -256,10 +274,10 @@ function subtractLevel (index) {
     }
     
     // Calculate and show adjustments for this specific creature
-    calculateAndShowAdjustments(index);
+    calculateAdjustments(index);
 }
 
-function calculateAndShowAdjustments(index) {
+function calculateAdjustments(index) {
     const levelInput = document.getElementById(`level-${index}`);
     const creature = chosenCreatures[index];
     
@@ -310,6 +328,18 @@ function calculateAndShowAdjustments(index) {
             statDiff -= 2;
         }
     }
+
+    // Set stat changes for updateCreature()
+    editCreature[index] = {
+        originalLevel: creature.level,
+        level: Number(levelInput.value),
+        hp: creature.hp + hpDiff,
+        ac: creature.ac + statDiff,
+        fortitude: creature.fortitude + statDiff,
+        reflex: creature.reflex + statDiff,
+        will: creature.will + statDiff,
+        perception: creature.perception + statDiff,
+    };
     
     // Show changes for this specific creature
     showStatDiff(index, adjustmentCount, hpDiff, statDiff);
@@ -326,15 +356,22 @@ function showStatDiff (index, adjustmentCount, hpDiff, statDiff) {
     const willPreview = document.getElementById(`preview-will-${index}`);
     const perceptionPreview = document.getElementById(`preview-perception-${index}`);
     const warning = document.getElementById(`warning-${index}`);
+    const levelInput = document.getElementById(`level-${index}`);
+    const creature = chosenCreatures[index];
+
+    const originalLevel = creature.original_level || creature.level;
+    const currentInputLevel = Number(levelInput.value);
+
+    const diffLevel = currentInputLevel - originalLevel;
 
     // Set warning
-    if (adjustmentCount > 1) {
+    if (Math.abs(diffLevel) > 2) {
         warning.innerHTML = `
             Multiple elite/weak adjustments are not recommended. 
             Consider using the creature builder for building creatures instead.`;
-     } else {
+    } else {
         warning.innerHTML = '';
-     }
+    }
  
     // Signs
     let levelSign = adjustmentCount > 0 ? '+' : '';
