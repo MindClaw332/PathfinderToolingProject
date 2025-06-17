@@ -33,13 +33,13 @@
             @include('builder.partials.creatureList', ['chosenCreatures' => $chosenCreatures])
         </div>
         <!-- select traits and/or sizes -->
-        <div class="flex flex-row justify-between m-2">
+        <div class="flex flex-col m-2">
             <div>
                 <!-- traits -->
                 <div class="p-1">Trait</div>
-                <div class="flex flex-row gap-2">
+                <div class="flex flex-wrap flex-row gap-2">
                     @foreach($traits as $trait)
-                        <button onclick="" class="bg-tertiary p-1 rounded-lg" id="randomize-trait-{{$trait->id}}">
+                        <button onclick="" class="bg-tertiary p-1 rounded-lg cursor-pointer" id="randomize-trait-{{$trait->id}}">
                             {{$trait->name}}
                         </button>
                     @endforeach
@@ -48,9 +48,9 @@
             <div>
                 <!-- sizes -->
                 <div class="p-1">Size</div>
-                <div class="flex flex-row gap-2">
+                <div class="flex flex-wrap flex-row gap-2">
                     @foreach($sizes as $size)
-                        <button onclick="" class="bg-tertiary p-1 rounded-lg" id="randomize-size-{{$size->id}}">
+                        <button onclick="" class="bg-tertiary p-1 rounded-lg cursor-pointer" id="randomize-size-{{$size->id}}">
                             {{$size->name}}
                         </button>
                     @endforeach
@@ -75,9 +75,9 @@
         <div class="m-2">
             <!-- Types -->
             <div class="p-1">Type</div>
-            <div class="flex flex-row gap-2">
+            <div class="flex flex-wrap flex-row gap-2">
                 @foreach($types as $type)
-                    <button onclick="" class="bg-tertiary p-1 rounded-lg" id="randomize-type-{{$type->id}}">
+                    <button onclick="" class="bg-tertiary p-1 rounded-lg cursor-pointer" id="randomize-type-{{$type->id}}">
                         {{$type->name}}
                     </button>
                 @endforeach

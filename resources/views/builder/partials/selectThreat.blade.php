@@ -9,7 +9,7 @@
     @endphp
 
     <div class="text-lg m-1">Choose threat</div>
-    <select class="w-full p-3">
+    <select class="w-full p-3 cursor-pointer">
         @foreach ($availableOptions as $option)
             <option value="{{ $option }}" {{ $option === $threatLevel ? 'selected' : '' }}>
                 {{ $option }}-threat

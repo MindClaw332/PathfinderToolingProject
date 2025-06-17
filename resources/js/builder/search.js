@@ -234,7 +234,7 @@ function renderCreatures(list) {
     list.forEach(creature => {
         // make wrapper
         const wrapper = document.createElement('div');
-        wrapper.className = 'p-2';
+        wrapper.className = 'p-2 cursor-pointer';
         wrapper.id = creature.id;
         // add hover
         wrapper.setAttribute('onmouseover', `showCreatureInfo(${creature.id})`);
@@ -281,7 +281,7 @@ function renderHazards(list) {
     list.forEach(hazard => {
         // make wrapper
         const wrapper = document.createElement('div');
-        wrapper.className = 'flex flex-row justify-between p-2';
+        wrapper.className = 'flex flex-row justify-between p-2 cursor-pointer';
         wrapper.id = hazard.id;
         // add hover
         wrapper.setAttribute('onmouseover', `showHazardInfo(${hazard.id})`);
