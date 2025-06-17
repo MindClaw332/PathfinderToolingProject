@@ -28,18 +28,15 @@
                 <div class="p-1" id="creatureAmount"></div>
             </div>
         </div>
-        <div class="divide-y-1 divide-y divide-tertiary m-1 max-h-46 overflow-y-auto scrollbar-hide" id="creature-list">
-            <!-- list chosen creatures -->
-            @include('builder.partials.creatureList', ['chosenCreatures' => $chosenCreatures])
-        </div>
         <!-- select traits and/or sizes -->
         <div class="flex flex-col m-2">
             <div>
                 <!-- traits -->
-                <div class="p-1">Trait</div>
-                <div class="flex flex-wrap flex-row gap-2">
+                <button onclick="showFilter('hideTraits')" class="p-1">Trait</button>
+                <div class="flex flex-wrap flex-row gap-2 hidden" id="hideTraits">
                     @foreach($traits as $trait)
-                        <button onclick="" class="bg-tertiary p-1 rounded-lg cursor-pointer" id="randomize-trait-{{$trait->id}}">
+                        <button onclick="selectedFilter(this, 'trait', {{$trait->id}})" 
+                        class="bg-tertiary p-1 rounded-lg cursor-pointer" id="randomize-trait-{{$trait->id}}">
                             {{$trait->name}}
                         </button>
                     @endforeach
@@ -47,15 +44,25 @@
             </div>
             <div>
                 <!-- sizes -->
-                <div class="p-1">Size</div>
-                <div class="flex flex-wrap flex-row gap-2">
+                <div class="flex flex-row justify-between">
+                    <button onclick="showFilter('hideSizes')" class="p-1">Size</button>
+                    <button onclick="resetSizes()" class="text-red-800 cursor-pointer hidden" id="resetSizes">
+                        Reset
+                    </button>
+                </div>
+                <div class="flex flex-wrap flex-row gap-2 hidden" id="hideSizes">
                     @foreach($sizes as $size)
-                        <button onclick="" class="bg-tertiary p-1 rounded-lg cursor-pointer" id="randomize-size-{{$size->id}}">
+                        <button onclick="selectedFilter(this, 'size', {{$size->id}})" 
+                        class="bg-tertiary p-1 rounded-lg cursor-pointer" id="randomize-size-{{$size->id}}">
                             {{$size->name}}
                         </button>
                     @endforeach
                 </div>
             </div>
+        </div>
+        <!-- list chosen creatures -->
+        <div class="divide-y-1 divide-y divide-tertiary m-1 max-h-46 overflow-y-auto scrollbar-hide" id="creature-list">
+            @include('builder.partials.creatureList', ['chosenCreatures' => $chosenCreatures])
         </div>
         <!-- add hazards -->
         <div class="flex flex-row justify-between">
@@ -67,21 +74,22 @@
                 <div class="p-1" id="hazardAmount"></div>
             </div>
         </div>
-        <div class="divide-y-1 divide-y divide-tertiary m-1 max-h-46 overflow-y-auto scrollbar-hide" id="hazard-list">
-            <!-- list chosen hazards -->
-            @include('builder.partials.hazardList', ['chosenHazards' => $chosenHazards])
-        </div>
         <!-- select types -->
         <div class="m-2">
             <!-- Types -->
-            <div class="p-1">Type</div>
-            <div class="flex flex-wrap flex-row gap-2">
+            <button onclick="showFilter('hideTypes')" class="p-1">Type</button>
+            <div class="flex flex-wrap flex-row gap-2 hidden" id="hideTypes">
                 @foreach($types as $type)
-                    <button onclick="" class="bg-tertiary p-1 rounded-lg cursor-pointer" id="randomize-type-{{$type->id}}">
+                    <button onclick="selectedFilter(this, 'type', {{$type->id}})" 
+                    class="bg-tertiary p-1 rounded-lg cursor-pointer" id="randomize-type-{{$type->id}}">
                         {{$type->name}}
                     </button>
                 @endforeach
             </div>
+        </div>
+        <!-- list chosen hazards -->
+        <div class="divide-y-1 divide-y divide-tertiary m-1 max-h-46 overflow-y-auto scrollbar-hide" id="hazard-list">
+            @include('builder.partials.hazardList', ['chosenHazards' => $chosenHazards])
         </div>
         <!-- choose difficulty -->
         <div>
