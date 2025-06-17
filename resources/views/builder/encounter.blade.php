@@ -10,11 +10,11 @@
             <div class="flex flex-row content-center">
                 <div class="flex flex-row">
                     <div>Party size:</div>
-                    <input class="m-2" type="number" id="partySize" value="4" onchange="calculateXP()">
+                    <input class="m-2" type="number" id="partySize" value="4" onchange="calculateXP()" min="1" max="12">
                 </div>
                 <div class="flex flex-row">
                     <div>Party level:</div>
-                    <input class="m-2" type="number" id="partyLevel" value="2" onchange="calculateXP()">
+                    <input class="m-2" type="number" id="partyLevel" value="2" onchange="calculateXP()" min="1" max="20">
                 </div>
             </div>
         </div>

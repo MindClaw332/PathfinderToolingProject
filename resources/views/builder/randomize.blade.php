@@ -10,11 +10,11 @@
             <div class="flex flex-row content-center">
                 <div class="flex flex-row">
                     <div>Party size:</div>
-                    <input class="m-2" type="number" id="partySize" value="4" onchange="calculateXP()">
+                    <input class="m-2" type="number" id="partySize" value="4" onchange="calculateXP()" min="1" max="12">
                 </div>
                 <div class="flex flex-row">
                     <div>Party level:</div>
-                    <input class="m-2" type="number" id="partyLevel" value="2" onchange="calculateXP()">
+                    <input class="m-2" type="number" id="partyLevel" value="2" onchange="calculateXP()" min="1" max="20">
                 </div>
             </div>
         </div>
@@ -77,7 +77,7 @@
             <div class="p-1">Type</div>
             <div class="flex flex-row gap-2">
                 @foreach($types as $type)
-                    <button onclick="toggleSelectedHazardType({{$type->id}})" class="bg-tertiary p-1 rounded-lg" id="type-{{$type->id}}">
+                    <button onclick="" class="bg-tertiary p-1 rounded-lg" id="randomize-type-{{$type->id}}">
                         {{$type->name}}
                     </button>
                 @endforeach
