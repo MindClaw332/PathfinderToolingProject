@@ -5,34 +5,34 @@
     <div class="p-2">
         <div class="flex flex-row justify-between">
         <!-- title -->
-            <div class="text-2xl m-1">Randomize</div>
+            <div class="text-2xl text-sky-50 m-1">Randomize</div>
             <!-- current player party -->
             <div class="flex flex-row content-center">
                 <div class="flex flex-row">
-                    <div>Party size:</div>
+                    <div class="content-center">Party size:</div>
                     <input class="m-2" type="number" id="partySize" value="4" onchange="calculateXP()" min="1" max="12">
                 </div>
                 <div class="flex flex-row">
-                    <div>Party level:</div>
+                    <div class="content-center">Party level:</div>
                     <input class="m-2" type="number" id="partyLevel" value="2" onchange="calculateXP()" min="1" max="20">
                 </div>
             </div>
         </div>
         <!-- add creatures -->
         <div class="flex flex-row justify-between">
-            <div class="text-lg m-1">Add creatures</div>
+            <div class="text-lg text-sky-600 m-1">Creatures</div>
             <!-- choose amount -->
-            <div class="flex flex-row">
-                <div>Amount:</div>
-                <input type="number">
-                <div class="p-1" id="creatureAmount"></div>
+            <div class="flex flex-row gap-2">
+                <div class="content-center">Amount:</div>
+                <input type="number" value="0" min="0" max="10">
+                <div class="content-center" id="creatureAmount"></div>
             </div>
         </div>
         <!-- select traits and/or sizes -->
         <div class="flex flex-col m-2">
             <div>
                 <!-- traits -->
-                <button onclick="showFilter('hideTraits')" class="p-1">Trait</button>
+                <button onclick="showFilter('hideTraits')" class="p-1 text-sky-200">Trait</button>
                 <div class="flex flex-wrap flex-row gap-2 hidden" id="hideTraits">
                     @foreach($traits as $trait)
                         <button onclick="selectedFilter(this, 'trait', {{$trait->id}})" 
@@ -45,7 +45,7 @@
             <div>
                 <!-- sizes -->
                 <div class="flex flex-row justify-between">
-                    <button onclick="showFilter('hideSizes')" class="p-1">Size</button>
+                    <button onclick="showFilter('hideSizes')" class="p-1 text-sky-200">Size</button>
                     <button onclick="resetSizes()" class="text-red-800 cursor-pointer hidden" id="resetSizes">
                         Reset
                     </button>
@@ -66,18 +66,18 @@
         </div>
         <!-- add hazards -->
         <div class="flex flex-row justify-between">
-            <div class="text-lg m-1">Add hazards</div>
+            <div class="text-lg text-sky-600 m-1">Hazards</div>
             <!-- choose amount -->
-            <div class="flex flex-row">
-                <div>Amount:</div>
-                <input type="number">
-                <div class="p-1" id="hazardAmount"></div>
+            <div class="flex flex-row gap-2">
+                <div class="content-center">Amount:</div>
+                <input type="number" value="0" min="0" max="2">
+                <div class="content-center" id="hazardAmount"></div>
             </div>
         </div>
         <!-- select types -->
         <div class="m-2">
             <!-- Types -->
-            <button onclick="showFilter('hideTypes')" class="p-1">Type</button>
+            <button onclick="showFilter('hideTypes')" class="p-1 text-sky-200">Type</button>
             <div class="flex flex-wrap flex-row gap-2 hidden" id="hideTypes">
                 @foreach($types as $type)
                     <button onclick="selectedFilter(this, 'type', {{$type->id}})" 
