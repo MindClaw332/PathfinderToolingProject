@@ -58,6 +58,8 @@
             color: var(--color-text);
             background-color: var(--color-bg);
             min-height: 100vh;
+            position: relative;
+            z-index: 1;
         }
         
         .dark .combat-manager {
@@ -77,6 +79,7 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
+            border: 1px solid var(--color-accent);
         }
         
         .dice-header {
@@ -203,6 +206,9 @@
             gap: 0.5rem;
             padding: 0.5rem 0;
             margin-bottom: 1.5rem;
+            border: 1px solid var(--color-accent);
+            border-radius: 8px;
+            padding: 0.5rem;
         }
         
         .turn-item {
@@ -247,6 +253,7 @@
             transition: all 0.2s ease;
             cursor: pointer;
             scroll-margin-top: 100px;
+            border: 1px solid var(--color-accent);
         }
         
         .dark .combatant-card {
@@ -496,6 +503,7 @@
             padding: 1rem;
             border-radius: 8px;
             width: 100%;
+            border: 1px solid var(--color-accent);
         }
         
         .dark .custom-dice-roller {
@@ -1125,6 +1133,189 @@
         .hidden {
             display: none;
         }
+        
+        /* Tutorial styles - Fixed colors */
+        .tutorial-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            display: none;
+        }
+        
+        .tutorial-overlay.visible {
+            display: block;
+        }
+        
+        .tutorial-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: var(--color-card);
+            color: var(--color-text);
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            z-index: 2001;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease-out;
+        }
+        
+        .dark .tutorial-popup {
+            background: var(--color-dark-card);
+            color: var(--color-dark-text);
+        }
+        
+        .tutorial-popup.visible {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        .tutorial-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--color-accent);
+        }
+        
+        .tutorial-content {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .tutorial-progress {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .dark .tutorial-progress {
+            color: #aaa;
+        }
+        
+        .tutorial-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .tutorial-highlight {
+            position: absolute;
+            border: 3px solid var(--color-accent);
+            border-radius: 8px;
+            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+            z-index: 1999;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            display: none; /* Added to fix overlay issue */
+        }
+        
+        .tutorial-skip {
+            color: #999;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        
+        .dark .tutorial-skip {
+            color: #ccc;
+        }
+        
+        /* New styles for better combatant display */
+        .combatant-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .combatant-stat {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+        
+        .combatant-stat-label {
+            min-width: 70px;
+            font-weight: 500;
+        }
+        
+        .combatant-stat-value {
+            font-weight: 600;
+            margin-left: 0.25rem;
+        }
+        
+        .initiative-roll-btn {
+            margin-left: 0.5rem;
+            background: rgba(0,0,0,0.1);
+            border-radius: 4px;
+            width: 24px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .dark .initiative-roll-btn {
+            background: rgba(255,255,255,0.1);
+            color: var(--color-accent); /* Added for better visibility */
+        }
+        
+        .hp-bar-container {
+            height: 8px;
+            background: rgba(0,0,0,0.1);
+            border-radius: 4px;
+            margin-top: 0.25rem;
+            overflow: hidden;
+        }
+        
+        .dark .hp-bar-container {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .hp-bar {
+            height: 100%;
+            background: var(--color-accent);
+            transition: width 0.3s ease;
+        }
+        
+        .section-header {
+            margin-bottom: 1rem;
+        }
+        
+        .combatant-actions {
+            margin-top: 0.5rem;
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .combatant-action-btn {
+            padding: 0.25rem 0.5rem;
+            background: var(--color-tertiary);
+            color: white;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        
+        /* Added for golden border sections */
+        .golden-border-section {
+            border: 1px solid var(--color-accent);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        #character-info-section > div {
+            border: 1px solid var(--color-accent);
+            border-radius: 8px;
+            overflow: hidden;
+        }
     </style>
 </head>
 <body>
@@ -1142,6 +1333,47 @@
             </div>
             <div class="dice-label" x-text="diceLabel"></div>
         </div>
+        
+        <!-- Tutorial Overlay -->
+        <div class="tutorial-overlay" :class="{ 'visible': tutorialActive }"></div>
+        
+        <!-- Tutorial Popup -->
+        <div class="tutorial-popup" :class="{ 'visible': tutorialActive }">
+            <div class="tutorial-title" x-text="currentTutorialStep.title"></div>
+            <div class="tutorial-content" x-html="currentTutorialStep.content"></div>
+            <div class="tutorial-progress">
+                Step <span x-text="currentTutorialIndex + 1"></span> of <span x-text="tutorialSteps.length"></span>
+            </div>
+            <div class="tutorial-buttons">
+                <button 
+                    x-show="currentTutorialIndex > 0" 
+                    @click="prevTutorialStep"
+                    class="btn btn-secondary"
+                >
+                    <i class="fas fa-arrow-left mr-1"></i> Previous
+                </button>
+                <button 
+                    x-show="currentTutorialIndex === tutorialSteps.length - 1" 
+                    @click="endTutorial"
+                    class="btn btn-primary"
+                >
+                    Finish Tutorial
+                </button>
+                <button 
+                    x-show="currentTutorialIndex < tutorialSteps.length - 1" 
+                    @click="nextTutorialStep"
+                    class="btn btn-primary"
+                >
+                    Next <i class="fas fa-arrow-right ml-1"></i>
+                </button>
+            </div>
+            <div class="text-right mt-2">
+                <span class="tutorial-skip" @click="endTutorial">Skip Tutorial</span>
+            </div>
+        </div>
+        
+        <!-- Tutorial Highlight Box -->
+        <div class="tutorial-highlight" :style="highlightStyle"></div>
         
         <!-- Add Combatant Modal -->
         <div class="creature-modal" :class="{ 'visible': showAddCreatureModal }">
@@ -1444,6 +1676,9 @@
                 
                 <div class="header-controls">
                     <div class="header-buttons">
+                        <button class="btn btn-info" @click="startTutorial">
+                            <i class="fas fa-graduation-cap mr-1"></i> Tutorial
+                        </button>
                         <button class="btn btn-primary" @click="openAddCombatantModal">
                             <i class="fas fa-plus mr-1"></i> Add Combatant
                         </button>
@@ -1469,17 +1704,12 @@
                     <button @click="toggleTheme" 
                             class="theme-toggle" 
                             title="Toggle theme">
-                        <i class="sun">☀️</i>
-                        <i class="moon">🌙</i>
                     </button>
                 </div>
             </div>
             
-            <!-- Dice buttons -->
+            <!-- Dice buttons - Reordered to d4, d6, d8, d12, d20, d100 -->
             <div class="dice-header">
-                <div class="dice-btn" @click="rollD20" title="Roll d20">
-                    <span>d20</span>
-                </div>
                 <div class="dice-btn" @click="rollDice('d4')" title="Roll d4">
                     <span>d4</span>
                 </div>
@@ -1489,11 +1719,11 @@
                 <div class="dice-btn" @click="rollDice('d8')" title="Roll d8">
                     <span>d8</span>
                 </div>
-                <div class="dice-btn" @click="rollDice('d10')" title="Roll d10">
-                    <span>d10</span>
-                </div>
                 <div class="dice-btn" @click="rollDice('d12')" title="Roll d12">
                     <span>d12</span>
+                </div>
+                <div class="dice-btn" @click="rollD20" title="Roll d20">
+                    <span>d20</span>
                 </div>
                 <div class="dice-btn" @click="rollDice('d100')" title="Roll d100 (percentile)">
                     <span>%</span>
@@ -1591,11 +1821,10 @@
                                 </div>
                             </div>
                             
-                            <div class="grid grid-cols-2 gap-2 text-sm mb-3">
-                                <div class="initiative-container">
-                                    <span>Initiative: </span>
-                                    <span x-text="combatant.initiative" class="font-medium ml-1"></span>
-                                    <!-- Initiative Roll Button -->
+                            <div class="combatant-stats">
+                                <div class="combatant-stat">
+                                    <span class="combatant-stat-label">Initiative:</span>
+                                    <span class="combatant-stat-value" x-text="combatant.initiative"></span>
                                     <button 
                                         @click.stop="rollInitiative(combatant)"
                                         class="initiative-roll-btn"
@@ -1604,17 +1833,26 @@
                                         <i class="fas fa-dice"></i>
                                     </button>
                                 </div>
-                                <div>AC: <span x-text="combatant.ac" class="font-medium"></span></div>
+                                <div class="combatant-stat">
+                                    <span class="combatant-stat-label">AC:</span>
+                                    <span class="combatant-stat-value" x-text="combatant.ac"></span>
+                                </div>
                                 <template x-if="combatant.class">
-                                    <div>Class: <span x-text="combatant.class" class="font-medium"></span></div>
+                                    <div class="combatant-stat">
+                                        <span class="combatant-stat-label">Class:</span>
+                                        <span class="combatant-stat-value" x-text="combatant.class"></span>
+                                    </div>
                                 </template>
                                 <template x-if="combatant.level">
-                                    <div>Level: <span x-text="combatant.level" class="font-medium"></span></div>
+                                    <div class="combatant-stat">
+                                        <span class="combatant-stat-label">Level:</span>
+                                        <span class="combatant-stat-value" x-text="combatant.level"></span>
+                                    </div>
                                 </template>
                             </div>
                             
                             <div class="mt-1">
-                                <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center justify-between mb-1">
                                     <span class="text-sm font-medium">HP:</span>
                                     <div class="flex items-center">
                                         <input 
@@ -1627,6 +1865,10 @@
                                         <span class="mx-1 text-sm">/</span>
                                         <span x-text="combatant.maxHp" class="text-sm"></span>
                                     </div>
+                                </div>
+                                
+                                <div class="hp-bar-container">
+                                    <div class="hp-bar" :style="'width: ' + (combatant.currentHp / combatant.maxHp * 100) + '%'"></div>
                                 </div>
                                 
                                 <div class="hp-controls">
@@ -1662,9 +1904,25 @@
                                     <input 
                                         type="text" 
                                         x-model="combatant.conditions" 
-                                        class="conditions-input" 
+                                        class="conditions-input w-full p-1 border rounded text-sm" 
                                         placeholder="Add conditions (comma separated)"
                                     >
+                                </div>
+                                
+                                <!-- Quick Actions -->
+                                <div class="combatant-actions">
+                                    <button class="combatant-action-btn" @click.stop="rollAttack(combatant)">
+                                        Attack
+                                    </button>
+                                    <button class="combatant-action-btn" @click.stop="rollDamage(combatant)">
+                                        Damage
+                                    </button>
+                                    <button class="combatant-action-btn" @click.stop="addCondition(combatant, 'Flat-footed')">
+                                        Flat-footed
+                                    </button>
+                                    <button class="combatant-action-btn" @click.stop="addCondition(combatant, 'Stunned')">
+                                        Stunned
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -1674,111 +1932,113 @@
             
             <!-- Combatant Detail -->
             <div class="lg:col-span-1" id="character-info-section">
-                <h2 class="text-xl font-bold mb-3">Combatant Details</h2>
-                
-                <template x-if="selectedCombatant">
-                    <div>
-                        <div class="detail-header">
-                            <h3 class="text-xl font-bold" x-text="selectedCombatant.name"></h3>
-                            <div class="flex flex-col gap-1 mt-2 text-sm">
-                                <div>AC: <span x-text="selectedCombatant.ac" class="font-bold"></span></div>
-                                <div>HP: 
-                                    <span x-text="selectedCombatant.currentHp" class="font-bold"></span>
-                                    <span>/</span>
-                                    <span x-text="selectedCombatant.maxHp" class="font-bold"></span>
-                                </div>
-                                <div>Initiative: <span x-text="selectedCombatant.initiative" class="font-bold"></span></div>
-                                <div>Conditions: 
-                                    <span class="font-bold" x-text="selectedCombatant.conditions || 'None'"></span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="detail-content">
-                            <!-- Conditions Editor -->
-                            <div class="mb-6">
-                                <h4 class="font-bold text-lg mb-2">Edit Conditions</h4>
-                                <textarea 
-                                    x-model="selectedCombatant.conditions" 
-                                    class="w-full p-2 border rounded conditions-textarea" 
-                                    placeholder="Enter conditions (comma separated)&#10;Example: frightened 2, sickened, slowed"
-                                ></textarea>
-                                <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                                    Separate multiple conditions with commas
-                                </div>
-                            </div>
-                            
-                            <!-- Stats Grid -->
-                            <div class="stat-grid">
-                                <div class="stat-item">
-                                    <div class="stat-label">Speed</div>
-                                    <div class="stat-value" x-text="selectedCombatant.speed"></div>
-                                </div>
-                                <div class="stat-item">
-                                    <div class="stat-label">Perception</div>
-                                    <div class="stat-value" x-text="selectedCombatant.perception"></div>
-                                </div>
-                                <div class="stat-item">
-                                    <div class="stat-label">Saves</div>
-                                    <div class="stat-value" x-text="selectedCombatant.saves"></div>
-                                </div>
-                                <div class="stat-item">
-                                    <div class="stat-label">Actions</div>
-                                    <div class="stat-value" x-text="selectedCombatant.actions"></div>
-                                </div>
-                            </div>
-                            
-                            <!-- Stat Block -->
-                            <template x-if="selectedCombatant.type === 'monster'">
-                                <div>
-                                    <!-- Saving Throw Roller -->
-                                    <div class="save-rolls">
-                                        <h4 class="font-bold text-lg mb-2">
-                                            <i class="fas fa-shield-alt"></i> Saving Throws
-                                        </h4>
-                                        <div class="save-buttons">
-                                            <button class="save-btn" @click="rollSave('Fortitude', selectedCombatant.fortSave)">
-                                                Fortitude <span x-text="selectedCombatant.fortSave"></span>
-                                            </button>
-                                            <button class="save-btn" @click="rollSave('Reflex', selectedCombatant.refSave)">
-                                                Reflex <span x-text="selectedCombatant.refSave"></span>
-                                            </button>
-                                            <button class="save-btn" @click="rollSave('Will', selectedCombatant.willSave)">
-                                                Will <span x-text="selectedCombatant.willSave"></span>
-                                            </button>
-                                        </div>
+                <div class="golden-border-section">
+                    <h2 class="text-xl font-bold mb-3">Combatant Details</h2>
+                    
+                    <template x-if="selectedCombatant">
+                        <div>
+                            <div class="detail-header">
+                                <h3 class="text-xl font-bold" x-text="selectedCombatant.name"></h3>
+                                <div class="flex flex-col gap-1 mt-2 text-sm">
+                                    <div>AC: <span x-text="selectedCombatant.ac" class="font-bold"></span></div>
+                                    <div>HP: 
+                                        <span x-text="selectedCombatant.currentHp" class="font-bold"></span>
+                                        <span>/</span>
+                                        <span x-text="selectedCombatant.maxHp" class="font-bold"></span>
+                                    </div>
+                                    <div>Initiative: <span x-text="selectedCombatant.initiative" class="font-bold"></span></div>
+                                    <div>Conditions: 
+                                        <span class="font-bold" x-text="selectedCombatant.conditions || 'None'"></span>
                                     </div>
                                 </div>
-                            </template>
+                            </div>
                             
-                            <template x-if="selectedCombatant.type === 'player'">
-                                <div class="stat-block">
-                                    <div class="grid grid-cols-1 gap-4">
-                                        <div>
-                                            <div class="mb-2 text-sm">
-                                                <strong>Class:</strong> <span x-text="selectedCombatant.class"></span>
-                                            </div>
-                                            <div class="mb-2 text-sm">
-                                                <strong>Level:</strong> <span x-text="selectedCombatant.level"></span>
+                            <div class="detail-content">
+                                <!-- Conditions Editor -->
+                                <div class="mb-6">
+                                    <h4 class="font-bold text-lg mb-2">Edit Conditions</h4>
+                                    <textarea 
+                                        x-model="selectedCombatant.conditions" 
+                                        class="w-full p-2 border rounded conditions-textarea" 
+                                        placeholder="Enter conditions (comma separated)&#10;Example: frightened 2, sickened, slowed"
+                                    ></textarea>
+                                    <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                                        Separate multiple conditions with commas
+                                    </div>
+                                </div>
+                                
+                                <!-- Stats Grid -->
+                                <div class="stat-grid">
+                                    <div class="stat-item">
+                                        <div class="stat-label">Speed</div>
+                                        <div class="stat-value" x-text="selectedCombatant.speed || '30 ft'"></div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-label">Perception</div>
+                                        <div class="stat-value" x-text="selectedCombatant.perception || '+5'"></div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-label">Saves</div>
+                                        <div class="stat-value" x-text="selectedCombatant.saves || '+6/+4/+8'"></div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-label">Actions</div>
+                                        <div class="stat-value" x-text="selectedCombatant.actions || '3'"></div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Stat Block -->
+                                <template x-if="selectedCombatant.type === 'monster'">
+                                    <div>
+                                        <!-- Saving Throw Roller -->
+                                        <div class="save-rolls">
+                                            <h4 class="font-bold text-lg mb-2">
+                                                <i class="fas fa-shield-alt"></i> Saving Throws
+                                            </h4>
+                                            <div class="save-buttons">
+                                                <button class="save-btn" @click="rollSave('Fortitude', selectedCombatant.fortSave || 8)">
+                                                    Fortitude <span x-text="selectedCombatant.fortSave || 8"></span>
+                                                </button>
+                                                <button class="save-btn" @click="rollSave('Reflex', selectedCombatant.refSave || 5)">
+                                                    Reflex <span x-text="selectedCombatant.refSave || 5"></span>
+                                                </button>
+                                                <button class="save-btn" @click="rollSave('Will', selectedCombatant.willSave || 7)">
+                                                    Will <span x-text="selectedCombatant.willSave || 7"></span>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </template>
+                                </template>
+                                
+                                <template x-if="selectedCombatant.type === 'player'">
+                                    <div class="stat-block">
+                                        <div class="grid grid-cols-1 gap-4">
+                                            <div>
+                                                <div class="mb-2 text-sm">
+                                                    <strong>Class:</strong> <span x-text="selectedCombatant.class || 'Fighter'"></span>
+                                                </div>
+                                                <div class="mb-2 text-sm">
+                                                    <strong>Level:</strong> <span x-text="selectedCombatant.level || '5'"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
                         </div>
-                    </div>
-                </template>
-                
-                <template x-if="!selectedCombatant">
-                    <div class="detail-content text-center py-12">
-                        <div class="text-gray-500 dark:text-gray-400">
-                            Select a combatant to view details
+                    </template>
+                    
+                    <template x-if="!selectedCombatant">
+                        <div class="detail-content text-center py-12">
+                            <div class="text-gray-500 dark:text-gray-400">
+                                Select a combatant to view details
+                            </div>
+                            <div class="mt-4 text-5xl text-gray-300 dark:text-gray-600">
+                                <i class="fas fa-user"></i>
+                            </div>
                         </div>
-                        <div class="mt-4 text-5xl text-gray-300 dark:text-gray-600">
-                            <i class="fas fa-user"></i>
-                        </div>
-                    </div>
-                </template>
+                    </template>
+                </div>
             </div>
         </div>
     </div>
@@ -1826,6 +2086,53 @@
                 // CSV Import properties
                 showCsvImportModal: false,
                 csvPreviewData: [],
+                
+                // Tutorial properties
+                tutorialActive: false,
+                currentTutorialIndex: 0,
+                highlightStyle: '',
+                tutorialSteps: [
+                    {
+                        title: "Welcome to Combat Manager",
+                        content: "This tutorial will guide you through the main features of the Pathfinder 2e Combat Manager.<br><br>You'll learn how to add combatants, manage turns, track HP, and use dice rollers.",
+                        element: null
+                    },
+                    {
+                        title: "Adding Combatants",
+                        content: "Click the <strong>Add Combatant</strong> button to add monsters or player characters to your combat.<br><br>You can add creatures from the database or create custom player characters.",
+                        element: ".header-buttons .btn:nth-child(2)"
+                    },
+                    {
+                        title: "Turn Order",
+                        content: "The turn order bar shows all combatants in initiative order.<br><br>Click on a combatant's card to set their turn as active.",
+                        element: ".turn-order"
+                    },
+                    {
+                        title: "Combatant Cards",
+                        content: "Each combatant has a card showing their vital stats.<br><br>Click on a card to select it and view detailed information.",
+                        element: ".combatant-card"
+                    },
+                    {
+                        title: "Managing Health",
+                        content: "Use the <strong>HP controls</strong> to adjust a combatant's health.<br><br>You can also edit the HP number directly.",
+                        element: ".hp-controls"
+                    },
+                    {
+                        title: "Dice Rollers",
+                        content: "Use the dice buttons to quickly roll dice.<br><br>The custom dice roller lets you enter complex expressions like 2d8+5.",
+                        element: ".dice-header"
+                    },
+                    {
+                        title: "Combatant Details",
+                        content: "The details panel shows all information for the selected combatant.<br><br>Here you can edit conditions, view stats, and roll saving throws.",
+                        element: "#character-info-section"
+                    },
+                    {
+                        title: "Tutorial Complete",
+                        content: "You've completed the tutorial!<br><br>Remember you can always restart this tutorial using the <strong>Tutorial</strong> button.",
+                        element: null
+                    }
+                ],
                 
                 init() {
                     // Initialize theme
@@ -2118,77 +2425,77 @@
                     this.showExportModal = true;
                 },
                 
-               printCombatants() {
-            // Create a temporary iframe for printing
-            const iframe = document.createElement('iframe');
-            iframe.style.display = 'none';
-            document.body.appendChild(iframe);
-            
-            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-            
-            // Write print-specific content to iframe
-            iframeDoc.write(`
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <title>Combat Export</title>
-                    <style>
-                        @page { size: landscape; margin: 5mm; }
-                        body { font-family: Arial; font-size: 9pt; }
-                        table { width: 100%; border-collapse: collapse; }
-                        th { background: #00162E; color: white; padding: 2mm; text-align: left; }
-                        td { padding: 2mm; border: 1px solid #ddd; }
-                        tr:nth-child(even) { background: #f8f8f8; }
-                    </style>
-                </head>
-                <body>
-                    <h1 style="text-align:center">Pathfinder 2e Combat Export</h1>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Type</th>
-                                <th>AC</th>
-                                <th>HP</th>
-                                <th>Fortitude</th>
-                                <th>Reflex</th>
-                                <th>Will</th>
-                                <th>Initiative</th>
-                                <th>Perception</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${this.combatants.map(c => `
-                                <tr>
-                                    <td>${c.name}</td>
-                                    <td>${c.type}</td>
-                                    <td>${c.ac}</td>
-                                    <td>${c.currentHp}/${c.maxHp}</td>
-                                    <td>${c.fortSave || c.fortitude || '-'}</td>
-                                    <td>${c.refSave || c.reflex || '-'}</td>
-                                    <td>${c.willSave || c.will || '-'}</td>
-                                    <td>${c.initiative}</td>
-                                    <td>${c.perception}</td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                    <div style="text-align:center;margin-top:5mm">
-                        Generated by Pathfinder 2e Combat Manager
-                    </div>
-                </body>
-                </html>
-            `);
-            
-            iframeDoc.close();
-            
-            // Print the iframe content
-            iframe.contentWindow.focus();
-            iframe.contentWindow.print();
-            
-            // Clean up
-            setTimeout(() => document.body.removeChild(iframe), 1000);
-        },
+                printCombatants() {
+                    // Create a temporary iframe for printing
+                    const iframe = document.createElement('iframe');
+                    iframe.style.display = 'none';
+                    document.body.appendChild(iframe);
+                    
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    
+                    // Write print-specific content to iframe
+                    iframeDoc.write(`
+                        <!DOCTYPE html>
+                        <html>
+                        <head>
+                            <title>Combat Export</title>
+                            <style>
+                                @page { size: landscape; margin: 5mm; }
+                                body { font-family: Arial; font-size: 9pt; }
+                                table { width: 100%; border-collapse: collapse; }
+                                th { background: #00162E; color: white; padding: 2mm; text-align: left; }
+                                td { padding: 2mm; border: 1px solid #ddd; }
+                                tr:nth-child(even) { background: #f8f8f8; }
+                            </style>
+                        </head>
+                        <body>
+                            <h1 style="text-align:center">Pathfinder 2e Combat Export</h1>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>AC</th>
+                                        <th>HP</th>
+                                        <th>Fortitude</th>
+                                        <th>Reflex</th>
+                                        <th>Will</th>
+                                        <th>Initiative</th>
+                                        <th>Perception</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${this.combatants.map(c => `
+                                        <tr>
+                                            <td>${c.name}</td>
+                                            <td>${c.type}</td>
+                                            <td>${c.ac}</td>
+                                            <td>${c.currentHp}/${c.maxHp}</td>
+                                            <td>${c.fortSave || c.fortitude || '-'}</td>
+                                            <td>${c.refSave || c.reflex || '-'}</td>
+                                            <td>${c.willSave || c.will || '-'}</td>
+                                            <td>${c.initiative}</td>
+                                            <td>${c.perception}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                            <div style="text-align:center;margin-top:5mm">
+                                Generated by Pathfinder 2e Combat Manager
+                            </div>
+                        </body>
+                        </html>
+                    `);
+                    
+                    iframeDoc.close();
+                    
+                    // Print the iframe content
+                    iframe.contentWindow.focus();
+                    iframe.contentWindow.print();
+                    
+                    // Clean up
+                    setTimeout(() => document.body.removeChild(iframe), 1000);
+                },
                 
                 // Dice roller functions
                 rollD20() {
@@ -2309,6 +2616,45 @@
                     setTimeout(() => {
                         this.showDiceResult = false;
                     }, 2000);
+                },
+                
+                // Roll attack
+                rollAttack(combatant) {
+                    const roll = Math.floor(Math.random() * 20) + 1;
+                    const bonus = combatant.attackBonus || 0;
+                    const total = roll + bonus;
+                    this.showDiceResult = true;
+                    this.diceResult = total;
+                    this.diceLabel = `${combatant.name} Attack`;
+                    this.diceCritical = null;
+                    if (roll === 20) this.diceCritical = 'success';
+                    if (roll === 1) this.diceCritical = 'failure';
+                    setTimeout(() => {
+                        this.showDiceResult = false;
+                    }, 2000);
+                },
+                
+                // Roll damage
+                rollDamage(combatant) {
+                    const damageRoll = Math.floor(Math.random() * 8) + 1 + Math.floor(Math.random() * 8) + 1;
+                    const bonus = combatant.damageBonus || 0;
+                    const total = damageRoll + bonus;
+                    this.showDiceResult = true;
+                    this.diceResult = total;
+                    this.diceLabel = `${combatant.name} Damage`;
+                    this.diceCritical = null;
+                    setTimeout(() => {
+                        this.showDiceResult = false;
+                    }, 2000);
+                },
+                
+                // Add condition to combatant
+                addCondition(combatant, condition) {
+                    if (!combatant.conditions) {
+                        combatant.conditions = condition;
+                    } else if (!combatant.conditions.includes(condition)) {
+                        combatant.conditions += ', ' + condition;
+                    }
                 },
                 
                 // Roll custom dice expression
@@ -2543,6 +2889,60 @@
                     this.csvPreviewData = [];
                     
                     alert(`Successfully imported ${this.combatants.length} combatants!`);
+                },
+                
+                // Tutorial methods
+                startTutorial() {
+                    this.tutorialActive = true;
+                    this.currentTutorialIndex = 0;
+                    this.positionTutorialHighlight();
+                },
+                
+                nextTutorialStep() {
+                    if (this.currentTutorialIndex < this.tutorialSteps.length - 1) {
+                        this.currentTutorialIndex++;
+                        this.positionTutorialHighlight();
+                    }
+                },
+                
+                prevTutorialStep() {
+                    if (this.currentTutorialIndex > 0) {
+                        this.currentTutorialIndex--;
+                        this.positionTutorialHighlight();
+                    }
+                },
+                
+                endTutorial() {
+                    this.tutorialActive = false;
+                    this.highlightStyle = '';
+                },
+                
+                positionTutorialHighlight() {
+                    const step = this.tutorialSteps[this.currentTutorialIndex];
+                    if (!step.element) {
+                        this.highlightStyle = '';
+                        return;
+                    }
+                    this.$nextTick(() => {
+                        const element = document.querySelector(step.element);
+                        if (element) {
+                            const rect = element.getBoundingClientRect();
+                            this.highlightStyle = `
+                                top: ${rect.top - 10}px;
+                                left: ${rect.left - 10}px;
+                                width: ${rect.width + 20}px;
+                                height: ${rect.height + 20}px;
+                            `;
+                            element.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'center'
+                            });
+                        }
+                    });
+                },
+                
+                get currentTutorialStep() {
+                    return this.tutorialSteps[this.currentTutorialIndex];
                 }
             }));
         });
