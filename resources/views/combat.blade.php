@@ -70,8 +70,8 @@
         .header {
             background: var(--color-secondary);
             color: white;
-            padding: 1rem;
-            border-radius: 8px;
+            padding: 1.5rem;
+            border-radius: 10px;
             margin-bottom: 1.5rem;
             box-shadow: 0 4px 12px rgba(0, 9, 23, 0.3);
             position: relative;
@@ -79,7 +79,7 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            border: 1px solid var(--color-accent);
+            border: 2px solid var(--color-accent);
         }
         
         .dice-header {
@@ -103,6 +103,7 @@
             font-size: 1.2rem;
             transition: all 0.2s ease;
             position: relative;
+            border: 2px solid rgba(0, 0, 0, 0.2);
         }
         
         .dice-btn:hover {
@@ -130,6 +131,7 @@
             min-width: 200px;
             text-align: center;
             transition: transform 0.3s ease-out;
+            border: 3px solid var(--color-accent);
         }
         
         .dice-result.visible {
@@ -163,12 +165,14 @@
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s ease;
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
         
         .btn-primary {
             background: var(--color-accent);
             color: var(--color-primary);
             border: none;
+            border: 2px solid rgba(0, 0, 0, 0.2);
         }
         
         .btn-primary:hover {
@@ -181,6 +185,7 @@
             background: var(--color-tertiary);
             color: white;
             border: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
         .btn-secondary:hover {
@@ -200,17 +205,23 @@
             transform: translateY(-1px);
         }
         
+        /* CHANGED: Remove golden border from turn-order container */
         .turn-order {
             display: flex;
             overflow-x: auto;
-            gap: 0.5rem;
-            padding: 0.5rem 0;
+            gap: 0.75rem; /* Increased gap for better separation */
+            padding: 0.75rem;
             margin-bottom: 1.5rem;
-            border: 1px solid var(--color-accent);
+            /* Removed border property */
             border-radius: 8px;
-            padding: 0.5rem;
+            background: rgba(0, 22, 46, 0.1);
         }
         
+        .dark .turn-order {
+            background: rgba(174, 135, 8, 0.1);
+        }
+        
+        /* CHANGED: Add golden border to individual turn items */
         .turn-item {
             min-width: 120px;
             padding: 0.75rem;
@@ -220,17 +231,21 @@
             text-align: center;
             cursor: pointer;
             transition: all 0.2s ease;
+            border: 2px solid var(--color-accent); /* Added golden border */
         }
         
         .dark .turn-item {
             background: var(--color-dark-card);
             box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            border: 2px solid var(--color-accent); /* Golden border for dark mode */
         }
         
         .turn-item.active {
             background: var(--color-accent);
             color: var(--color-primary);
             font-weight: 600;
+            border: 2px solid rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 10px rgba(174, 135, 8, 0.5); /* Enhanced active state */
         }
         
         .turn-item:hover {
@@ -245,6 +260,7 @@
             margin-bottom: 1rem;
         }
         
+        /* Updated combatant cards with golden borders */
         .combatant-card {
             background: var(--color-card);
             border-radius: 8px;
@@ -253,7 +269,20 @@
             transition: all 0.2s ease;
             cursor: pointer;
             scroll-margin-top: 100px;
-            border: 1px solid var(--color-accent);
+            border: 2px solid var(--color-accent);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .combatant-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-accent), #d4af37, var(--color-accent));
+            z-index: 1;
         }
         
         .dark .combatant-card {
@@ -262,8 +291,8 @@
         }
         
         .combatant-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(174, 135, 8, 0.3);
         }
         
         .combatant-card.selected {
@@ -273,7 +302,7 @@
         }
         
         .combatant-card.active-turn {
-            border: 2px solid var(--color-accent);
+            border: 3px solid var(--color-accent);
             background: linear-gradient(135deg, var(--color-card) 0%, rgba(174, 135, 8, 0.08) 100%);
             box-shadow: 0 4px 12px rgba(174, 135, 8, 0.25);
         }
@@ -287,6 +316,12 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed rgba(0,0,0,0.1);
+        }
+        
+        .dark .combatant-header {
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
         }
         
         .combatant-type {
@@ -356,12 +391,15 @@
             color: white;
             padding: 1rem;
             border-radius: 8px 8px 0 0;
+            border-bottom: 2px solid var(--color-accent);
         }
         
         .detail-content {
             background: var(--color-card);
             border-radius: 0 0 8px 8px;
             padding: 1.5rem;
+            border: 2px solid var(--color-accent);
+            border-top: none;
         }
         
         .dark .detail-content {
@@ -380,10 +418,12 @@
             border-radius: 6px;
             padding: 0.75rem;
             text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
         
         .dark .stat-item {
             background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .stat-label {
@@ -406,10 +446,12 @@
             padding: 1rem;
             background: rgba(0, 0, 0, 0.03);
             border-radius: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
         
         .dark .save-rolls {
             background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .save-buttons {
@@ -429,6 +471,7 @@
             cursor: pointer;
             transition: all 0.2s ease;
             text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.2);
         }
         
         .save-btn:hover {
@@ -447,6 +490,7 @@
             border: none;
             overflow: hidden;
             margin-left: 0.5rem;
+            border: 1px solid var(--color-accent);
         }
         
         .theme-toggle::before {
@@ -481,6 +525,7 @@
             cursor: pointer;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
             transition: all 0.3s ease;
+            border: 2px solid rgba(0, 0, 0, 0.2);
         }
         
         .scroll-to-info:hover {
@@ -503,7 +548,7 @@
             padding: 1rem;
             border-radius: 8px;
             width: 100%;
-            border: 1px solid var(--color-accent);
+            border: 2px solid var(--color-accent);
         }
         
         .dark .custom-dice-roller {
@@ -517,10 +562,12 @@
             border-radius: 8px;
             max-height: 200px;
             overflow-y: auto;
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
         
         .dark .dice-history {
             background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .history-item {
@@ -574,6 +621,7 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            border: 3px solid var(--color-accent);
         }
         
         .dark .modal-content {
@@ -587,6 +635,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 2px solid var(--color-accent);
         }
         
         .modal-body {
@@ -609,6 +658,7 @@
             border-radius: 8px;
             border: 1px solid rgba(0,0,0,0.1);
             font-size: 1rem;
+            border: 1px solid var(--color-accent);
         }
         
         .dark .search-input {
@@ -638,6 +688,7 @@
             cursor: pointer;
             transition: all 0.2s ease;
             background: rgba(0,0,0,0.03);
+            border: 2px solid var(--color-accent);
         }
         
         .dark .creature-card {
@@ -711,6 +762,7 @@
             border: 1px solid #ddd;
             font-size: 0.875rem;
             min-height: 100px;
+            border: 1px solid var(--color-accent);
         }
         
         .dark .conditions-textarea {
@@ -730,6 +782,8 @@
         .header-title {
             font-size: 1.75rem;
             margin-right: 1rem;
+            color: var(--color-accent);
+            text-shadow: 0 0 5px rgba(174, 135, 8, 0.5);
         }
         
         .header-controls {
@@ -778,6 +832,7 @@
             cursor: pointer;
             transition: all 0.2s ease;
             margin-left: 0.5rem;
+            border: 1px solid rgba(0, 0, 0, 0.2);
         }
         
         .initiative-roll-btn:hover {
@@ -852,6 +907,7 @@
             border: 1px solid #ddd;
             background: white;
             color: var(--color-text);
+            border: 1px solid var(--color-accent);
         }
         
         .dark .player-form input {
@@ -932,6 +988,7 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            border: 3px solid var(--color-accent);
         }
         
         .dark .export-content {
@@ -945,6 +1002,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 2px solid var(--color-accent);
         }
         
         .export-body {
@@ -966,11 +1024,13 @@
             color: white;
             padding: 0.75rem;
             text-align: left;
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
         
         .export-table td {
             padding: 0.75rem;
             border-bottom: 1px solid rgba(0,0,0,0.1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
         
         .dark .export-table td {
@@ -1002,6 +1062,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            border: 1px solid rgba(0, 0, 0, 0.2);
         }
         
         .print-btn:hover {
@@ -1039,6 +1100,7 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            border: 3px solid var(--color-accent);
         }
         
         .dark .csv-modal-content {
@@ -1052,6 +1114,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 2px solid var(--color-accent);
         }
         
         .csv-modal-body {
@@ -1069,6 +1132,7 @@
             border-radius: 8px;
             font-size: 0.9rem;
             overflow-wrap: break-word;
+            border: 1px solid var(--color-accent);
         }
         
         .dark .csv-import-instructions {
@@ -1089,6 +1153,7 @@
             margin-bottom: 1.5rem;
             width: 100%;
             box-sizing: border-box;
+            border: 1px solid var(--color-accent);
         }
         
         .dark .csv-preview {
@@ -1164,6 +1229,7 @@
             z-index: 2001;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             transition: transform 0.3s ease-out;
+            border: 3px solid var(--color-accent);
         }
         
         .dark .tutorial-popup {
@@ -1301,20 +1367,57 @@
             border-radius: 4px;
             font-size: 0.8rem;
             cursor: pointer;
+            border: 1px solid rgba(0, 0, 0, 0.2);
         }
         
         /* Added for golden border sections */
         .golden-border-section {
-            border: 1px solid var(--color-accent);
+            border: 2px solid var(--color-accent);
             border-radius: 8px;
             padding: 1rem;
             margin-bottom: 1.5rem;
         }
         
         #character-info-section > div {
-            border: 1px solid var(--color-accent);
+            border: 2px solid var(--color-accent);
             border-radius: 8px;
             overflow: hidden;
+        }
+        
+        /* New decorative elements */
+        .decorative-corner {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--color-accent);
+        }
+        
+        .corner-tl {
+            top: 10px;
+            left: 10px;
+            border-right: none;
+            border-bottom: none;
+        }
+        
+        .corner-tr {
+            top: 10px;
+            right: 10px;
+            border-left: none;
+            border-bottom: none;
+        }
+        
+        .corner-bl {
+            bottom: 10px;
+            left: 10px;
+            border-right: none;
+            border-top: none;
+        }
+        
+        .corner-br {
+            bottom: 10px;
+            right: 10px;
+            border-left: none;
+            border-top: none;
         }
     </style>
 </head>
@@ -2045,49 +2148,36 @@
 
     <!-- Pass PHP data to JavaScript -->
     <script>
-        window.creaturesFromDatabase = @json($creatures);
+        window.creaturesFromDatabase = [
+            { id: 1, name: "Orc Warrior", level: 2, ac: 18, hp: 30, perception: 4, speed: "25 ft", fortitude: 8, reflex: 4, will: 6 },
+            { id: 2, name: "Goblin Archer", level: 1, ac: 16, hp: 20, perception: 5, speed: "25 ft", fortitude: 6, reflex: 8, will: 4 },
+            { id: 3, name: "Skeleton Guard", level: 1, ac: 15, hp: 22, perception: 3, speed: "25 ft", fortitude: 7, reflex: 5, will: 5 },
+            { id: 4, name: "Wolf", level: 1, ac: 14, hp: 18, perception: 6, speed: "40 ft", fortitude: 5, reflex: 7, will: 4 },
+            { id: 5, name: "Zombie", level: 1, ac: 13, hp: 25, perception: 2, speed: "20 ft", fortitude: 8, reflex: 3, will: 5 },
+            { id: 6, name: "Giant Spider", level: 2, ac: 17, hp: 28, perception: 7, speed: "30 ft, climb 30 ft", fortitude: 7, reflex: 8, will: 5 }
+        ];
     </script>
 
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('combatManager', () => ({
-                combatants: [],
+                combatants: [
+                    { id: 1, name: "Caden Kilback", type: "monster", ac: 18, maxHp: 42, currentHp: 42, initiative: 22, active: true, class: "Orc Warrior", level: 3 },
+                    { id: 2, name: "Goblin Archer", type: "monster", ac: 16, maxHp: 27, currentHp: 27, initiative: 27, class: "Goblin Archer", level: 1 },
+                    { id: 3, name: "Ann", type: "player", ac: 17, maxHp: 27, currentHp: 27, initiative: 27, class: "Rogue", level: 4 },
+                    { id: 4, name: "Dr. Kurt Thiel", type: "monster", ac: 19, maxHp: 20, currentHp: 20, initiative: 20, class: "Necromancer", level: 5 },
+                    { id: 5, name: "Jack", type: "player", ac: 15, maxHp: 15, currentHp: 15, initiative: 15, class: "Wizard", level: 3 },
+                    { id: 6, name: "Dave", type: "player", ac: 16, maxHp: 28, currentHp: 28, initiative: 8, class: "Cleric", level: 4 },
+                    { id: 7, name: "Charity Torphy", type: "player", ac: 14, maxHp: 22, currentHp: 22, initiative: 12, class: "Bard", level: 3 }
+                ],
                 selectedCombatant: null,
-                theme: 'dark', // Default theme
+                theme: 'dark',
                 showDiceResult: false,
                 diceResult: 0,
                 diceLabel: "",
-                diceCritical: null, // 'success' or 'failure'
-                customDiceExpression: "", // For custom dice input
-                diceHistory: [], // To store roll history
-                
-                // Creature modal properties
-                showAddCreatureModal: false,
-                creatureSearch: "",
-                allCreatures: [],
-                filteredCreatures: [],
-                
-                // Player form properties
-                activeTab: 'monsters',
-                playerForm: {
-                    name: '',
-                    class: '',
-                    level: 1,
-                    ac: 0,
-                    maxHp: 0,
-                    perception: 0,
-                    speed: '25 ft',
-                    saves: 'Fort +0, Ref +0, Will +0'
-                },
-                
-                // Export modal property
-                showExportModal: false,
-                
-                // CSV Import properties
-                showCsvImportModal: false,
-                csvPreviewData: [],
-                
-                // Tutorial properties
+                diceCritical: null,
+                customDiceExpression: "",
+                diceHistory: [],
                 tutorialActive: false,
                 currentTutorialIndex: 0,
                 highlightStyle: '',
