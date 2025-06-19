@@ -1,4 +1,11 @@
-@vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/builder/builder.js', 'resources/js/builder/search.js'])
+@vite([
+    'resources/css/app.css', 
+    'resources/js/app.js', 
+    'resources/js/builder/builder.js', 
+    'resources/js/builder/search.js', 
+    'resources/js/builder/hazards.js',
+    'resources/js/builder/creatures.js',
+])
 
 <div class="bg-primary text-white h-full w-full">
     <!-- selection bar -->
