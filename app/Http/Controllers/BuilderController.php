@@ -88,7 +88,7 @@ class BuilderController extends Controller
         $sizes = Size::get();
         $rarities = Rarity::get();
         $contentId = 'newcreature';
-        return view('builder.newcreature', compact([
+        return view('builder.newCreature', compact([
             'contentId',
             'creatures',
             'traits',
