@@ -72,7 +72,7 @@ class AuthController extends Controller
 
         event(new Registered($user));
 
-        return redirect()->route('login.form')->with('message', 'You have been registered. Login to get started!');
+        return redirect()->route('login.form')->with('message', 'You have been registered. Check your inbox and register your email!');
     }
 
     public function logout(Request $request)

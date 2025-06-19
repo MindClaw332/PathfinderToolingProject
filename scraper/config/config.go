@@ -27,8 +27,8 @@ func GetConfig() (*Config, error) {
 		}
 	}
 	// error if the connection is not mysql
-	if os.Getenv("DB_HOST") != "mysql" {
-		log.Printf("Wrong database driver need mysql has: %v", os.Getenv("DB_HOST"))
+	if os.Getenv("DB_CONNECTION") != "mysql" {
+		log.Printf("Wrong database driver need mysql has: %v", os.Getenv("DB_CONNECTION"))
 	}
 
 	// add it to a memory address we can return and modify later if necessary

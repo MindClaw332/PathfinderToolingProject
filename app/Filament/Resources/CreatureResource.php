@@ -127,6 +127,7 @@ class CreatureResource extends Resource
     public static function getPages(): array
     {
         return [
+            // THIS GIVES AN ERROR IN IDE EVEN THOUGH IT WORK
             'index' => Pages\ListCreatures::route('/'),
             'create' => Pages\CreateCreature::route('/create'),
             'edit' => Pages\EditCreature::route('/{record}/edit'),
