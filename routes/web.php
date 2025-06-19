@@ -65,11 +65,12 @@ Route::get('creature', [BuilderController::class, 'creature']);
 
 Route::get('/contact', function () {
     return view('contact');
-});
+})->name('contact');
 
 Route::get('/about', function () {
     return view('about');
-});
+})->name('about');
+
 Route::get('/login/test', function () {
     return view('auth.authtest');
 })->middleware(['auth', 'verified']);
@@ -81,4 +82,3 @@ Route::post('/content/{content}/hazards', [BuilderController::class, 'addHazard'
 Route::delete('/content/{content}/hazards/{index}', [BuilderController::class, 'removeHazard']);
 
 Route::post('/content/{content}/calculate', [BuilderController::class, 'calculateXP']);
-

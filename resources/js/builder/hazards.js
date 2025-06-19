@@ -1,7 +1,7 @@
 let baseUrl = `/content/${contentId}`;
 
 // Get data + Make functions globally available
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Make functions globally available
     window.setHazard = setHazard;
     window.removeHazard = removeHazard;

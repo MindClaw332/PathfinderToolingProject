@@ -4,7 +4,7 @@
     <meta name="content-id" content="{{ $contentId }}">
     <div class="p-2">
         <div class="flex flex-row justify-between">
-        <!-- title -->
+            <!-- title -->
             <div class="text-2xl m-1">Randomize</div>
             <!-- current player party -->
             <div class="flex flex-row content-center">
@@ -54,7 +54,10 @@
         </div>
         <!-- encounter threat level -->
         <div class="flex justify-center m-2">
-            @include('builder.partials.encounterBudget', ['threatLevel' => $threatLevel, 'skippedCreatures' => $skippedCreatures])
+            @include('builder.partials.encounterBudget', [
+                'threatLevel' => $threatLevel,
+                'skippedCreatures' => $skippedCreatures,
+            ])
         </div>
     </div>
 @endsection
