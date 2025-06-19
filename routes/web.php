@@ -54,11 +54,22 @@ Route::post('/register', [AuthController::class, 'register'])->name('register.re
 Route::get('/combat', [CombatController::class, 'index'])->name('combat');
 Route::get('/creatures/search', [CreatureController::class, 'search'])->name('creatures.search');
 
+// Add PDF generation route
+Route::post('/generate-combat-pdf', [CombatController::class, 'generatePDF'])
+    ->name('generate.combat.pdf');
+
 Route::get('newcreature', [BuilderController::class, 'newcreature']);
 Route::get('randomize', [BuilderController::class, 'randomize']);
 Route::get('encounter', [BuilderController::class, 'encounter']);
 Route::get('creature', [BuilderController::class, 'creature']);
 
+Route::get('/contact', function () {
+    return view('contact');
+});
+
+Route::get('/about', function () {
+    return view('about');
+});
 Route::get('/login/test', function () {
     return view('auth.authtest');
 })->middleware(['auth', 'verified']);
