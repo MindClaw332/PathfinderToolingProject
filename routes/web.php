@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BuilderController;
+use App\Http\Controllers\RandomizeController;
 use App\Http\Controllers\CombatController;
 use App\Http\Controllers\CreatureController;
 
@@ -78,3 +79,4 @@ Route::delete('/content/{content}/hazards/{index}', [BuilderController::class, '
 
 Route::post('/content/{content}/calculate', [BuilderController::class, 'calculateXP']);
 
+Route::post('/content/{content}/randomize', [RandomizeController::class, 'randomizeEncounter']);

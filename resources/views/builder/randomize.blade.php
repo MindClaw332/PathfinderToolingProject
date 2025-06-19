@@ -24,7 +24,7 @@
             <!-- choose amount -->
             <div class="flex flex-row gap-2">
                 <div class="content-center">Amount:</div>
-                <input type="number" value="0" min="0" max="10">
+                <input type="number" value="1" min="1" max="10" id="creatureInput">
                 <div class="content-center" id="creatureAmount"></div>
             </div>
         </div>
@@ -32,8 +32,8 @@
         <div class="flex flex-col m-2">
             <div>
                 <!-- traits -->
-                <button onclick="showFilter('hideTraits')" class="p-1 text-sky-200">Trait</button>
-                <div class="flex flex-wrap flex-row gap-2 hidden" id="hideTraits">
+                <button onclick="showFilter('hideTraits')" class="text-sky-200">Trait</button>
+                <div class="flex flex-wrap flex-row mt-1 mb-1 gap-2 hidden" id="hideTraits">
                     @foreach($traits as $trait)
                         <button onclick="selectedFilter(this, 'trait', {{$trait->id}})" 
                         class="bg-tertiary p-1 rounded-lg cursor-pointer" id="randomize-trait-{{$trait->id}}">
@@ -45,12 +45,12 @@
             <div>
                 <!-- sizes -->
                 <div class="flex flex-row justify-between">
-                    <button onclick="showFilter('hideSizes')" class="p-1 text-sky-200">Size</button>
+                    <button onclick="showFilter('hideSizes')" class="text-sky-200">Size</button>
                     <button onclick="resetSizes()" class="text-red-800 cursor-pointer hidden" id="resetSizes">
                         Reset
                     </button>
                 </div>
-                <div class="flex flex-wrap flex-row gap-2 hidden" id="hideSizes">
+                <div class="flex flex-wrap flex-row mt-1 mb-1 gap-2 hidden" id="hideSizes">
                     @foreach($sizes as $size)
                         <button onclick="selectedFilter(this, 'size', {{$size->id}})" 
                         class="bg-tertiary p-1 rounded-lg cursor-pointer" id="randomize-size-{{$size->id}}">
@@ -70,15 +70,15 @@
             <!-- choose amount -->
             <div class="flex flex-row gap-2">
                 <div class="content-center">Amount:</div>
-                <input type="number" value="0" min="0" max="2">
+                <input type="number" value="0" min="0" max="2" id="hazardInput">
                 <div class="content-center" id="hazardAmount"></div>
             </div>
         </div>
         <!-- select types -->
         <div class="m-2">
             <!-- Types -->
-            <button onclick="showFilter('hideTypes')" class="p-1 text-sky-200">Type</button>
-            <div class="flex flex-wrap flex-row gap-2 hidden" id="hideTypes">
+            <button onclick="showFilter('hideTypes')" class="text-sky-200">Type</button>
+            <div class="flex flex-wrap flex-row mt-1 mb-1 gap-2 hidden " id="hideTypes">
                 @foreach($types as $type)
                     <button onclick="selectedFilter(this, 'type', {{$type->id}})" 
                     class="bg-tertiary p-1 rounded-lg cursor-pointer" id="randomize-type-{{$type->id}}">
@@ -92,17 +92,18 @@
             @include('builder.partials.hazardList', ['chosenHazards' => $chosenHazards])
         </div>
         <!-- choose difficulty -->
+        <div class="text-lg text-sky-600 m-1">Threat</div>
+        <!-- encounter threat level -->
+        <div class="flex justify-center m-2">
+            @include('builder.partials.encounterBudget', ['threatLevel' => $threatLevel, 'skippedCreatures' => $skippedCreatures])
+        </div>
         <div>
             @include('builder.partials.selectThreat', ['threatLevel' => $threatLevel])
         </div>
         <!-- buttons -->
         <div class="flex justify-between gap-4">
-            <button class="bg-secondary w-1/2 p-1 rounded-lg">randomize</button>
-            <button class="bg-secondary w-1/2 p-1 rounded-lg">clear</button>
-        </div>
-        <!-- encounter threat level -->
-        <div class="flex justify-center m-2">
-            @include('builder.partials.encounterBudget', ['threatLevel' => $threatLevel, 'skippedCreatures' => $skippedCreatures])
+            <button onclick="randomize()" class="bg-secondary w-1/2 p-1 rounded-lg">randomize</button>
+            <button onclick="resetRandomize()" class="bg-secondary w-1/2 p-1 rounded-lg">clear</button>
         </div>
     </div>
 @endsection

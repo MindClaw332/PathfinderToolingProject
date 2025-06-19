@@ -8,8 +8,8 @@
             : $threatOptions;
     @endphp
 
-    <div class="text-lg text-sky-600 m-1">Threat</div>
-    <select class="w-full p-3 cursor-pointer">
+    <div class="mt-4 ml-2">Desired threat level:</div>
+    <select class="w-full m-2 mb-4 cursor-pointer bg-primary text-white" id="threatLevel">
         @foreach ($availableOptions as $option)
             <option value="{{ $option }}" {{ $option === $threatLevel ? 'selected' : '' }}>
                 {{ $option }}-threat
