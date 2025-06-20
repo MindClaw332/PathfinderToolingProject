@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Contact - Pathfinder 2e Combat Manager</title>
+    <title>Contact - Kobald lair</title>
     
     <!-- Vite for Tailwind -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
