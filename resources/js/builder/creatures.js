@@ -8,7 +8,7 @@ let baseUrl = `/content/${contentId}`;
 let chosenCreatures;
 
 // Get data + Make functions globally available
-document.addEventListener('DOMContentLoaded', function() {   
+document.addEventListener('DOMContentLoaded', function () {
     // Make functions globally available
     window.setCreature = setCreature;
     window.removeCreature = removeCreature;
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addLevel = addLevel;
     window.subtractLevel = subtractLevel;
 
-    refreshChosenCreatures ();
+    refreshChosenCreatures();
     calculateXP();
 });
 
@@ -32,25 +32,25 @@ async function setCreature(creatureId) {
     });
     if (response.data.success) {
         document.getElementById('creature-list').innerHTML = response.data.html;
-        refreshChosenCreatures ();
+        refreshChosenCreatures();
     };
 }
 
 // Show the edit form for creatures
-function showCreatureEdit (index) {
+function showCreatureEdit(index) {
     let creature = document.getElementById(`creature-${index}`);
     let edit = document.getElementById(`edit-${index}`);
     let stat = document.getElementById(`stat-${index}`);
-    
+
     let selectedCreature = chosenCreatures[index];
-    
+
     creature.classList.remove('block');
     creature.classList.add('hidden');
     edit.classList.remove('hidden');
     edit.classList.add('block');
     stat.classList.remove('hidden');
     stat.classList.add('block');
-    
+
     stat.innerHTML = `
         <div class="flex flex-row gap-12 p-2 pt-4 justify-evenly">
             <div class="flex flex-row gap-3">
@@ -106,7 +106,7 @@ function showCreatureEdit (index) {
 }
 
 // Hide the edit form for creatures
-function hideCreatureEdit (index) {
+function hideCreatureEdit(index) {
     let creature = document.getElementById(`creature-${index}`);
     let edit = document.getElementById(`edit-${index}`);
     let level = document.getElementById(`level-${index}`);
@@ -143,10 +143,10 @@ async function updateCreature(index) {
     // If success rerender/reset everything
     if (response.data.success) {
         document.getElementById('creature-list').innerHTML = response.data.html;
-        refreshChosenCreatures ();
+        refreshChosenCreatures();
         buttonPressCount[index] = 0;
         delete editCreature[index];
-        calculateXP ();
+        calculateXP();
     };
 }
 
@@ -155,12 +155,12 @@ async function removeCreature(index) {
     const response = await axios.delete(`${baseUrl}/creatures/${index}`);
     if (response.data.success) {
         document.getElementById('creature-list').innerHTML = response.data.html;
-        refreshChosenCreatures ();
+        refreshChosenCreatures();
     };
 }
 
 // Calculate encounter XP
-async function calculateXP () {
+async function calculateXP() {
     const response = await axios.post(`${baseUrl}/calculate`, {
         party_size: partySize.value,
         party_level: partyLevel.value,
@@ -171,7 +171,7 @@ async function calculateXP () {
 }
 
 // Show Stats on mouseover
-function showStatsInfo (index) {
+function showStatsInfo(index) {
     let selectedCreature = chosenCreatures[index];
     let hover = document.getElementById(`hover-${index}`);
     hover.classList.remove('hidden');
@@ -207,16 +207,16 @@ function showStatsInfo (index) {
 }
 
 // Hide stats on mouseout
-function hideStatsInfo (index) {
+function hideStatsInfo(index) {
     let hover = document.getElementById(`hover-${index}`);
     hover.classList.remove('block');
     hover.classList.add('hidden');
 }
 
 // Refresh chosen creatures array
-function refreshChosenCreatures () {
+function refreshChosenCreatures() {
     const dataContainer = document.getElementById('creatureData-container');
-    
+
     // Get data
     if (dataContainer) {
         chosenCreatures = JSON.parse(dataContainer.dataset.chosenCreatures || '[]');
@@ -224,20 +224,20 @@ function refreshChosenCreatures () {
 }
 
 // Add a level to a creature
-function addLevel (index) {
+function addLevel(index) {
     const levelInput = document.getElementById(`level-${index}`);
 
-     // Prevent going above 25
+    // Prevent going above 25
     if (levelInput.value === "25") {
         return;
     }
 
-    if (!buttonPressCount[index]) { 
+    if (!buttonPressCount[index]) {
         buttonPressCount[index] = 0;
     }
 
     // Change input value
-    if (levelInput.value <= 0){
+    if (levelInput.value <= 0) {
         levelInput.stepUp();
         levelInput.stepUp();
         buttonPressCount[index] += 1;
@@ -245,13 +245,13 @@ function addLevel (index) {
         levelInput.stepUp();
         buttonPressCount[index] += 1;
     }
-    
+
     // Calculate and show adjustments for this specific creature
     calculateAdjustments(index);
 }
 
 // Subtract a level for a creature
-function subtractLevel (index) {
+function subtractLevel(index) {
     const levelInput = document.getElementById(`level-${index}`);
     const creature = chosenCreatures[index];
     const originalLevel = creature.original_level || creature.level;
@@ -261,10 +261,10 @@ function subtractLevel (index) {
         return;
     }
 
-    if (!buttonPressCount[index]) { 
+    if (!buttonPressCount[index]) {
         buttonPressCount[index] = 0;
     }
-    
+
     // Change input value
     if (levelInput.value === "1") {
         levelInput.stepDown();
@@ -278,7 +278,7 @@ function subtractLevel (index) {
         levelInput.stepDown();
         buttonPressCount[index] -= 1;
     }
-    
+
     // Calculate and show adjustments for this specific creature
     calculateAdjustments(index);
 }
@@ -286,19 +286,19 @@ function subtractLevel (index) {
 function calculateAdjustments(index) {
     const levelInput = document.getElementById(`level-${index}`);
     const creature = chosenCreatures[index];
-    
+
     // Calculate level based on difference from original
     const adjustmentCount = Number(levelInput.value) - creature.level;
-    
+
     // Calculate HP and other stats based on buttons pressed
     let hpDiff = 0;
     let statDiff = 0;
-    
+
     if (buttonPressCount[index] > 0) {
         // Elite adjustments
         for (let i = 0; i < buttonPressCount[index]; i++) {
             const currentLevel = creature.level + i;
-            
+
             // HP adjustment
             if (currentLevel <= 1) {
                 hpDiff += 10;
@@ -318,7 +318,7 @@ function calculateAdjustments(index) {
         // Weak adjustments
         for (let i = 0; i < Math.abs(buttonPressCount[index]); i++) {
             const currentLevel = creature.level - i;
-            
+
             // HP adjustment
             if (currentLevel >= 1 && currentLevel <= 2) {
                 hpDiff -= 10;
@@ -346,13 +346,13 @@ function calculateAdjustments(index) {
         will: creature.will + statDiff,
         perception: creature.perception + statDiff,
     };
-    
+
     // Show changes for this specific creature
     showStatDiff(index, adjustmentCount, hpDiff, statDiff);
 }
 
 // Show +/- values that will apply for changing the level
-function showStatDiff (index, adjustmentCount, hpDiff, statDiff) {
+function showStatDiff(index, adjustmentCount, hpDiff, statDiff) {
     // Get elements
     const levelPreview = document.getElementById(`preview-level-${index}`);
     const hpPreview = document.getElementById(`preview-hp-${index}`);
@@ -378,7 +378,7 @@ function showStatDiff (index, adjustmentCount, hpDiff, statDiff) {
     } else {
         warning.innerHTML = '';
     }
- 
+
     // Signs
     let levelSign = adjustmentCount > 0 ? '+' : '';
     let hpSign = hpDiff > 0 ? '+' : '';
@@ -395,11 +395,11 @@ function showStatDiff (index, adjustmentCount, hpDiff, statDiff) {
 
     // Show signs and numbers
     const elements = [
-        `preview-level-${index}`, `preview-hp-${index}`, `preview-ac-${index}`, 
-        `preview-fortitude-${index}`, `preview-reflex-${index}`, `preview-will-${index}`, 
+        `preview-level-${index}`, `preview-hp-${index}`, `preview-ac-${index}`,
+        `preview-fortitude-${index}`, `preview-reflex-${index}`, `preview-will-${index}`,
         `preview-perception-${index}`, `warning-${index}`
     ];
-    
+
     elements.forEach(id => {
         const element = document.getElementById(id);
         if (element) {

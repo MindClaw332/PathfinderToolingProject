@@ -10,6 +10,7 @@ import (
 	_ "github.com/joho/godotenv/autoload"
 )
 
+// test if we have an env
 func TestEnv() {
 	err := godotenv.Load("../.env")
 	if err != nil {

@@ -12,6 +12,7 @@
     --color-secondary: #c0c0c0;
     --color-tertiary: #a0a0a0;
     --color-accent:  #FFAA00;
+    --color-highlight: black;
 }
 
 /* Then define light and dark values */
