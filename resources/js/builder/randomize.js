@@ -138,7 +138,7 @@ async function randomize() {
         // If success, show result
         if (response.data.success) {
             document.getElementById('creatureHTML').innerHTML = response.data.creatureHTML;
-            document.getElementById('randomizeButton').innerHTML = response.data.randomize;
+            document.getElementById('hazardHTML').innerHTML = response.data.hazardHTML;
             console.log('New creatures:', response.data.newCreatures);
             console.log('New hazards:', response.data.newHazards);
             console.log('XP Budget:', response.data.xpBudget);

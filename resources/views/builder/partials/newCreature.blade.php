@@ -3,7 +3,7 @@
         <!-- show randomized creatures -->
         <div class="flex flex-row justify-between block" 
         onmouseover="showStatsInfo({{ $index }}, 'newCreatures')" onmouseout="hideStatsInfo({{ $index }}, 'newCreatures')">
-            <div class="p-2">{{$creature['name']}}</div>
+            <div class="text-accent p-2">{{$creature['name']}}</div>
         </div>
         <!-- hover -->
         <div class="flex flex-col hidden" id="newCreatures-{{ $index }}"></div>

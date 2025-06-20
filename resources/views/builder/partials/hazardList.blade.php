@@ -13,3 +13,4 @@
 @else
     <div class="m-1">No hazards chosen yet</div>
 @endif
+@include('builder.partials.newHazard', ['newHazards' => $newHazards])
