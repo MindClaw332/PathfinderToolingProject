@@ -44,10 +44,10 @@
                 {{-- if the user is not logged in show theme button and login button  --}}
                 @if (!Auth::check())
                     <li>
-                        <button class="border rounded-lg bg-accent py-2 px-5 hover:brightness-90 hover:underline"
+                        <button class="border rounded-lg bg-accent py-2 px-5 hover:brightness-90 hover:underline hover:cursor-pointer"
                             onclick="toggleTheme()">Toggle Theme</button>
                         <button onclick="window.location='{{ route('login.login') }}'"
-                            class="border rounded-lg bg-accent py-2 px-5 hover:brightness-90 hover:underline"
+                            class="border rounded-lg bg-accent py-2 px-5 hover:brightness-90 hover:underline hover:cursor-pointer"
                             href="{{ route('login.login') }}" role="button">Log In</button>
                     </li>
                 @endif
@@ -56,10 +56,10 @@
                     <li class="flex gap-2">
                         <form action="{{ route('login.logout') }}" method="POST">
                             @csrf
-                            <button class="border rounded-lg bg-accent py-2 px-5 hover:brightness-90 hover:underline"
+                            <button class="border rounded-lg bg-accent py-2 px-5 hover:brightness-90 hover:underline hover:cursor-pointer"
                                 onclick="toggleTheme()">Toggle Theme</button>
                             <button type="submit"
-                                class="border rounded-lg bg-accent py-2 px-5 hover:brightness-90 hover:underline">Logout
+                                class="border rounded-lg bg-accent py-2 px-5 hover:brightness-90 hover:underline hover:cursor-pointer">Logout
                             </button>
                         </form>
                     </li>
