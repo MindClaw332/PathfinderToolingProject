@@ -168,6 +168,7 @@ async function calculateXP () {
     if (response.data.success) {
         document.getElementById('encounterBar').innerHTML = response.data.html;
         document.getElementById('selectThreat').innerHTML = response.data.select;
+        document.getElementById('randomizeButton').innerHTML = response.data.randomize;
         if (response.data.creatureCount > 0) {
             document.getElementById('creatureAmount').innerHTML = '+' + response.data.creatureCount;
         } else {

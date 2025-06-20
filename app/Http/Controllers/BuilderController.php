@@ -314,6 +314,7 @@ class BuilderController extends Controller
 
         $html = view('builder.partials.encounterBudget', ['threatLevel' => $threatLevel, 'skippedCreatures' => $skippedCreatures])->render();
         $select = view('builder.partials.selectThreat', ['threatLevel' => $threatLevel])->render();
+        $randomize = view('builder.partials.randomize', ['skippedCreatures' => $skippedCreatures])->render();
         $creatureCount = count($creatures) - count($skippedCreatures);
 
         return response()->json([
@@ -323,6 +324,7 @@ class BuilderController extends Controller
             'skippedCreatures' => $skippedCreatures,
             'html' => $html,
             'select' => $select,
+            'randomize' => $randomize,
             'creatureCount' => $creatureCount,
         ]);
     }

@@ -36,5 +36,8 @@
         <div class="flex justify-center m-2">
             @include('builder.partials.encounterBudget', ['threatLevel' => $threatLevel, 'skippedCreatures' => $skippedCreatures])
         </div>
+        <div>
+            @include('builder.partials.export')
+        </div>
     </div>
 @endsection

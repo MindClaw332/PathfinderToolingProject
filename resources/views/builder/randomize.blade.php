@@ -101,9 +101,12 @@
             @include('builder.partials.selectThreat', ['threatLevel' => $threatLevel])
         </div>
         <!-- buttons -->
-        <div class="flex justify-between gap-4">
-            <button onclick="randomize()" class="bg-secondary w-1/2 p-1 rounded-lg">randomize</button>
-            <button onclick="resetRandomize()" class="bg-secondary w-1/2 p-1 rounded-lg">clear</button>
+        <div class="flex flex-row">
+            @include('builder.partials.randomize', ['skippedCreatures' => $skippedCreatures])
+            <button onclick="resetRandomize()" class="bg-secondary w-1/2 m-2 p-1 rounded-lg">clear</button>
+        </div>
+        <div>
+            @include('builder.partials.export')
         </div>
     </div>
 @endsection
