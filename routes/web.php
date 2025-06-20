@@ -63,13 +63,13 @@ Route::get('/login/test', function () {
 
 Route::get('/donate', function () {
     return view('donation.donate');
-})->name('donate');
+})->name('donate')->middleware(CustomAuth::class, 'verified');
 Route::put('/content/{content}/creatures/{index}', [BuilderController::class, 'updateCreature']);
 Route::delete('/content/{content}/creatures/{index}', [BuilderController::class, 'removeCreature']);
 Route::post('/content/{content}/hazards', [BuilderController::class, 'addHazard']);
 Route::delete('/content/{content}/hazards/{index}', [BuilderController::class, 'removeHazard']);
 Route::post('/content/{content}/calculate', [BuilderController::class, 'calculateXP']);
 
-Route::post('/donate/donate', [PaymentController::class, 'processPayment'])->name('donate.donate');
+Route::post('/donate/donate', [PaymentController::class, 'processPayment'])->name('donate.donate')->middleware(CustomAuth::class, 'verified');
 Route::get('/donate/success', [PaymentController::class, 'showSuccess'])->name('donate.success');
 Route::get('/donate/failure', [PaymentController::class, 'showFailure'])->name('donate.failure');
