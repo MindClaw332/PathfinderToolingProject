@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Creature;
+use Illuminate\Routing\Controller;
 
 class CreatureController extends Controller
 {

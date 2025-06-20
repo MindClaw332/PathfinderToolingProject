@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Stripe\StripeClient;
+use Illuminate\Routing\Controller;
+
 
 class PaymentController extends Controller
 {
