@@ -1019,7 +1019,7 @@
             padding: 1.5rem;
             background: var(--color-secondary);
             color: white;
-            display: flex;
+            display: flex;secondary
             justify-content: space-between;
             align-items: center;
             border-bottom: 2px solid var(--color-accent);
@@ -1444,7 +1444,7 @@
     </style>
 </head>
 
-<body>
+@include('partials_mich.header')
     <div class="combat-manager" x-data="combatManager">
         <!-- Dice roller overlay -->
         <div class="dice-overlay" :class="{ 'visible': showDiceResult }" @click="showDiceResult = false"></div>
@@ -3110,6 +3110,6 @@
             }));
         });
     </script>
-</body>
+@include('partials_mich.footer')
 
 </html>

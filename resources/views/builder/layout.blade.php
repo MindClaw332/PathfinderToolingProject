@@ -159,3 +159,4 @@
 <script>
     let contentId = "{{ $contentId ?? '' }}";
 </script>
+@include('partials_mich.footer')

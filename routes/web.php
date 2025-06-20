@@ -32,7 +32,7 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form
 Route::post('/login', [AuthController::class, 'login'])->name('login.login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('login.logout');
 //verification flow
-Route::get('/email/verify', [VerificationController::class, 'showVerificationForm'])->middleware('auth')->name('verification.notice');
+Route::get('/email/verify', [VerificationController::class, 'showReVerificationForm'])->middleware('auth')->name('verification.notice');
 Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verifyEmail'])->middleware(['auth', 'signed'])->name('verification.verify');
 Route::post('/email/verification-notification', [VerificationController::class, 'sendVerificationEmail'])->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
