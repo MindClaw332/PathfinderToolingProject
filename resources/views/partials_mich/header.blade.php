@@ -12,7 +12,7 @@
 {{-- start the body which ends in footer --}}
 
 <body class="bg-primary">
-    <header>
+    <header class="bg-primary">
         <div class="bg-secondary m-4 border border-accent rounded-lg block">
             {{-- list of items in a flex --}}
             <ul class="flex justify-between m-6 text-highlight flex-wrap gap-4 items-center">

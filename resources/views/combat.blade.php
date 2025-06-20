@@ -1444,7 +1444,7 @@
     </style>
 </head>
 
-@include('partials_mich.header')
+<body>
     <div class="combat-manager" x-data="combatManager">
         <!-- Dice roller overlay -->
         <div class="dice-overlay" :class="{ 'visible': showDiceResult }" @click="showDiceResult = false"></div>
@@ -1758,6 +1758,7 @@
                         <button class="btn btn-secondary" @click="showCsvImportModal = true">
                             <i class="fas fa-file-import mr-1"></i> Import CSV
                         </button>
+                        <a class="btn btn-secondary" href="/">Go Back To Homepage</a>
                     </div>
 
                     <!-- Theme Toggle Button -->
