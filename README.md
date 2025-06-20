@@ -27,6 +27,9 @@ node -v
 npm -v
 ```
 
+### 4. a MySQL/mariaDb database
+THE WEBSCRAPER REQUIRES A MYSQL OR MARIADB DATABASE TO BE REGISTERED INSIDE OF THE .ENV
+
 ## running the app
 
 ### 1. clone the repository
@@ -50,6 +53,16 @@ npm install
 cp .env.example .env
 ```
 Update .env with your database and mail credentials.
+
+if you want to use the stripe functionality create a stripe account and add these variables to the .env
+```
+STRIPE_KEY=stripe_api_key
+STRIPE_SECRET=stripe_secret_key
+STRIPE_WEBHOOK_SECRET=your-stripe-webhook-secret
+
+CASHIER_CURRENCY=eur
+CASHIER_CURRENCY_LOCALE=nl_BE of course change these to fit your app
+```
 
 ### 5. generate an application key
 ```bash
