@@ -196,7 +196,8 @@ class BuilderController extends Controller
         $hazards[] = $hazard->toArray();
         session([$sessionKey => $hazards]);
 
-        $html = view('builder.partials.hazardList', ['chosenHazards' => $hazards])->render();
+        $newHazards = [];
+        $html = view('builder.partials.hazardList', ['chosenHazards' => $hazards, 'newHazards' => $newHazards])->render();
         $hazardCount = count($hazards);
         
         return response()->json([
@@ -219,7 +220,8 @@ class BuilderController extends Controller
             session([$sessionKey => $hazards]);
         }
 
-        $html = view('builder.partials.hazardList', ['chosenHazards' => $hazards])->render();
+        $newHazards = [];
+        $html = view('builder.partials.hazardList', ['chosenHazards' => $hazards, 'newHazards' => $newHazards])->render();
         $hazardCount = count($hazards);
         
         return response()->json([

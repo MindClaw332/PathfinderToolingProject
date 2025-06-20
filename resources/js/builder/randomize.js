@@ -145,9 +145,6 @@ async function randomize() {
             console.log('XP Used:', response.data.xpUsed);
             console.log('XP Remaining:', response.data.xpRemaining);
             
-            // Handle the successful response here
-            // For example, update the UI with the new creatures and hazards
-            
         } else {
             console.error('Request failed:', response.data.message);
         }
