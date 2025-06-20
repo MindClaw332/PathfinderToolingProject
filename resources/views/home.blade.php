@@ -2,13 +2,14 @@
 
 
 <!-- Main Content -->
+{{-- title card  --}}
 <main class="text-highlight px-6 py-8 max-w-6xl mx-auto">
     <section class="mb-12 text-center">
         <h1 class="text-4xl font-bold mb-4">Welcome to {{ config('app.name', 'Pathfinder Toolkit') }}</h1>
         <p class="text-lg text-accent-light">Your one-stop hub for mastering Pathfinder adventures with powerful tools
             designed for Game Masters and Players alike.</p>
     </section>
-
+    {{-- explanation cards --}}
     <section class="grid gap-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
         <div class="bg-secondary rounded-xl p-6 border border-accent shadow-lg hover:shadow-xl transition-shadow">
             <h2 class="text-xl font-semibold mb-2">Encounter Builder</h2>
@@ -37,7 +38,7 @@
             {{-- <a href="{{ route('donate') }}" class="text-accent hover:underline">Donate →</a> --}}
         </div>
     </section>
-
+    {{-- small marketing text --}}
     <section class="mt-16 text-center ">
         <div class="border border-accent rounded-xl bg-secondary p-6 inline-block mx-auto">
             <h3 class="text-2xl font-semibold mb-4 underline">Why Use This Toolkit?</h3>
