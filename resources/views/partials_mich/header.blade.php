@@ -22,9 +22,6 @@
                             class="h-15 w-auto"></a>
                 </li>
                 <li>
-                    <a class="hover:underline hover:text-accent" href="">Contact</a>
-                </li>
-                <li>
                     <a class="hover:underline hover:text-accent" href="{{ route('builder.encounter') }}">Encounter
                         Builder</a>
                 </li>
@@ -32,7 +29,10 @@
                     <a class="hover:underline hover:text-accent" href="{{ route('combat') }}">Combat manager</a>
                 </li>
                 <li>
-                    <a class="hover:underline hover:text-accent" href="">About us</a>
+                    <a class="hover:underline hover:text-accent" href="{{ route('contact') }}">Contact</a>
+                </li>
+                <li>
+                    <a class="hover:underline hover:text-accent" href="{{ route('about') }}">About us</a>
                 </li>
 
                 {{-- if the user is logged in and an admin show the admin panel link  --}}
@@ -46,8 +46,9 @@
                     <li>
                         <button class="border rounded-lg bg-accent py-2 px-5 hover:brightness-90 hover:underline"
                             onclick="toggleTheme()">Toggle Theme</button>
-                        <a class="border rounded-lg bg-accent py-2 px-5 hover:brightness-90 hover:underline"
-                            href="{{ route('login.login') }}" role="button">Log In</a>
+                        <button onclick="window.location='{{ route('login.login') }}'"
+                            class="border rounded-lg bg-accent py-2 px-5 hover:brightness-90 hover:underline"
+                            href="{{ route('login.login') }}" role="button">Log In</button>
                     </li>
                 @endif
                 {{-- if they are logged in show a logout button  --}}
