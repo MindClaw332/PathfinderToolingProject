@@ -62,7 +62,7 @@
         </div>
         <!-- list chosen creatures -->
         <div class="divide-y-1 divide-y divide-tertiary m-1 max-h-46 overflow-y-auto scrollbar-hide" id="creature-list">
-            @include('builder.partials.creatureList', ['chosenCreatures' => $chosenCreatures])
+            @include('builder.partials.creatureList', ['chosenCreatures' => $chosenCreatures, 'newCreatures' => $newCreatures])
         </div>
         <!-- add hazards -->
         <div class="flex flex-row justify-between">

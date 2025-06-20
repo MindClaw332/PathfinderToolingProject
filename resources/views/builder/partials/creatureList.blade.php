@@ -2,7 +2,7 @@
     @foreach($chosenCreatures as $index => $creature)
         <!-- show chosen creatures -->
         <div class="flex flex-row justify-between block cursor-pointer" id="creature-{{ $index }}" 
-        onmouseover="showStatsInfo({{ $index }})" onmouseout="hideStatsInfo({{ $index }})">
+        onmouseover="showStatsInfo({{ $index }}, 'chosenCreatures')" onmouseout="hideStatsInfo({{ $index }}, 'chosenCreatures')">
             <div class="w-10/12 p-2" onclick="showCreatureEdit({{ $index }})">{{$creature['name']}} {{$creature['level']}}</div>
             <button onclick="(async () => { await removeCreature({{ $index }}); await calculateXP(); })()" 
             class="w-2/12 m-2 p-1 text-sm rounded-lg bg-red-800 cursor-pointer" type="button">
@@ -40,7 +40,7 @@
         </form>
         <!-- show stats -->
             <!-- hover -->
-            <div class="flex flex-col hidden" id="hover-{{ $index }}"></div>
+            <div class="flex flex-col hidden" id="chosenCreatures-{{ $index }}"></div>
             <!-- edit -->
             <div class="flex flex-col hidden" id="stat-{{ $index }}"></div>
     <!-- data -->
@@ -52,3 +52,4 @@
 @else
     <div class="m-1">No creatures selected yet</div>
 @endif
+@include('builder.partials.newCreature', ['newCreatures' => $newCreatures])

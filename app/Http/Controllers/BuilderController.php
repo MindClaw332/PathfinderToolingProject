@@ -65,6 +65,8 @@ class BuilderController extends Controller
         $chosenHazards = session("content_{$contentId}_hazards", []);
         $threatLevel = null;
         $skippedCreatures = null;
+        $newCreatures = [];
+        $newHazards = [];
         return view('builder.randomize', compact([
             'contentId',
             'creatures',
@@ -77,6 +79,8 @@ class BuilderController extends Controller
             'chosenHazards',
             'threatLevel',
             'skippedCreatures',
+            'newCreatures',
+            'newHazards',
         ]));
     }
 
@@ -94,7 +98,7 @@ class BuilderController extends Controller
             'traits',
             'sizes',
             'rarities',
-            'hazards'
+            'hazards',
         ]));
     }
 
@@ -111,7 +115,8 @@ class BuilderController extends Controller
         $creatures[] = $creature->toArray();
         session([$sessionKey => $creatures]);
 
-        $html = view('builder.partials.creatureList', ['chosenCreatures' => $creatures])->render();
+        $newCreatures = [];
+        $html = view('builder.partials.creatureList', ['chosenCreatures' => $creatures, 'newCreatures' => $newCreatures])->render();
         
         return response()->json([
             'success' => true,
@@ -147,7 +152,8 @@ class BuilderController extends Controller
             session([$sessionKey => $creatures]);
         }
 
-        $html = view('builder.partials.creatureList', ['chosenCreatures' => $creatures])->render();
+        $newCreatures = [];
+        $html = view('builder.partials.creatureList', ['chosenCreatures' => $creatures, 'newCreatures' => $newCreatures])->render();
         
         return response()->json([
             'success' => true,
@@ -168,7 +174,8 @@ class BuilderController extends Controller
             session([$sessionKey => $creatures]);
         }
 
-        $html = view('builder.partials.creatureList', ['chosenCreatures' => $creatures])->render();
+        $newCreatures = [];
+        $html = view('builder.partials.creatureList', ['chosenCreatures' => $creatures, 'newCreatures' => $newCreatures])->render();
 
         return response()->json([
             'success' => true,

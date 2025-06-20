@@ -137,14 +137,13 @@ async function randomize() {
 
         // If success, show result
         if (response.data.success) {
+            document.getElementById('creatureHTML').innerHTML = response.data.creatureHTML;
+            document.getElementById('randomizeButton').innerHTML = response.data.randomize;
             console.log('New creatures:', response.data.newCreatures);
             console.log('New hazards:', response.data.newHazards);
             console.log('XP Budget:', response.data.xpBudget);
             console.log('XP Used:', response.data.xpUsed);
             console.log('XP Remaining:', response.data.xpRemaining);
-            console.log('selected:', response.data.selectedTrait);
-            console.log('selected:', response.data.selectedType);
-            console.log('selected:', response.data.selectedSizes);
             
             // Handle the successful response here
             // For example, update the UI with the new creatures and hazards

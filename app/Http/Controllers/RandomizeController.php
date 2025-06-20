@@ -214,6 +214,9 @@ class RandomizeController extends Controller
             'xp_used' => $finalXpUsed,
         ]);
 
+        $creatureHTML = view('builder.partials.newCreature', ['newCreatures' => $newCreatures])->render();
+        $hazardHTML = view('builder.partials.newHazard', ['newHazards' => $newHazards])->render();
+
         return response()->json([
             'success' => true,
             'newCreatures' => $newCreatures,
@@ -221,14 +224,13 @@ class RandomizeController extends Controller
             'xpBudget' => $xpBudget,
             'xpUsed' => $finalXpUsed,
             'xpRemaining' => $finalXpRemaining,
+            'creatureHTML' => $creatureHTML,
+            'hazardHTML' => $hazardHTML,
             'debug' => [
                 'threat_level' => $threatLevel,
                 'remaining_xp_for_selection' => $remainingXp,
                 'average_xp_per_creature' => $averageXpPerCreature,
                 'total_creatures_available' => $allCreatures->count(),
-                'selectedType' => $selectedType,
-                'selectedTrait' => $selectedTrait,
-                'selectedSizes' => $selectedSizes,
             ]
         ]);
     }
