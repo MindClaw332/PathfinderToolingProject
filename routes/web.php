@@ -60,6 +60,9 @@ Route::get('/login/test', function () {
     return view('auth.authtest');
 })->middleware([CustomAuth::class, 'verified']);
 
+Route::get('/donate', function () {
+    return view('donate');
+})->name('donate');
 Route::put('/content/{content}/creatures/{index}', [BuilderController::class, 'updateCreature']);
 Route::delete('/content/{content}/creatures/{index}', [BuilderController::class, 'removeCreature']);
 Route::post('/content/{content}/hazards', [BuilderController::class, 'addHazard']);

@@ -35,7 +35,7 @@
             <h2 class="text-xl font-semibold mb-2">Donate</h2>
             <p class="text-sm text-accent-light mb-4">See how you can help us cover server costs and keep us up and
                 running!</p>
-            {{-- <a href="{{ route('donate') }}" class="text-accent hover:underline">Donate →</a> --}}
+            <a href="{{ route('donate') }}" class="text-accent hover:underline">Donate →</a>
         </div>
     </section>
     {{-- small marketing text --}}
