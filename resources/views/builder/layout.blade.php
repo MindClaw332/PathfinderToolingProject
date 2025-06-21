@@ -1,4 +1,4 @@
-<div class="bg-primary text-white h-full w-full">
+<div class="bg-primary text-white min-h-screen h-max w-full">
     @include('builder.header')
     <div class="flex flex-row">
         <!-- creature/hazard picker -->

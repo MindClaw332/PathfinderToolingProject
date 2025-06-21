@@ -12,6 +12,7 @@
 
     $config = $threatLevels[$threatLevel] ?? null;
 @endphp
+<div class="w-full h-max">
 <!-- threat level of encounter -->
 <div class="w-full h-8 bg-secondary rounded-lg" id="encounterBar">
     @if($config)
@@ -23,16 +24,19 @@
     @endif
 </div>
 <!-- skipped creatures -->
-@if($skippedCreatures)
-    <div>
-        Creatures with a too low or too high level:
-    </div>
-    <ul class="list-disc ml-6">
-        @foreach($skippedCreatures as $creature)
-            <li>{{ $creature['name'] }}</li>
-        @endforeach
-    </ul>
-    <div>
-        Please remove or adjust the level by clicking on the creatures.
-    </div>
-@endif
+<div class="m-1 mt-2">
+    @if($skippedCreatures)
+        <div>
+            Creatures with a too low or too high level:
+        </div>
+        <ul class="list-disc ml-6">
+            @foreach($skippedCreatures as $creature)
+                <li>{{ $creature['name'] }}</li>
+            @endforeach
+        </ul>
+        <div>
+            Please remove or adjust the level by clicking on the creatures.
+        </div>
+    @endif
+</div>
+</div>

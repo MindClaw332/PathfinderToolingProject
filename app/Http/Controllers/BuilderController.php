@@ -37,6 +37,8 @@ class BuilderController extends Controller
         $chosenHazards = session("content_{$contentId}_hazards", []);
         $threatLevel = null;
         $skippedCreatures = null;
+        $newCreatures = [];
+        $newHazards = [];
         return view('builder.encounter', compact([
             'contentId',
             'creatures',
@@ -48,7 +50,9 @@ class BuilderController extends Controller
             'chosenCreatures',
             'chosenHazards',
             'threatLevel',
-            'skippedCreatures'
+            'skippedCreatures',
+            'newCreatures',
+            'newHazards',
         ]));
     }
 
@@ -67,6 +71,7 @@ class BuilderController extends Controller
         $skippedCreatures = null;
         $newCreatures = [];
         $newHazards = [];
+        $hazardCount = count($chosenHazards);
         return view('builder.randomize', compact([
             'contentId',
             'creatures',
@@ -81,6 +86,7 @@ class BuilderController extends Controller
             'skippedCreatures',
             'newCreatures',
             'newHazards',
+            'hazardCount',
         ]));
     }
 

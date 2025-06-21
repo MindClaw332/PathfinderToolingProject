@@ -71,7 +71,9 @@
             <div class="flex flex-row gap-2">
                 <div class="content-center">Amount:</div>
                 <input type="number" value="0" min="0" max="2" id="hazardInput">
-                <div class="content-center" id="hazardAmount"></div>
+                <div class="content-center" id="hazardAmount">
+                    @if($hazardCount > 0) + {{$hazardCount}} @endif
+                </div>
             </div>
         </div>
         <!-- select types -->
