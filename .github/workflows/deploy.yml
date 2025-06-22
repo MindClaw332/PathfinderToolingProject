@@ -1,0 +1,33 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          
+      - name: Install SSH key
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+          
+      - name: Deploy to server
+        run: |
+          rsync -e "ssh -o StrictHostKeyChecking=no" -avz --exclude '.git/' \
+                     --exclude '.github/' \
+                     --exclude 'node_modules/' \
+                     --exclude '.env' \
+                     --exclude '.env.example' \
+                     ./ productionserverbe@ssh.productionserver.be:subsites/masterstoolkit.be/
+          
+      - name: Post-deployment commands
+        run: |
+          ssh -o StrictHostKeyChecking=no productionserverbe@ssh.productionserver.be "cd subsites/spotmyalien.be/team4 && bash post-deploy.sh"
