@@ -36,6 +36,6 @@ php artisan view:clear
 php artisan storage:link
 
 # Run migrations (optional, uncomment if needed)
-php artisan migrate:fresh --force --seed
+php artisan migrate
 
 echo "✅ Deployment completed successfully!"
