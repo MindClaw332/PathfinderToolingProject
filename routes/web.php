@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BuilderController;
+use App\Http\Controllers\RandomizeController;
 use App\Http\Controllers\CombatController;
 use App\Http\Controllers\CreatureController;
 use App\Http\Controllers\PaymentController;
@@ -69,6 +70,8 @@ Route::delete('/content/{content}/creatures/{index}', [BuilderController::class,
 Route::post('/content/{content}/hazards', [BuilderController::class, 'addHazard']);
 Route::delete('/content/{content}/hazards/{index}', [BuilderController::class, 'removeHazard']);
 Route::post('/content/{content}/calculate', [BuilderController::class, 'calculateXP']);
+
+Route::post('/content/{content}/randomize', [RandomizeController::class, 'randomizeEncounter']);
 
 Route::post('/donate/donate', [PaymentController::class, 'processPayment'])->name('donate.donate')->middleware(CustomAuth::class, 'verified');
 Route::get('/donate/success', [PaymentController::class, 'showSuccess'])->name('donate.success');

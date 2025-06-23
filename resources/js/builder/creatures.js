@@ -5,10 +5,10 @@ const buttonPressCount = {};
 const editCreature = {};
 
 let baseUrl = `/content/${contentId}`;
-let chosenCreatures;
+let chosenCreatures, newCreatures;
 
 // Get data + Make functions globally available
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() { 
     // Make functions globally available
     window.setCreature = setCreature;
     window.removeCreature = removeCreature;
@@ -167,13 +167,21 @@ async function calculateXP() {
     });
     if (response.data.success) {
         document.getElementById('encounterBar').innerHTML = response.data.html;
+        document.getElementById('selectThreat').innerHTML = response.data.select;
+        document.getElementById('randomizeButton').innerHTML = response.data.randomize;
+        if (response.data.creatureCount > 0) {
+            document.getElementById('creatureAmount').innerHTML = '+' + response.data.creatureCount;
+        } else {
+            document.getElementById('creatureAmount').innerHTML = '';
+        }
     }
 }
 
 // Show Stats on mouseover
-function showStatsInfo(index) {
-    let selectedCreature = chosenCreatures[index];
-    let hover = document.getElementById(`hover-${index}`);
+function showStatsInfo (index, arrayName) {
+    refreshNewCreatures ();
+    let selectedCreature = window[arrayName][index];
+    let hover = document.getElementById(`${arrayName}-${index}`);
     hover.classList.remove('hidden');
     hover.classList.add('block');
 
@@ -207,8 +215,8 @@ function showStatsInfo(index) {
 }
 
 // Hide stats on mouseout
-function hideStatsInfo(index) {
-    let hover = document.getElementById(`hover-${index}`);
+function hideStatsInfo (index, arrayName) {
+    let hover = document.getElementById(`${arrayName}-${index}`);
     hover.classList.remove('block');
     hover.classList.add('hidden');
 }
@@ -220,6 +228,16 @@ function refreshChosenCreatures() {
     // Get data
     if (dataContainer) {
         chosenCreatures = JSON.parse(dataContainer.dataset.chosenCreatures || '[]');
+        window.chosenCreatures = chosenCreatures;
+    }
+}
+
+function refreshNewCreatures () {
+    const newDataContainer = document.getElementById('newCreatureData-container');
+
+    if (newDataContainer) {
+        newCreatures = JSON.parse(newDataContainer.dataset.new_creatures || '[]');
+        window.newCreatures = newCreatures;
     }
 }
 

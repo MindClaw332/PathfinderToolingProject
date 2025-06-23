@@ -39,6 +39,8 @@ class BuilderController extends Controller
         $chosenHazards = session("content_{$contentId}_hazards", []);
         $threatLevel = null;
         $skippedCreatures = null;
+        $newCreatures = [];
+        $newHazards = [];
         return view('builder.encounter', compact([
             'contentId',
             'creatures',
@@ -50,7 +52,9 @@ class BuilderController extends Controller
             'chosenCreatures',
             'chosenHazards',
             'threatLevel',
-            'skippedCreatures'
+            'skippedCreatures',
+            'newCreatures',
+            'newHazards',
         ]));
     }
 
@@ -67,6 +71,9 @@ class BuilderController extends Controller
         $chosenHazards = session("content_{$contentId}_hazards", []);
         $threatLevel = null;
         $skippedCreatures = null;
+        $newCreatures = [];
+        $newHazards = [];
+        $hazardCount = count($chosenHazards);
         return view('builder.randomize', compact([
             'contentId',
             'creatures',
@@ -78,7 +85,10 @@ class BuilderController extends Controller
             'chosenCreatures',
             'chosenHazards',
             'threatLevel',
-            'skippedCreatures'
+            'skippedCreatures',
+            'newCreatures',
+            'newHazards',
+            'hazardCount',
         ]));
     }
 
@@ -96,7 +106,7 @@ class BuilderController extends Controller
             'traits',
             'sizes',
             'rarities',
-            'hazards'
+            'hazards',
         ]));
     }
 
@@ -113,7 +123,8 @@ class BuilderController extends Controller
         $creatures[] = $creature->toArray();
         session([$sessionKey => $creatures]);
 
-        $html = view('builder.partials.creatureList', ['chosenCreatures' => $creatures])->render();
+        $newCreatures = [];
+        $html = view('builder.partials.creatureList', ['chosenCreatures' => $creatures, 'newCreatures' => $newCreatures])->render();
         
         return response()->json([
             'success' => true,
@@ -149,7 +160,8 @@ class BuilderController extends Controller
             session([$sessionKey => $creatures]);
         }
 
-        $html = view('builder.partials.creatureList', ['chosenCreatures' => $creatures])->render();
+        $newCreatures = [];
+        $html = view('builder.partials.creatureList', ['chosenCreatures' => $creatures, 'newCreatures' => $newCreatures])->render();
         
         return response()->json([
             'success' => true,
@@ -170,7 +182,8 @@ class BuilderController extends Controller
             session([$sessionKey => $creatures]);
         }
 
-        $html = view('builder.partials.creatureList', ['chosenCreatures' => $creatures])->render();
+        $newCreatures = [];
+        $html = view('builder.partials.creatureList', ['chosenCreatures' => $creatures, 'newCreatures' => $newCreatures])->render();
 
         return response()->json([
             'success' => true,
@@ -191,12 +204,15 @@ class BuilderController extends Controller
         $hazards[] = $hazard->toArray();
         session([$sessionKey => $hazards]);
 
-        $html = view('builder.partials.hazardList', ['chosenHazards' => $hazards])->render();
+        $newHazards = [];
+        $html = view('builder.partials.hazardList', ['chosenHazards' => $hazards, 'newHazards' => $newHazards])->render();
+        $hazardCount = count($hazards);
         
         return response()->json([
             'success' => true,
             'hazard' => $hazard,
             'html' => $html,
+            'hazardCount' => $hazardCount,
         ]);
     }
 
@@ -212,11 +228,14 @@ class BuilderController extends Controller
             session([$sessionKey => $hazards]);
         }
 
-        $html = view('builder.partials.hazardList', ['chosenHazards' => $hazards])->render();
+        $newHazards = [];
+        $html = view('builder.partials.hazardList', ['chosenHazards' => $hazards, 'newHazards' => $newHazards])->render();
+        $hazardCount = count($hazards);
         
         return response()->json([
             'success' => true,
             'html' => $html,
+            'hazardCount' => $hazardCount,
         ]);
     }
 
@@ -311,6 +330,9 @@ class BuilderController extends Controller
         }
 
         $html = view('builder.partials.encounterBudget', ['threatLevel' => $threatLevel, 'skippedCreatures' => $skippedCreatures])->render();
+        $select = view('builder.partials.selectThreat', ['threatLevel' => $threatLevel])->render();
+        $randomize = view('builder.partials.randomize', ['skippedCreatures' => $skippedCreatures])->render();
+        $creatureCount = count($creatures) - count($skippedCreatures);
 
         return response()->json([
             'success' => true,
@@ -318,6 +340,9 @@ class BuilderController extends Controller
             'threat_level' => $threatLevel,
             'skippedCreatures' => $skippedCreatures,
             'html' => $html,
+            'select' => $select,
+            'randomize' => $randomize,
+            'creatureCount' => $creatureCount,
         ]);
     }
 }

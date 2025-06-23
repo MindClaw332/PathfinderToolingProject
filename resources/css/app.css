@@ -18,10 +18,10 @@
 /* Then define light and dark values */
 @layer base {
    :root {
-    --color-primary: #e0e0e0;
-    --color-secondary: #c0c0c0;
-    --color-tertiary: #a0a0a0;
-    --color-accent:  #FFAA00;
+    --color-primary: #788599;
+    --color-secondary: #233950;
+    --color-tertiary: #335477;
+    --color-accent:  #B5B800;
     --color-highlight: black;
   }
   [data-theme="dark"] {
