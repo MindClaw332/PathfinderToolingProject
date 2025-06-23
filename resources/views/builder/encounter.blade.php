@@ -19,19 +19,19 @@
             </div>
         </div>
         <!-- current creatures -->
-        <div class="text-lg text-sky-600 m-1">Creatures</div>
+        <div class="text-lg m-1">Creatures</div>
         <div class="divide-y-1 divide-y divide-tertiary m-1 max-h-52 overflow-y-auto scrollbar-hide" id="creature-list">
             <!-- list chosen creatures -->
             @include('builder.partials.creatureList', ['chosenCreatures' => $chosenCreatures])
         </div>
         <!-- current hazards -->
-        <div class="text-lg text-sky-600 m-1">Hazards</div>
+        <div class="text-lg m-1">Hazards</div>
         <div class="divide-y-1 divide-y divide-tertiary m-1 max-h-52 overflow-y-auto scrollbar-hide" id="hazard-list">
             <!-- list chosen hazards -->
             @include('builder.partials.hazardList', ['chosenHazards' => $chosenHazards])
         </div>
         <!-- current threat level -->
-        <div class="text-lg text-sky-600 m-1">Threat</div>
+        <div class="text-lg m-1">Threat</div>
         <!-- Encounter threat level -->
         <div class="flex justify-center m-2">
             @include('builder.partials.encounterBudget', ['threatLevel' => $threatLevel, 'skippedCreatures' => $skippedCreatures])

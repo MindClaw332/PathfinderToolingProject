@@ -22,7 +22,7 @@
         <div id="error-container" class="hidden"></div>
         <!-- add creatures -->
         <div class="flex flex-row justify-between">
-            <div class="text-lg text-sky-600 m-1">Creatures</div>
+            <div class="text-lg m-1">Creatures</div>
             <!-- choose amount -->
             <div class="flex flex-row gap-2">
                 <div class="content-center">Amount:</div>
@@ -68,7 +68,7 @@
         </div>
         <!-- add hazards -->
         <div class="flex flex-row justify-between">
-            <div class="text-lg text-sky-600 m-1">Hazards</div>
+            <div class="text-lg m-1">Hazards</div>
             <!-- choose amount -->
             <div class="flex flex-row gap-2">
                 <div class="content-center">Amount:</div>
@@ -96,7 +96,7 @@
             @include('builder.partials.hazardList', ['chosenHazards' => $chosenHazards])
         </div>
         <!-- choose difficulty -->
-        <div class="text-lg text-sky-600 m-1">Threat</div>
+        <div class="text-lg m-1">Threat</div>
         <!-- encounter threat level -->
         <div class="m-2">
             @include('builder.partials.encounterBudget', ['threatLevel' => $threatLevel, 'skippedCreatures' => $skippedCreatures])

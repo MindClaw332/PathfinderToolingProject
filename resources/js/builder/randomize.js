@@ -117,8 +117,6 @@ async function randomize() {
             console.error('Party level and size are required');
             return;
         }
-        console.log(chosenCreatures)
-        console.log(chosenHazards)
 
         // Set data
         const updateData = {
@@ -133,8 +131,6 @@ async function randomize() {
             selectedType: selectedFilters.type,
             selectedSizes: selectedFilters.size,
         };
-
-        console.log('Sending data:', updateData);
 
         // Send data - fixed URL to match Laravel route
         const response = await axios.post(`${baseUrl}/randomize`, updateData,);
