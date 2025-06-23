@@ -12,31 +12,31 @@
 
     $config = $threatLevels[$threatLevel] ?? null;
 @endphp
-<div class="w-full h-max">
-<!-- threat level of encounter -->
-<div class="w-full h-8 bg-secondary rounded-lg" id="encounterBar">
-    @if($config)
-        <div class="p-1 rounded-lg text-center {{ $config['color'] }} {{ $config['display']}}" style="width: {{ $config['width'] }};">
-            {{ $threatLevel }} threat
-        </div>
-    @else
-        <div class="h-6 rounded-lg" style="width: 0;"></div>
-    @endif
-</div>
-<!-- skipped creatures -->
-<div class="m-1 mt-2">
-    @if($skippedCreatures)
-        <div>
-            Creatures with a too low or too high level:
-        </div>
-        <ul class="list-disc ml-6">
-            @foreach($skippedCreatures as $creature)
-                <li>{{ $creature['name'] }}</li>
-            @endforeach
-        </ul>
-        <div>
-            Please remove or adjust the level by clicking on the creatures.
-        </div>
-    @endif
-</div>
+<div class="w-full min-h-max">
+    <!-- threat level of encounter -->
+    <div class="w-full h-8 bg-secondary rounded-lg" id="encounterBar">
+        @if($config)
+            <div class="p-1 rounded-lg text-center {{ $config['color'] }} {{ $config['display']}}" style="width: {{ $config['width'] }};">
+                {{ $threatLevel }} threat
+            </div>
+        @else
+            <div class="h-6 rounded-lg" style="width: 0;"></div>
+        @endif
+    </div>
+    <!-- skipped creatures -->
+    <div class="m-1 mt-2">
+        @if($skippedCreatures)
+            <div>
+                Creatures with a too low or too high level:
+            </div>
+            <ul class="list-disc ml-6">
+                @foreach($skippedCreatures as $creature)
+                    <li>{{ $creature['name'] }}</li>
+                @endforeach
+            </ul>
+            <div>
+                Please remove or adjust the level by clicking on the creatures.
+            </div>
+        @endif
+    </div>
 </div>

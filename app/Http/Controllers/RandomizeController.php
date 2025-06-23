@@ -83,26 +83,52 @@ class RandomizeController extends Controller
                 }
             } catch (\Exception $e) {
                 Log::error('Error processing chosen creatures', ['error' => $e->getMessage()]);
-                return response()->json(['success' => false, 'message' => 'Error processing chosen creatures'], 500);
+                return response()->json([
+                    'success' => false, 
+                    'message' => 'Error processing chosen creatures',
+                    'details' => ['suggestions' => ['Check your selected creatures and try again']]
+                ], 500);
             }
         }
 
         $remainingXp = $xpBudget - $xpUsed;
 
-        // Validation checks
+        // Enhanced validation checks with user-friendly messages
         if ($remainingXp <= 0) {
-            return response()->json(['success' => false, 'message' => 'No XP budget left for new creatures'], 400);
+            return response()->json([
+                'success' => false, 
+                'message' => 'Your selected creatures already use the entire XP budget',
+                'details' => [
+                    'xp_budget' => $xpBudget,
+                    'xp_used' => $xpUsed,
+                    'suggestions' => [
+                        'Remove some selected creatures',
+                        'Increase the threat level',
+                        'Increase party size to get more XP budget'
+                    ]
+                ]
+            ], 200);
         }
 
         $averageXpPerCreature = $remainingXp / $creatureAmount;
         if ($averageXpPerCreature < 10) {
             return response()->json([
                 'success' => false,
-                'message' => "Impossible to create {$creatureAmount} creatures within remaining XP budget. Average XP per creature ({$averageXpPerCreature}) is below minimum 10.",
-            ], 400);
+                'message' => "Cannot fit {$creatureAmount} creatures in remaining XP budget",
+                'details' => [
+                    'remaining_xp' => $remainingXp,
+                    'creatures_requested' => $creatureAmount,
+                    'average_xp_per_creature' => round($averageXpPerCreature, 1),
+                    'suggestions' => [
+                        'Reduce the number of creatures requested',
+                        'Remove some selected creatures to free up XP',
+                        'Increase threat level for more XP budget'
+                    ]
+                ]
+            ], 200);
         }
 
-        // Fetch and filter creatures
+        // Fetch and filter creatures with detailed error reporting
         try {
             $query = Creature::query()
                 ->when(!empty($selectedSizes), function ($q) use ($selectedSizes) {
@@ -115,6 +141,37 @@ class RandomizeController extends Controller
                 });
 
             $allCreatures = $query->get();
+            $totalCreaturesBeforeFiltering = $allCreatures->count();
+
+            // Track filtering steps for better error messages
+            $filteringSteps = [
+                'total_creatures' => $totalCreaturesBeforeFiltering,
+                'after_size_filter' => $totalCreaturesBeforeFiltering,
+                'after_trait_filter' => $totalCreaturesBeforeFiltering,
+                'after_level_filter' => 0,
+            ];
+
+            if ($totalCreaturesBeforeFiltering === 0) {
+                $suggestions = ['Remove filters to see more creatures'];
+                if (!empty($selectedSizes)) {
+                    $suggestions[] = 'Try different creature sizes';
+                }
+                if (!empty($selectedTrait)) {
+                    $suggestions[] = 'Try different creature traits';
+                }
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No creatures found matching your filters',
+                    'details' => [
+                        'applied_filters' => [
+                            'sizes' => $selectedSizes,
+                            'trait' => $selectedTrait,
+                        ],
+                        'suggestions' => $suggestions
+                    ]
+                ], 200);
+            }
 
             // Filter by level range (-4 to +4) and calculate XP
             $viableCreatures = $allCreatures->filter(function ($creature) use ($partyLevel, $creatureXpMap) {
@@ -129,29 +186,78 @@ class RandomizeController extends Controller
                 return true;
             });
 
+            $filteringSteps['after_level_filter'] = $viableCreatures->count();
+
             if ($viableCreatures->isEmpty()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'No viable creatures found matching the specified filters and level requirements.',
-                ], 400);
+                    'message' => 'No creatures found within suitable level range',
+                    'details' => [
+                        'party_level' => $partyLevel,
+                        'level_range' => [
+                            'min' => $partyLevel - 4,
+                            'max' => $partyLevel + 4
+                        ],
+                        'filtering_results' => $filteringSteps,
+                        'suggestions' => [
+                            'Adjust party level if possible',
+                            'Remove size or trait filters',
+                            'Try a different threat level'
+                        ]
+                    ]
+                ], 200);
             }
+
+            // Check if we have enough variety for the requested amount
+            $lowXpCreatures = $viableCreatures->filter(fn($c) => $c->calculated_xp <= 30)->count();
+            $mediumXpCreatures = $viableCreatures->filter(fn($c) => $c->calculated_xp > 30 && $c->calculated_xp <= 80)->count();
+            $highXpCreatures = $viableCreatures->filter(fn($c) => $c->calculated_xp > 80)->count();
 
         } catch (\Exception $e) {
             Log::error('Error querying creatures', ['error' => $e->getMessage()]);
-            return response()->json(['success' => false, 'message' => 'Error fetching creatures'], 500);
+            return response()->json([
+                'success' => false, 
+                'message' => 'Database error while searching for creatures',
+                'details' => ['suggestions' => ['Try again in a moment']]
+            ], 500);
         }
 
         // Use optimal XP randomization algorithm
         $selectionResult = $this->optimizedCreatureSelection($viableCreatures, $remainingXp, $creatureAmount);
         
         if (count($selectionResult['creatures']) < $creatureAmount) {
+            $suggestions = [
+                'Reduce the number of creatures requested',
+                'Increase threat level for more XP budget'
+            ];
+
+            // Add specific suggestions based on what we found
+            if ($selectionResult['xpUsed'] < $remainingXp * 0.5) {
+                $suggestions[] = 'Try removing filters - not enough low-cost creatures available';
+            }
+            if ($lowXpCreatures < $creatureAmount && $averageXpPerCreature < 40) {
+                $suggestions[] = 'Not enough low-level creatures available for this XP budget';
+            }
+
             return response()->json([
                 'success' => false,
-                'message' => "Unable to find {$creatureAmount} creatures that fit the XP budget efficiently. Found {$selectionResult['count']} creatures using {$selectionResult['xpUsed']} XP.",
-            ], 400);
+                'message' => "Could only find {$selectionResult['count']} creatures instead of {$creatureAmount}",
+                'details' => [
+                    'creatures_found' => $selectionResult['count'],
+                    'creatures_requested' => $creatureAmount,
+                    'xp_used' => $selectionResult['xpUsed'],
+                    'xp_budget' => $remainingXp,
+                    'creature_distribution' => [
+                        'low_xp' => $lowXpCreatures,
+                        'medium_xp' => $mediumXpCreatures,
+                        'high_xp' => $highXpCreatures,
+                    ],
+                    'suggestions' => $suggestions
+                ]
+            ], 200);
         }
 
-        // Fetch hazards
+        // Fetch hazards (existing code continues...)
         $newHazards = collect();
         if ($hazardAmount > 0) {
             try {
@@ -199,7 +305,9 @@ class RandomizeController extends Controller
                 'remaining_xp_for_selection' => $remainingXp,
                 'average_xp_per_creature' => round($averageXpPerCreature, 1),
                 'total_creatures_available' => $allCreatures->count(),
+                'viable_creatures' => $viableCreatures->count(),
                 'xp_efficiency' => round($xpEfficiency, 1) . '%',
+                'filtering_steps' => $filteringSteps ?? [],
             ]
         ]);
     }

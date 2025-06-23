@@ -92,6 +92,10 @@ function showFilter (type) {
 // Get data needed to randomize, Show randomized result
 async function randomize() {
     try {
+        // Clear previous errors
+        clearErrorMessage();
+        showLoadingState();
+
         // Get data
         const creatureAmount = Number(document.getElementById('creatureInput').value);
         const hazardAmount = Number(document.getElementById('hazardInput').value);
@@ -147,6 +151,7 @@ async function randomize() {
             
         } else {
             console.error('Request failed:', response.data.message);
+            showErrorMessage(response.data.message, response.data.details?.suggestions);
         }
 
     } catch (error) {
@@ -163,10 +168,75 @@ async function randomize() {
             // Something else happened
             console.error('Error message:', error.message);
         }
+    } finally {
+        hideLoadingState();
     }
 }
 
 // Reset the entire ranomization form
 function resetRandomize () {
 
+}
+
+// Show error message
+function showErrorMessage(message, suggestions = []) {
+    const errorContainer = document.getElementById('error-container');
+    
+    let html = `
+        <div class="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg mb-4">
+            <div class="flex items-start">
+                <svg class="w-5 h-5 text-red-400 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                </svg>
+                <div class="flex-1">
+                    <h3 class="font-medium">No Results Found</h3>
+                    <p class="mt-1">${message}</p>`;
+    
+    if (suggestions && suggestions.length > 0) {
+        html += `
+                    <div class="mt-3">
+                        <p class="font-medium text-sm">Try these suggestions:</p>
+                        <ul class="mt-1 list-disc list-inside text-sm space-y-1">`;
+        suggestions.forEach(suggestion => {
+            html += `<li>${suggestion}</li>`;
+        });
+        html += `
+                        </ul>
+                    </div>`;
+    }
+    
+    html += `
+                </div>
+            </div>
+        </div>`;
+    
+    errorContainer.innerHTML = html;
+    errorContainer.classList.remove('hidden');
+}
+
+// Hide error message
+function clearErrorMessage() {
+    const errorContainer = document.getElementById('error-container');
+    errorContainer.innerHTML = '';
+    errorContainer.classList.add('hidden');
+}
+
+// Show generating 
+function showLoadingState() {
+    const button = document.querySelector('[onclick="randomize()"]');
+    if (button) {
+        button.disabled = true;
+        button.textContent = 'Generating...';
+        button.classList.add('opacity-50');
+    }
+}
+
+// Hide generating
+function hideLoadingState() {
+    const button = document.querySelector('[onclick="randomize()"]');
+    if (button) {
+        button.disabled = false;
+        button.textContent = 'randomize';
+        button.classList.remove('opacity-50');
+    }
 }

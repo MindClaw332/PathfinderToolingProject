@@ -10,7 +10,7 @@
 
 <!-- selection bar -->
 <div class="p-2">
-    <div class="flex flex-row bg-secondary w-full p-2 border border-accent rounded-lg justify-between">
+    <div class="flex flex-wrap flex-row bg-secondary w-full p-2 border border-accent rounded-lg justify-between">
         <!-- show/hide creatures and hazards -->
         @if($creatures || $hazards)
             <button onclick="toggleCreatureHazard ()" class="cursor-pointer">
@@ -23,17 +23,14 @@
         <a href="{{ route('builder.encounter', ['contentId' => $contentId]) }}" class="cursor-pointer">
             Encounter
         </a>
-        <a href="{{ route('builder.newcreature', ['contentId' => $contentId]) }}" class="cursor-pointer">
+        {{-- <a href="{{ route('builder.newcreature', ['contentId' => $contentId]) }}" class="cursor-pointer">
             create creature
-        </a>
-        <a href="{{ route('builder.creature', ['contentId' => $contentId]) }}" class="cursor-pointer">
+        </a> --}}
+        {{-- <a href="{{ route('builder.creature', ['contentId' => $contentId]) }}" class="cursor-pointer">
             My creatures
-        </a>
+        </a> --}}
         <button onclick="toggleTheme()" class="cursor-pointer">
             Toggle Theme
         </button>
-        <div class="cursor-pointer">randomize complete</div>
-        <div class="cursor-pointer">export</div>
-        <div class="cursor-pointer">import</div>
     </div>
 </div>

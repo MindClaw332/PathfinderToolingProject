@@ -18,6 +18,8 @@
                 </div>
             </div>
         </div>
+        <!-- error message -->
+        <div id="error-container" class="hidden"></div>
         <!-- add creatures -->
         <div class="flex flex-row justify-between">
             <div class="text-lg text-sky-600 m-1">Creatures</div>
@@ -96,7 +98,7 @@
         <!-- choose difficulty -->
         <div class="text-lg text-sky-600 m-1">Threat</div>
         <!-- encounter threat level -->
-        <div class="flex justify-center m-2">
+        <div class="m-2">
             @include('builder.partials.encounterBudget', ['threatLevel' => $threatLevel, 'skippedCreatures' => $skippedCreatures])
         </div>
         <div>
