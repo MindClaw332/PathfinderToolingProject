@@ -18,7 +18,7 @@
             <ul class="flex justify-between m-6 text-highlight flex-wrap gap-4 items-center">
                 <li>
                     <a class="hover:underline hover:text-accent" href="{{ route('home') }}"><img
-                            src="{{ asset('storage/images/logo_masterstoolkit.png') }}" alt="website-logo"
+                            src="{{ asset('logo_masterstoolkit.png') }}" alt="website-logo"
                             class="h-15 w-auto"></a>
                 </li>
                 <li>
