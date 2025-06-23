@@ -47,15 +47,15 @@ function toggleFilterCreature () {
     const isH140 = creatureList.classList.contains('h-140');
     const isH88 = creatureList.classList.contains('h-94');
     const isH84 = creatureList.classList.contains('h-84');
-    const isH38 = creatureList.classList.contains('h-38');
+    const isH38 = creatureList.classList.contains('h-26');
 
     // Check heights
     if (isH84) {
         creatureList.classList.remove('h-84');
-        creatureList.classList.add('h-38');
+        creatureList.classList.add('h-26');
     }
     if (isH38) {
-        creatureList.classList.remove('h-38');
+        creatureList.classList.remove('h-26');
         creatureList.classList.add('h-84');
     }
     if (isH140) {
@@ -251,11 +251,12 @@ function renderCreatures(list) {
 
         // name
         const name = document.createElement('div');
+        name.className = 'flex-shrink-0 min-w-0'; // Prevent name from shrinking too much
         name.textContent = creature.name;
 
         // traits
         const traitContainer = document.createElement('div');
-        traitContainer.className = 'flex flex-row gap-2';
+        traitContainer.className = 'flex flex-row flex-wrap gap-2 justify-end ml-auto';
         creature.pathfindertraits?.forEach(trait => {
             const traitEl = document.createElement('div');
             traitEl.className = 'bg-tertiary p-1 rounded-lg';

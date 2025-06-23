@@ -20,9 +20,9 @@
                                 <div>Trait</div>
                                 <button onclick="resetCreatureFilters()" class="text-red-700 cursor-pointer">Reset</button>
                             </div>
-                            <div class="flex flex-wrap flex-row gap-2">
+                            <div class="flex flex-wrap flex-row justify-between h-20 overflow-y-auto scrollbar-hide">
                                 @foreach($traits as $trait)
-                                    <button onclick="toggleSelectCreatureTrait({{$trait->id}})" class="bg-tertiary p-1 rounded-lg cursor-pointer" 
+                                    <button onclick="toggleSelectCreatureTrait({{$trait->id}})" class="bg-tertiary m-1 p-1 rounded-lg cursor-pointer" 
                                     id="trait-{{$trait->id}}">
                                         {{$trait->name}}
                                     </button>
@@ -55,7 +55,8 @@
                         </div>
                     </div>
                     <!-- list of creatures -->
-                    <div class="{{ !empty($hazards) ? 'h-84' : 'h-140' }} overflow-y-auto scrollbar-hide divide-y-1 divide-y divide-tertiary" id="creatureList"></div>
+                    <div class="{{ !empty($hazards) ? 'h-84' : 'h-140' }} overflow-y-auto scrollbar-hide divide-y-1 divide-y divide-tertiary" 
+                    id="creatureList"></div>
                 </div>
             @endif
             <!-- hazards -->
