@@ -291,6 +291,10 @@ class RandomizeController extends Controller
             'xp_used' => $finalXpUsed,
         ]);
 
+        $skippedCreatures = [];
+        $threatLevel = ucfirst($threatLevel);
+        $html = view('builder.partials.encounterBudget', ['threatLevel' => $threatLevel, 'skippedCreatures' => $skippedCreatures])->render();
+
         return response()->json([
             'success' => true,
             'newCreatures' => $newCreatures,
@@ -300,6 +304,7 @@ class RandomizeController extends Controller
             'xpRemaining' => $finalXpRemaining,
             'creatureHTML' => $creatureHTML,
             'hazardHTML' => $hazardHTML,
+            'html' => $html,
             'debug' => [
                 'threat_level' => $threatLevel,
                 'remaining_xp_for_selection' => $remainingXp,

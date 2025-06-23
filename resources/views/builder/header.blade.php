@@ -11,6 +11,7 @@
 <!-- selection bar -->
 <div class="p-2">
     <div class="flex flex-wrap flex-row bg-secondary w-full p-2 border border-accent rounded-lg justify-between">
+        <a href="{{ route('home') }}">Back</a>
         <!-- show/hide creatures and hazards -->
         @if($creatures || $hazards)
             <button onclick="toggleCreatureHazard ()" class="cursor-pointer">
@@ -18,7 +19,7 @@
             </button>
         @endif
         <a href="{{ route('builder.randomize', ['contentId' => $contentId]) }}" class="cursor-pointer">
-            randomize partially
+            Randomize
         </a>
         <a href="{{ route('builder.encounter', ['contentId' => $contentId]) }}" class="cursor-pointer">
             Encounter

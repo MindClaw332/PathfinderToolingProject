@@ -5,7 +5,12 @@
     <div class="p-2">
         <div class="flex flex-row justify-between">
         <!-- title -->
-            <div class="text-2xl text-sky-50 m-1">Randomize</div>
+            <div class="flex flex-row gap-2">
+                <div class="text-2xl text-sky-50 m-1">Randomize</div>
+                <button onclick="randomize()">
+                    T
+                </button>
+            </div>
             <!-- current player party -->
             <div class="flex flex-row content-center">
                 <div class="flex flex-row">
@@ -35,10 +40,10 @@
             <div>
                 <!-- traits -->
                 <button onclick="showFilter('hideTraits')" class="text-sky-200">Trait</button>
-                <div class="flex flex-wrap flex-row mt-1 mb-1 gap-2 hidden" id="hideTraits">
+                <div class="flex flex-wrap flex-row h-20 mt-1 mb-1 justify-between overflow-y-auto scrollbar-hide hidden" id="hideTraits">
                     @foreach($traits as $trait)
                         <button onclick="selectedFilter(this, 'trait', {{$trait->id}})" 
-                        class="bg-tertiary p-1 rounded-lg cursor-pointer" id="randomize-trait-{{$trait->id}}">
+                        class="bg-tertiary m-1 p-1 rounded-lg cursor-pointer" id="randomize-trait-{{$trait->id}}">
                             {{$trait->name}}
                         </button>
                     @endforeach
@@ -109,8 +114,8 @@
             @include('builder.partials.randomize', ['skippedCreatures' => $skippedCreatures])
             <button onclick="resetRandomize()" class="bg-secondary w-1/2 m-2 p-1 rounded-lg">clear</button>
         </div>
-        <div>
+        {{-- <div>
             @include('builder.partials.export')
-        </div>
+        </div> --}}
     </div>
 @endsection
