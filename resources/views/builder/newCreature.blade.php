@@ -1,4 +1,4 @@
-@extends('builder/layout')
+@extends('builder.layout')
 
 @section('content')
     <meta name="content-id" content="{{ $contentId }}">

@@ -9,9 +9,9 @@ const hazardList = document.getElementById('hazardList');
 let hazards, creatures, traits, sizes, rarities, types;
 
 // Get data + Make functions globally available
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const dataContainer = document.getElementById('data-container');
-    
+
     // Get data
     if (dataContainer) {
         hazards = JSON.parse(dataContainer.dataset.hazards || '[]');
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
         rarities = JSON.parse(dataContainer.dataset.rarities || '[]');
         types = JSON.parse(dataContainer.dataset.types || '[]');
     }
-    
+
     // Make functions globally available
     window.toggleFilterCreature = toggleFilterCreature;
     window.toggleFilterHazard = toggleFilterHazard;
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Show the creature filters
-function toggleFilterCreature () {
+function toggleFilterCreature() {
     filterCreature.classList.toggle('hidden');
     filterCreature.classList.toggle('block');
 
@@ -69,7 +69,7 @@ function toggleFilterCreature () {
 }
 
 // Show the hazard filters
-function toggleFilterHazard () {
+function toggleFilterHazard() {
     filterHazard.classList.toggle('hidden');
     filterHazard.classList.toggle('block');
     hazardList.classList.toggle('h-36');
@@ -87,7 +87,7 @@ function toggleSelection({ id, dataSource, selectedArray, elementPrefix }) {
         selectedArray.splice(index, 1);
         element.classList.remove('bg-accent');
         element.classList.add('bg-tertiary');
-    } 
+    }
     // filter not selected
     else {
         selectedArray.push(item);
@@ -243,7 +243,7 @@ function renderCreatures(list) {
         wrapper.onclick = async () => {
             await setCreature(creature.id);
             await calculateXP();
-        }; 
+        };
 
         // make row
         const row = document.createElement('div');

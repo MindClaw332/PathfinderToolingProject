@@ -8,15 +8,15 @@ let popup = document.getElementById('popup');
 let hazards, creatures;
 
 // Get data + Make functions globally available
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const dataContainer = document.getElementById('data-container');
-    
+
     // Get data
     if (dataContainer) {
         hazards = JSON.parse(dataContainer.dataset.hazards || '[]');
         creatures = JSON.parse(dataContainer.dataset.creatures || '[]');
     }
-    
+
     // Make functions globally available
     window.toggleTheme = toggleTheme;
     window.toggleCreatureHazard = toggleCreatureHazard;
@@ -30,19 +30,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Change between light and dark mode
 function toggleTheme() {
-  const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', theme);
-  localStorage.setItem('theme', theme);
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
 }
 
 // Persist on load
 document.addEventListener('DOMContentLoaded', () => {
-  const saved = localStorage.getItem('theme') || 'dark';
-  document.documentElement.setAttribute('data-theme', saved);
+    const saved = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', saved);
 });
 
 // Show/hide creatures and hazards
-function toggleCreatureHazard () {
+function toggleCreatureHazard() {
     creatureHazard.classList.toggle('hidden');
     creatureHazard.classList.toggle('block');
     content.classList.toggle('w-2/3');
@@ -50,7 +50,7 @@ function toggleCreatureHazard () {
 }
 
 // Show/hide creatures
-function toggleCreature () {
+function toggleCreature() {
     creature.classList.toggle('hidden');
     creature.classList.toggle('block');
     if (hazard.classList.contains('hidden')) {
@@ -60,7 +60,7 @@ function toggleCreature () {
 };
 
 // Show/hide hazards
-function toggleHazard () {
+function toggleHazard() {
     hazard.classList.toggle('hidden');
     hazard.classList.toggle('block');
     if (creature.classList.contains('hidden')) {
@@ -74,7 +74,7 @@ function showHazardInfo(id) {
     let selectedHazard = hazards.find(hazard => hazard.id == id);
     popup.classList.remove('hidden');
     content.classList.add('hidden');
-    
+
     const traitsHtml = selectedHazard.pathfindertraits
         .map(trait => `<div class="bg-tertiary p-1 rounded-lg">${trait.name}</div>`)
         .join('');
@@ -118,7 +118,7 @@ function showCreatureInfo(id) {
     let selectedCreature = creatures.find(creature => creature.id == id);
     popup.classList.remove('hidden');
     content.classList.add('hidden');
-    
+
     const traitsHtml = selectedCreature.pathfindertraits
         .map(trait => `<div class="bg-tertiary p-1 rounded-lg">${trait.name}</div>`)
         .join('');

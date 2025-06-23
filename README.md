@@ -1,61 +1,95 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📘 Master's Toolkit
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Welcome to **Master's Toolkit**, a Laravel-powered web application. This guide will walk you through installing Go, setting up Laravel, and running the project locally.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Prerequisites
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Before running the project, make sure you have the following installed:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 1. Go (Golang)
 
-## Learning Laravel
+Go is used in this project for our webscraper so make sure you have golang installed.
+you can follow the instructions on this webpage: https://go.dev/doc/install
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 2. PHP and Composer
+Make sure you have:
+    PHP ≥ 8.1
+    Composer ≥ 2.x
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 3. Node.js & NPM
+These are required for the frotend tooling
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+you can check if you have these installed by running
+```bash
+node -v
+npm -v
+```
 
-## Laravel Sponsors
+### 4. a MySQL/mariaDb database
+THE WEBSCRAPER REQUIRES A MYSQL OR MARIADB DATABASE TO BE REGISTERED INSIDE OF THE .ENV
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## running the app
 
-### Premium Partners
+### 1. clone the repository
+```bash
+git clone https://github.com/your-username/masters-toolkit.git
+cd masters-toolkit
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 2. install the dependencies
+```bash
+composer install
+```
 
-## Contributing
+### 3. install node dependencies
+```bash
+npm install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 4. Copy and configure the environment-variables
+```bash
+cp .env.example .env
+```
+Update .env with your database and mail credentials.
 
-## Code of Conduct
+if you want to use the stripe functionality create a stripe account and add these variables to the .env
+```
+STRIPE_KEY=stripe_api_key
+STRIPE_SECRET=stripe_secret_key
+STRIPE_WEBHOOK_SECRET=your-stripe-webhook-secret
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+CASHIER_CURRENCY=eur
+CASHIER_CURRENCY_LOCALE=nl_BE of course change these to fit your app
+```
 
-## Security Vulnerabilities
+### 5. generate an application key
+```bash
+php artisan key:generate
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 6. migrate and seed the database
+```bash
+php artisan migrate --seed
+```
+this can take a while since this will also run the webscraper
+if you do not want this to run the webscraper comment out this line:
+```PHP
+Process::timeout(800)->run("cd ./scraper && go run .");
+```
+`database/seeders/DatabaseSeeder.php`
 
-## License
+### 7. running the app
+```bash
+composer run dev
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### (optional) running the go tool separately
+inside of the repository run 
+```bash
+cd ./scraper && go run .
+```
+
+### license
+This project is open-source and licensed under the MIT License.

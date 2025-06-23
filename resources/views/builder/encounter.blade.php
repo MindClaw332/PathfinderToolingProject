@@ -39,7 +39,10 @@
         <div class="text-lg m-1">Threat</div>
         <!-- Encounter threat level -->
         <div class="flex justify-center m-2">
-            @include('builder.partials.encounterBudget', ['threatLevel' => $threatLevel, 'skippedCreatures' => $skippedCreatures])
+            @include('builder.partials.encounterBudget', [
+                'threatLevel' => $threatLevel,
+                'skippedCreatures' => $skippedCreatures,
+            ])
         </div>
         {{-- <div>
             @include('builder.partials.export')

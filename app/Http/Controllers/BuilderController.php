@@ -9,6 +9,8 @@ use App\Models\Size;
 use App\Models\Rarity;
 use App\Models\PathfinderTrait;
 use App\Models\Type;
+use Illuminate\Routing\Controller;
+
 
 class BuilderController extends Controller
 {
@@ -98,7 +100,7 @@ class BuilderController extends Controller
         $sizes = Size::get();
         $rarities = Rarity::get();
         $contentId = 'newcreature';
-        return view('builder.newcreature', compact([
+        return view('builder.newCreature', compact([
             'contentId',
             'creatures',
             'traits',

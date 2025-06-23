@@ -1,10 +1,12 @@
+
 <div class="bg-primary text-white min-h-screen h-max w-full">
     @include('builder.header')
     <div class="flex flex-row">
         <!-- creature/hazard picker -->
-        <div class="{{ (!empty($creatures) || !empty($hazards)) ? 'flex flex-col w-1/3 p-2 block' : '' }}" id="creatureHazard">
+        <div class="{{ !empty($creatures) || !empty($hazards) ? 'flex flex-col w-1/3 p-2 block' : '' }}"
+            id="creatureHazard">
             <!-- creatures -->
-            @if($creatures)
+            @if ($creatures)
                 <div class="bg-secondary mb-4 border border-accent rounded-lg block" id="creature">
                     <!-- filter -->
                     <div class="flex flex-row p-2 gap-2">
@@ -60,7 +62,7 @@
                 </div>
             @endif
             <!-- hazards -->
-            @if($hazards)
+            @if ($hazards)
                 <div class="bg-secondary mb-1 border border-accent rounded-lg block" id="hazard">
                     <!-- filter -->
                     <div class="flex flex-row p-2 gap-2">
@@ -97,11 +99,12 @@
                         </div>
                     </div>
                     <!-- list of hazard -->
-                    <div class="h-36 overflow-y-auto scrollbar-hide divide-y-1 divide-y divide-tertiary" id="hazardList"></div>
+                    <div class="h-36 overflow-y-auto scrollbar-hide divide-y-1 divide-y divide-tertiary"
+                        id="hazardList"></div>
                 </div>
             @endif
             <!-- show/hide buttons -->
-            @if($creatures && $hazards)
+            @if ($creatures && $hazards)
                 <div class="flex justify-end gap-2">
                     <!-- show/hide creatures -->
                     <button class="cursor-pointer" onclick="toggleCreature ()">
@@ -117,22 +120,22 @@
         <!-- hover popup -->
         <div class="bg-secondary w-2/3 m-2 border border-accent rounded-lg hidden" id="popup"></div>
         <!-- selected content -->
-        <div class="{{ (!empty($creatures) || !empty($hazards)) ? 'w-2/3 m-2' : 'w-full m-2' }}" id="content">
+        <div class="{{ !empty($creatures) || !empty($hazards) ? 'w-2/3 m-2' : 'w-full m-2' }}" id="content">
             @yield('content')
         </div>
     </div>
 </div>
 <!-- data for popup creatures/hazards -->
 <div id="data-container" style="display: none;"
-        @if(isset($hazards)) data-hazards="{{ json_encode($hazards) }}" @endif
-        @if(isset($creatures)) data-creatures="{{ json_encode($creatures) }}" @endif
-        @if(isset($traits)) data-traits="{{ json_encode($traits) }}" @endif
-        @if(isset($sizes)) data-sizes="{{ json_encode($sizes) }}" @endif
-        @if(isset($rarities)) data-rarities="{{ json_encode($rarities) }}" @endif
-        @if(isset($types)) data-types="{{ json_encode($types) }}" @endif
-        data-content-id="{{ $contentId ?? '' }}"
-    >data</div>
+    @if (isset($hazards)) data-hazards="{{ json_encode($hazards) }}" @endif
+    @if (isset($creatures)) data-creatures="{{ json_encode($creatures) }}" @endif
+    @if (isset($traits)) data-traits="{{ json_encode($traits) }}" @endif
+    @if (isset($sizes)) data-sizes="{{ json_encode($sizes) }}" @endif
+    @if (isset($rarities)) data-rarities="{{ json_encode($rarities) }}" @endif
+    @if (isset($types)) data-types="{{ json_encode($types) }}" @endif
+    data-content-id="{{ $contentId ?? '' }}">data</div>
 
 <script>
-  let contentId = "{{ $contentId ?? '' }}";
+    let contentId = "{{ $contentId ?? '' }}";
 </script>
+@include('partials_mich.footer')
