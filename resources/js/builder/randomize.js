@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.resetSizes = resetSizes;
     window.showFilter = showFilter;
     window.randomize = randomize;
+    window.completeRandomize = completeRandomize;
     window.resetRandomize =  resetRandomize;
 });
 
@@ -132,7 +133,7 @@ async function randomize() {
             selectedSizes: selectedFilters.size,
         };
 
-        // Send data - fixed URL to match Laravel route
+        // Send data
         const response = await axios.post(`${baseUrl}/randomize`, updateData,);
 
         // If success, show result
@@ -167,6 +168,60 @@ async function randomize() {
         }
     } finally {
         hideLoadingState();
+    }
+}
+
+// Completely randomize the creatures and hazards
+async function completeRandomize () {
+    try {
+        // Get data
+        const partySize = Number(document.getElementById('partySize').value);
+        const partyLevel = Number(document.getElementById('partyLevel').value);
+
+        // Validate required fields
+        if (!partyLevel || !partySize) {
+            console.error('Party level and size are required');
+            return;
+        }
+
+        // Set data
+        const updateData = {
+            partyLevel: partyLevel,
+            partySize: partySize,
+        };
+
+        // Send data
+        const response = await axios.post(`${baseUrl}/randomize`, updateData,);
+
+        // If success, show result
+        if (response.data.success) {
+            document.getElementById('creatureHTML').innerHTML = response.data.creatureHTML;
+            document.getElementById('hazardHTML').innerHTML = response.data.hazardHTML;
+            document.getElementById('encounterBar').innerHTML = response.data.html;
+            console.log('New creatures:', response.data.newCreatures);
+            console.log('New hazards:', response.data.newHazards);
+            console.log('XP Budget:', response.data.xpBudget);
+            console.log('XP Used:', response.data.xpUsed);
+            console.log('XP Remaining:', response.data.xpRemaining);
+            
+        } else {
+            completeRandomize();
+        }
+
+    } catch (error) {
+        console.error('Error in randomize function:', error);
+        
+        if (error.response) {
+            // Server responded with error status
+            console.error('Response data:', error.response.data);
+            console.error('Response status:', error.response.status);
+        } else if (error.request) {
+            // Request was made but no response received
+            console.error('No response received:', error.request);
+        } else {
+            // Something else happened
+            console.error('Error message:', error.message);
+        }
     }
 }
 
