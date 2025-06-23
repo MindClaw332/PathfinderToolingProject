@@ -9,6 +9,7 @@ use App\Models\Size;
 use App\Models\Rarity;
 use App\Models\PathfinderTrait;
 use App\Models\Type;
+use Illuminate\Routing\Controller;
 
 use Illuminate\Support\Facades\Log;
 
