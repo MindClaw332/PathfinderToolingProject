@@ -1,25 +1,6 @@
-@vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/builder/builder.js', 'resources/js/builder/search.js', 'resources/js/builder/hazards.js', 'resources/js/builder/creatures.js'])
 
-<div class="bg-primary text-white h-full w-full">
-    <!-- selection bar -->
-    <div class="p-2">
-        <div class="flex flex-row bg-secondary w-full p-2 border border-accent rounded-lg justify-between">
-            <!-- show/hide creatures and hazards -->
-            @if ($creatures || $hazards)
-                <button onclick="toggleCreatureHazard ()">
-                    creatures/hazards
-                </button>
-            @endif
-            <a href="{{ route('builder.randomize', ['contentId' => $contentId]) }}">randomize partially</a>
-            <a href="{{ route('builder.encounter', ['contentId' => $contentId]) }}">Encounter</a>
-            <a href="{{ route('builder.newcreature', ['contentId' => $contentId]) }}">create creature</a>
-            <a href="{{ route('builder.creature', ['contentId' => $contentId]) }}">My creatures</a>
-            <button onclick="toggleTheme()">Toggle Theme</button>
-            <div>randomize complete</div>
-            <div>export</div>
-            <div>import</div>
-        </div>
-    </div>
+<div class="bg-primary text-white min-h-screen h-max w-full">
+    @include('builder.header')
     <div class="flex flex-row">
         <!-- creature/hazard picker -->
         <div class="{{ !empty($creatures) || !empty($hazards) ? 'flex flex-col w-1/3 p-2 block' : '' }}"
@@ -31,7 +12,7 @@
                     <div class="flex flex-row p-2 gap-2">
                         <!-- search -->
                         <input type="text" class="w-full p-1 bg-tertiary rounded-lg" id="inputCreature">
-                        <button onclick="toggleFilterCreature()">Filter</button>
+                        <button class="cursor-pointer" onclick="toggleFilterCreature()">Filter</button>
                     </div>
                     <!-- select -->
                     <div class="p-2 hidden" id="filterCreature">
@@ -39,13 +20,13 @@
                             <!-- traits -->
                             <div class="flex flex-row justify-between">
                                 <div>Trait</div>
-                                <button onclick="resetCreatureFilters()" class="text-red-700">Reset</button>
+                                <button onclick="resetCreatureFilters()" class="text-red-700 cursor-pointer">Reset</button>
                             </div>
-                            <div class="flex flex-row gap-2">
-                                @foreach ($traits as $trait)
-                                    <button onclick="toggleSelectCreatureTrait({{ $trait->id }})"
-                                        class="bg-tertiary p-1 rounded-lg" id="trait-{{ $trait->id }}">
-                                        {{ $trait->name }}
+                            <div class="flex flex-wrap flex-row justify-between h-20 overflow-y-auto scrollbar-hide">
+                                @foreach($traits as $trait)
+                                    <button onclick="toggleSelectCreatureTrait({{$trait->id}})" class="bg-tertiary m-1 p-1 rounded-lg cursor-pointer" 
+                                    id="trait-{{$trait->id}}">
+                                        {{$trait->name}}
                                     </button>
                                 @endforeach
                             </div>
@@ -53,11 +34,11 @@
                         <div>
                             <!-- size -->
                             <div>Size</div>
-                            <div class="flex flex-row gap-2">
-                                @foreach ($sizes as $size)
-                                    <button onclick="toggleSelectedCreatureSize({{ $size->id }})"
-                                        class="bg-tertiary p-1 rounded-lg" id="size-{{ $size->id }}">
-                                        {{ $size->name }}
+                            <div class="flex flex-wrap flex-row gap-2">
+                                @foreach($sizes as $size)
+                                    <button onclick="toggleSelectedCreatureSize({{$size->id}})" class="bg-tertiary p-1 rounded-lg cursor-pointer" 
+                                    id="size-{{$size->id}}">
+                                        {{$size->name}}
                                     </button>
                                 @endforeach
                             </div>
@@ -65,19 +46,19 @@
                         <div>
                             <!-- rarity -->
                             <div>Rarity</div>
-                            <div class="flex flex-row gap-2">
-                                @foreach ($rarities as $rarity)
-                                    <button onclick="toggleSelectedCreatureRarity({{ $rarity->id }})"
-                                        class="bg-tertiary p-1 rounded-lg" id="rarityC-{{ $rarity->id }}">
-                                        {{ $rarity->name }}
+                            <div class="flex flex-wrap flex-row gap-2">
+                                @foreach($rarities as $rarity)
+                                    <button onclick="toggleSelectedCreatureRarity({{$rarity->id}})" class="bg-tertiary p-1 rounded-lg cursor-pointer" 
+                                    id="rarityC-{{$rarity->id}}">
+                                        {{$rarity->name}}
                                     </button>
                                 @endforeach
                             </div>
                         </div>
                     </div>
                     <!-- list of creatures -->
-                    <div class="{{ !empty($hazards) ? 'h-84' : 'h-140' }} overflow-y-auto scrollbar-hide divide-y-1 divide-y divide-tertiary"
-                        id="creatureList"></div>
+                    <div class="{{ !empty($hazards) ? 'h-84' : 'h-140' }} overflow-y-auto scrollbar-hide divide-y-1 divide-y divide-tertiary" 
+                    id="creatureList"></div>
                 </div>
             @endif
             <!-- hazards -->
@@ -87,7 +68,7 @@
                     <div class="flex flex-row p-2 gap-2">
                         <!-- search -->
                         <input type="text" class="w-full p-1 bg-tertiary rounded-lg" id="inputHazard">
-                        <button onclick="toggleFilterHazard()">Filter</button>
+                        <button class="cursor-pointer" onclick="toggleFilterHazard()">Filter</button>
                     </div>
                     <!-- select -->
                     <div class="p-2 hidden" id="filterHazard">
@@ -95,13 +76,12 @@
                             <!-- type -->
                             <div class="flex flex-row justify-between">
                                 <div>Type</div>
-                                <button onclick="resetHazardFilters()" class="text-red-700">Reset</button>
+                                <button onclick="resetHazardFilters()" class="text-red-700 cursor-pointer">Reset</button>
                             </div>
-                            <div class="flex flex-row gap-2">
-                                @foreach ($types as $type)
-                                    <button onclick="toggleSelectedHazardType({{ $type->id }})"
-                                        class="bg-tertiary p-1 rounded-lg" id="type-{{ $type->id }}">
-                                        {{ $type->name }}
+                            <div class="flex flex-wrap flex-row gap-2">
+                                @foreach($types as $type)
+                                    <button onclick="toggleSelectedHazardType({{$type->id}})" class="bg-tertiary p-1 rounded-lg cursor-pointer" id="type-{{$type->id}}">
+                                        {{$type->name}}
                                     </button>
                                 @endforeach
                             </div>
@@ -109,11 +89,10 @@
                         <div>
                             <!-- rarity -->
                             <div>Rarity</div>
-                            <div class="flex flex-row gap-2">
-                                @foreach ($rarities as $rarity)
-                                    <button onclick="toggleSelectedHazardRarity({{ $rarity->id }})"
-                                        class="bg-tertiary p-1 rounded-lg" id="rarityH-{{ $rarity->id }}">
-                                        {{ $rarity->name }}
+                            <div class="flex flex-wrap flex-row gap-2">
+                                @foreach($rarities as $rarity)
+                                    <button onclick="toggleSelectedHazardRarity({{$rarity->id}})" class="bg-tertiary p-1 rounded-lg cursor-pointer" id="rarityH-{{$rarity->id}}">
+                                        {{$rarity->name}}
                                     </button>
                                 @endforeach
                             </div>
@@ -128,11 +107,11 @@
             @if ($creatures && $hazards)
                 <div class="flex justify-end gap-2">
                     <!-- show/hide creatures -->
-                    <button onclick="toggleCreature ()">
+                    <button class="cursor-pointer" onclick="toggleCreature ()">
                         creatures
                     </button>
                     <!-- show/hide hazards -->
-                    <button onclick="toggleHazard ()">
+                    <button class="cursor-pointer" onclick="toggleHazard ()">
                         hazards
                     </button>
                 </div>
